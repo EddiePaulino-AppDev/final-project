@@ -1,0 +1,42 @@
+<h1>
+  Section #<%= @section.id %> details
+</h1>
+
+<a href="/sections/<%= @section.id %>/edit">
+  Edit section
+</a>
+
+<hr>
+
+<dl>
+  <dt>
+    Topic
+  </dt>
+  <dd>
+    <%= @section.topic_id %>
+  </dd>
+
+  <dt>
+    Created at
+  </dt>
+  <dd>
+    <%= time_ago_in_words(@section.created_at) %> ago
+  </dd>
+
+  <dt>
+    Updated at
+  </dt>
+  <dd>
+    <%= time_ago_in_words(@section.updated_at) %> ago
+  </dd>
+</dl>
+
+<a href="/delete_section/<%= @section.id %>">
+  Delete section
+</a>
+
+<hr>
+
+<a href="/sections">
+  Go back
+</a>

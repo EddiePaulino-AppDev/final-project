@@ -1,0 +1,56 @@
+<h1>
+  Tab #<%= @tab.id %> details
+</h1>
+
+<a href="/tabs/<%= @tab.id %>/edit">
+  Edit tab
+</a>
+
+<hr>
+
+<dl>
+  <dt>
+    Title
+  </dt>
+  <dd>
+    <%= @tab.title %>
+  </dd>
+
+  <dt>
+    Num of tabs
+  </dt>
+  <dd>
+    <%= @tab.num_of_tabs %>
+  </dd>
+
+  <dt>
+    Tab
+  </dt>
+  <dd>
+    <%= @tab.tab_id %>
+  </dd>
+
+  <dt>
+    Created at
+  </dt>
+  <dd>
+    <%= time_ago_in_words(@tab.created_at) %> ago
+  </dd>
+
+  <dt>
+    Updated at
+  </dt>
+  <dd>
+    <%= time_ago_in_words(@tab.updated_at) %> ago
+  </dd>
+</dl>
+
+<a href="/delete_tab/<%= @tab.id %>">
+  Delete tab
+</a>
+
+<hr>
+
+<a href="/tabs">
+  Go back
+</a>

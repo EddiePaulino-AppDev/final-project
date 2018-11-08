@@ -1,0 +1,56 @@
+<h1>
+  Topic #<%= @topic.id %> details
+</h1>
+
+<a href="/topics/<%= @topic.id %>/edit">
+  Edit topic
+</a>
+
+<hr>
+
+<dl>
+  <dt>
+    Csi section
+  </dt>
+  <dd>
+    <%= @topic.csi_section %>
+  </dd>
+
+  <dt>
+    Title
+  </dt>
+  <dd>
+    <%= @topic.title %>
+  </dd>
+
+  <dt>
+    Engineering discipline
+  </dt>
+  <dd>
+    <%= @topic.engineering_discipline %>
+  </dd>
+
+  <dt>
+    Created at
+  </dt>
+  <dd>
+    <%= time_ago_in_words(@topic.created_at) %> ago
+  </dd>
+
+  <dt>
+    Updated at
+  </dt>
+  <dd>
+    <%= time_ago_in_words(@topic.updated_at) %> ago
+  </dd>
+</dl>
+
+<a href="/delete_topic/<%= @topic.id %>">
+  Delete topic
+</a>
+
+<hr>
+
+<a href="/topics">
+  Go back
+</a>

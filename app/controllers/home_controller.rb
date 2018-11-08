@@ -1,14 +1,19 @@
 class HomeController < ApplicationController
     def index
-        
+    @topic = Topic.all
       
-    render("home/index.html.erb")
+    render("home/index.html.erb", layout:false)
     end
     
-    def search_entry
+    def search
+    @topic = Topic.all
+    
+    render("home/search_results.html.erb")
+    end
         
-      
-    render("topic/index.html.erb")
+    def about_us
+       
+    render("home/about_us.html.erb") 
     end
     
 end

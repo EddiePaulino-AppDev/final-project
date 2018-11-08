@@ -1,0 +1,74 @@
+<h1>
+  All tabs
+</h1>
+
+<a href="/tabs/new">
+  Add a new tab
+</a>
+
+<hr>
+
+<table class="table">
+  <tr>
+    <th>
+      ID
+    </th>
+
+    <th>
+      Title
+    </th>
+
+    <th>
+      Num of tabs
+    </th>
+
+    <th>
+      Tab
+    </th>
+
+    <th>
+      Created at
+    </th>
+
+    <th>
+      Updated at
+    </th>
+
+    <th>
+    </th>
+  </tr>
+
+  <% @tabs.each do |tab| %>
+  <tr>
+    <td>
+      <%= tab.id %>
+    </td>
+
+    <td>
+      <%= tab.title %>
+    </td>
+
+    <td>
+      <%= tab.num_of_tabs %>
+    </td>
+
+    <td>
+      <%= tab.tab_id %>
+    </td>
+
+    <td>
+      <%= time_ago_in_words(tab.created_at) %> ago
+    </td>
+
+    <td>
+      <%= time_ago_in_words(tab.updated_at) %> ago
+    </td>
+
+    <td>
+      <a href="/tabs/<%= tab.id %>">
+        Show details
+      </a>
+    </td>
+  </tr>
+  <% end %>
+</table>

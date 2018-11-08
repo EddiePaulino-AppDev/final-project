@@ -1,0 +1,49 @@
+<h1>
+  Text component #<%= @text_component.id %> details
+</h1>
+
+<a href="/text_components/<%= @text_component.id %>/edit">
+  Edit text component
+</a>
+
+<hr>
+
+<dl>
+  <dt>
+    Tab
+  </dt>
+  <dd>
+    <%= @text_component.tab_id %>
+  </dd>
+
+  <dt>
+    Header
+  </dt>
+  <dd>
+    <%= @text_component.header %>
+  </dd>
+
+  <dt>
+    Created at
+  </dt>
+  <dd>
+    <%= time_ago_in_words(@text_component.created_at) %> ago
+  </dd>
+
+  <dt>
+    Updated at
+  </dt>
+  <dd>
+    <%= time_ago_in_words(@text_component.updated_at) %> ago
+  </dd>
+</dl>
+
+<a href="/delete_text_component/<%= @text_component.id %>">
+  Delete text component
+</a>
+
+<hr>
+
+<a href="/text_components">
+  Go back
+</a>

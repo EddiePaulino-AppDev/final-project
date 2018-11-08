@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+
+<h3>Search entry:"<%= params.fetch("search_entry") %>"</h3>
+
+<!--List of Topics-->
+<h1>
+  All topics
+</h1>
+
+<a href="/topic/new">
+  Add a new topic
+</a>
+
+<hr>
+
+<table class="table">
+  <tr>
+
+    <th>
+      Title
+    </th>
+
+    <th>
+    </th>
+  </tr>
+
+  <% @topic.each do |topic| %>
+  <tr>
+    
+    <td>
+      <%= topic.title %>
+    </td>
+
+    
+    <td>
+      <a href="/topic/<%= topic.id %>" class="btn btn-primary">
+        Show topic
+      </a>
+    </td>
+  </tr>
+  <% end %>
+</table>
+  
+  
+  
+</body>
+</html>

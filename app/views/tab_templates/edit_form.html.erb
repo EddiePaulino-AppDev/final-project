@@ -1,0 +1,53 @@
+<!-- Validation failure messages -->
+<% if @tab.errors.any? %>
+  <% @tab.errors.full_messages.each do |message| %>
+    <div class="alert">
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<h1>
+  Edit tab #<%= @tab.id %>
+</h1>
+
+<hr>
+
+<form action="/update_tab/<%= @tab.id %>" method="post">
+  <!-- Label and input for title -->
+  <div class="form-group">
+    <label for="title">
+      Title
+    </label>
+
+    <input type="text" id="title" name="title" class="form-control" value="<%= @tab.title %>">
+  </div>
+
+  <!-- Label and input for num_of_tabs -->
+  <div class="form-group">
+    <label for="num_of_tabs">
+      Num of tabs
+    </label>
+
+    <input type="text" id="num_of_tabs" name="num_of_tabs" class="form-control" value="<%= @tab.num_of_tabs %>">
+  </div>
+
+  <!-- Label and input for tab_id -->
+  <div class="form-group">
+    <label for="tab_id">
+      Tab
+    </label>
+
+    <input type="text" id="tab_id" name="tab_id" class="form-control" value="<%= @tab.tab_id %>">
+  </div>
+
+  <button class="btn btn-block btn-outline-secondary">
+    Update tab
+  </button>
+</form>
+
+<hr>
+
+<a href="/tabs">
+  Go back
+</a>

@@ -1,0 +1,37 @@
+<!-- Validation failure messages -->
+<% if @section.present? %>
+  <% if @section.errors.any? %>
+    <% @section.errors.full_messages.each do |message| %>
+      <div class="alert alert-danger">
+        <%= message %>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
+
+<h1>
+  Add a new section
+</h1>
+
+<hr>
+
+<form action="/create_section" method="post">
+  <!-- Label and input for topic_id -->
+  <div class="form-group">
+    <label for="topic_id">
+      Topic
+    </label>
+
+    <input type="text" id="topic_id" name="topic_id" class="form-control" value="<%= @section.try(:topic_id) %>">
+  </div>
+
+  <button class="btn btn-block btn-outline-secondary">
+    Create section
+  </button>
+</form>
+
+<hr>
+
+<a href="/sections">
+  Go back
+</a>

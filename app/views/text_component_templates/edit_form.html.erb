@@ -1,0 +1,44 @@
+<!-- Validation failure messages -->
+<% if @text_component.errors.any? %>
+  <% @text_component.errors.full_messages.each do |message| %>
+    <div class="alert">
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<h1>
+  Edit text component #<%= @text_component.id %>
+</h1>
+
+<hr>
+
+<form action="/update_text_component/<%= @text_component.id %>" method="post">
+  <!-- Label and input for tab_id -->
+  <div class="form-group">
+    <label for="tab_id">
+      Tab
+    </label>
+
+    <input type="text" id="tab_id" name="tab_id" class="form-control" value="<%= @text_component.tab_id %>">
+  </div>
+
+  <!-- Label and input for header -->
+  <div class="form-group">
+    <label for="header">
+      Header
+    </label>
+
+    <input type="text" id="header" name="header" class="form-control" value="<%= @text_component.header %>">
+  </div>
+
+  <button class="btn btn-block btn-outline-secondary">
+    Update text component
+  </button>
+</form>
+
+<hr>
+
+<a href="/text_components">
+  Go back
+</a>
