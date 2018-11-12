@@ -1,4 +1,6 @@
 class SectionsController < ApplicationController
+   before_action :authenticate_user!, :except => [:show, :index]
+   
   def index
     @sections = Section.all
 
@@ -18,7 +20,8 @@ class SectionsController < ApplicationController
   def create_row
     @section = Section.new
 
-    @section.topic_id = params.fetch("topic_id")
+    @section.tab_id = params.fetch("tab_id")
+    @section.title = params.fetch("section_title")
 
     if @section.valid?
       @section.save
@@ -38,7 +41,8 @@ class SectionsController < ApplicationController
   def update_row
     @section = Section.find(params.fetch("id_to_modify"))
 
-    @section.topic_id = params.fetch("topic_id")
+    @section.tab_id = params.fetch("tab_id")
+    @section.title = params.fetch("section_title")
 
     if @section.valid?
       @section.save

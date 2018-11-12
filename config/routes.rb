@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+ 
+  devise_for :users
+   # Home screen
+  # get("/",{:controller => "home", :action => "index"})
+    root "home#index"
+  get("/topics/search",{:controller => "home", :action => "search"})
+  get("/about_us",{:controller =>"home", :action =>"about_us"})
+  
   # Routes for the Text component resource:
 
   # CREATE
@@ -75,26 +83,7 @@ Rails.application.routes.draw do
 
   #------------------------------
 
-  # Home screen
-  get("/",{:controller => "home", :action => "index"})
-  get("/topic/search",{:controller => "home", :action => "search"})
-  get("/about_us",{:controller =>"home", :action =>"about_us"})
-  
-  #Routes for topic resource
-  #CREATE
-  get("/topic/new", {:controller => "topic", :action => "new_form"})
-  get("/create_topic", {:controller => "topic", :action => "create_row"})
-  
-  #READ
-  get("/topic/",{:controller => "topic", :action => "index"})
-  get("/topic/:id", {:controller => "topic", :action => "show"})
-  
-  #UPDATE
-  get("/topic/:id/edit", {:controller => "topic", :action => "edit_form"})
-  get("/update_topic/:id",{:controller =>"topic", :action => "update_row"})
-  
-  #DELETE
-  get("/delete_topic/:id", {:controller =>"topic", :action => "destroy_row"})
+
     
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)

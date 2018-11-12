@@ -45,22 +45,48 @@
       <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="/about_us">About Us</a>
+            <a href="/about_us" class="nav-link">
+              About Us
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/topic/new">Create a topic</a>
+            <a class="nav-link" href="/topics/new">Create a topic</a>
           </li>
-
         </ul>
+        <ul class="navbar-nav">
+          <% if current_user == nil %>
+            <li class="nav-item">
+              <a href="/users/sign_in" class="nav-link" >
+                Sign in
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/users/sign_up" class="nav-link" >
+                Sign Up
+              </a>
+            </li>
+          <% else %>
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" >
 
-        <a class="nav-link" href="#">Log in</a>
-        <a class="nav-link" href="#">
-          <i class="fa fa-cog fa-2x" aria-hidden="true"></i>
-        </a>
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="text" placeholder="Search">
-          <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-        </form>
+                <%= current_user.first_name %>
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="/users/edit">Edit Profile</a>
+                <a class="dropdown-item" href="/users/sign_out" data-method="delete">Log Out</a>
+
+              </div>
+            </li>
+
+          <% end %>
+          <li class="nav-item">
+            <form class="form-inline my-2 my-lg-0" action="/topics/search">
+              <label class="sr-only" for="search_bar"></label>
+              <input class="form-control mr-sm-2" type="text" name="search_entry" id="search_bar"  placeholder="Search">
+              <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+            </form>
+          </li>
+        </ul>
       </div>
     </nav>
 

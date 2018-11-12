@@ -3,10 +3,13 @@
 # Table name: sections
 #
 #  id         :integer          not null, primary key
-#  topic_id   :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  title      :string
+#  tab_id     :integer
 #
 
 class Section < ApplicationRecord
+  belongs_to :tab
+  has_many :text_components, :dependent => :destroy
 end

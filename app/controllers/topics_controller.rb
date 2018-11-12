@@ -1,4 +1,5 @@
 class TopicsController < ApplicationController
+ before_action :authenticate_user!, :except => [:show, :index]
   def index
     @topics = Topic.all
 
@@ -12,6 +13,7 @@ class TopicsController < ApplicationController
   end
 
   def new_form
+
     render("topic_templates/new_form.html.erb")
   end
 

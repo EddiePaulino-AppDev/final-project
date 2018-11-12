@@ -1,3 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+
+  </head>
+  <div>
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <a class="nav-link active" role="tab" data-toggle="tab" aria-controls="summary" aria-selected="true" href="#summary"><%= Tab.where(topic_id: @topic.id).first.title %></a>
+      </li>
+      <% Tab.where(topic_id: @topic.id).drop(1).each do|tab| %>
+
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" role="tab" data-toggle="tab" aria-controls="<%= tab.id %>" aria-selected="false" href="#<%= tab.id %>"><%= tab.title.to_s %></a>
+        </li>
+      <% end %>
+    </div>
+
+  </li>
+</ul>
+<div class="tab-content">
+  <div class="tab-pane fade active show" id="summary" aria-labelledby="summary-tab">
+    <p>Tab content goes here. Tab title: <%= Tab.where(topic_id: @topic.id).first.title %></p>
+  </div>
+  <% Tab.where(topic_id: @topic.id).drop(1).each do|tab| %>
+    <div class="tab-pane fade" id="<%= tab.id %>" aria-labelledby="<%= tab.id %>-tab">
+      <p>Tab content goes here. Tab title: <%= tab.title %></p>
+    </div>
+  <% end %>
+
+</div>
+
+<a href="/topics/<%= @topic.id %>/edit" class="btn btn-warning">
+  Edit topic
+</a>
+
+
 <h1>
   Topic #<%= @topic.id %> details
 </h1>
@@ -54,3 +92,7 @@
 <a href="/topics">
   Go back
 </a>
+
+
+</body>
+</html>

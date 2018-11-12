@@ -29,8 +29,25 @@
   <body>
 
     <div class="row justify-content-end" style="margin:10px">
-      <a href="#" class="nav-link">login</a>
-      <a href="/about_us" class="nav-link">About Us</a>
+      <% if current_user == nil %>
+        <a href="/users/sign_in" class="nav-link">Sign In</a>
+        <a href="/about_us" class="nav-link">About Us</a>
+      <% else %>
+        <div>
+          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" >
+
+            <%= current_user.first_name %>
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/users/edit">Edit Profile</a>
+            <a class="dropdown-item" href="/users/sign_out" data-method="delete">Log Out</a>
+
+          </div>
+        </div>
+
+        <a href="/about_us" class="nav-link">About Us</a>
+      <% end %>
+
     </div>
 
 
@@ -42,7 +59,7 @@
 
     <!--Search bar-->
     <div class="row justify-content-center">
-      <form class="form-row" action="/topic/search" >
+      <form class="form-row" action="/topics/search" >
         <div class="col">
         </div>
         <div class="col">
@@ -50,7 +67,7 @@
           <input type="text" class="form-control" name="search_entry" id="search_bar" placeholder="Search Design Wiki" style="min-width:600px;">
         </div>
         <div class="col">
-          <button class="btn btn-primary" type="submit">Search</button>
+          <button class="btn btn-secondary" type="submit">Search</button>
         </div>
       </form>
     </div>
@@ -100,7 +117,7 @@
       All topics
     </h1>
 
-    <a href="/topic/new">
+    <a href="/topics/new">
       Add a new topic
     </a>
 
@@ -125,7 +142,7 @@
           </td>
 
           <td>
-            <a href="/topic/<%= topic.id %>" class="btn btn-primary">
+            <a href="/topics/<%= topic.id %>" class="btn btn-primary">
               Show topic
             </a>
           </td>

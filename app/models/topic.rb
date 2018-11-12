@@ -11,4 +11,5 @@
 #
 
 class Topic < ApplicationRecord
+  has_many :tabs, :dependent => :destroy
 end

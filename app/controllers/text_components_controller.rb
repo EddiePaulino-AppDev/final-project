@@ -1,4 +1,6 @@
 class TextComponentsController < ApplicationController
+   before_action :authenticate_user!, :except => [:show, :index]
+  
   def index
     @text_components = TextComponent.all
 
@@ -18,7 +20,7 @@ class TextComponentsController < ApplicationController
   def create_row
     @text_component = TextComponent.new
 
-    @text_component.tab_id = params.fetch("tab_id")
+    @text_component.section_id = params.fetch("section_id")
     @text_component.header = params.fetch("header")
 
     if @text_component.valid?
@@ -39,7 +41,7 @@ class TextComponentsController < ApplicationController
   def update_row
     @text_component = TextComponent.find(params.fetch("id_to_modify"))
 
-    @text_component.tab_id = params.fetch("tab_id")
+    @text_component.section_id = params.fetch("section_id")
     @text_component.header = params.fetch("header")
 
     if @text_component.valid?

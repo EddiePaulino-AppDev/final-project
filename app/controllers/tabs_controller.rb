@@ -1,4 +1,6 @@
 class TabsController < ApplicationController
+   before_action :authenticate_user!, :except => [:show, :index]
+   
   def index
     @tabs = Tab.all
 
@@ -20,7 +22,7 @@ class TabsController < ApplicationController
 
     @tab.title = params.fetch("title")
     @tab.num_of_tabs = params.fetch("num_of_tabs")
-    @tab.tab_id = params.fetch("tab_id")
+    @tab.topic_id = params.fetch("topic_id")
 
     if @tab.valid?
       @tab.save
@@ -42,7 +44,7 @@ class TabsController < ApplicationController
 
     @tab.title = params.fetch("title")
     @tab.num_of_tabs = params.fetch("num_of_tabs")
-    @tab.tab_id = params.fetch("tab_id")
+    @tab.topic_id = params.fetch("topic_id")
 
     if @tab.valid?
       @tab.save

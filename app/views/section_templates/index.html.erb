@@ -15,7 +15,10 @@
     </th>
 
     <th>
-      Topic
+      Tab
+    </th>
+    <th>
+      Section Title
     </th>
 
     <th>
@@ -37,9 +40,11 @@
     </td>
 
     <td>
-      <%= section.topic_id %>
+      <%= section.tab_id %>
     </td>
-
+    <td>
+      <%= section.title %>
+    </td>
     <td>
       <%= time_ago_in_words(section.created_at) %> ago
     </td>

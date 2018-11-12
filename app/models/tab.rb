@@ -5,10 +5,12 @@
 #  id          :integer          not null, primary key
 #  title       :string
 #  num_of_tabs :integer
-#  tab_id      :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  topic_id    :integer
 #
 
 class Tab < ApplicationRecord
+  belongs_to :topic
+  has_many :sections, :dependent => :destroy
 end
