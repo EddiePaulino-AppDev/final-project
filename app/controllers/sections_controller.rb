@@ -26,7 +26,7 @@ class SectionsController < ApplicationController
     if @section.valid?
       @section.save
 
-      redirect_to("/sections", :notice => "Section created successfully.")
+      redirect_to("/topics/"+params.fetch("topic_id"), :notice => "Section created successfully.")
     else
       render("section_templates/new_form.html.erb")
     end

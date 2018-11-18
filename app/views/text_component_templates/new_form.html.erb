@@ -1,3 +1,4 @@
+<script src="https://cdn.ckeditor.com/ckeditor5/11.1.1/classic/ckeditor.js"></script>
 <!-- Validation failure messages -->
 <% if @text_component.present? %>
   <% if @text_component.errors.any? %>
@@ -16,13 +17,9 @@
 <hr>
 
 <form action="/create_text_component" method="post">
-  <!-- Label and input for tab_id -->
+  <!-- input for section_id -->
   <div class="form-group">
-    <label for="section_id">
-      Section
-    </label>
-
-    <input type="text" id="section_id" name="section_id" class="form-control" value="<%= @text_component.try(:section_id) %>">
+    <input type="hidden" id="section_id" name="section_id" class="form-control" value="<%= params.fetch("tab_id") %>">
   </div>
 
   <!-- Label and input for header -->
@@ -32,8 +29,25 @@
     </label>
 
     <input type="text" id="header" name="header" class="form-control" value="<%= @text_component.try(:header) %>">
-  </div>
 
+  </div>
+  <div class="form-group">
+    <label for="content">
+      Body
+    </label>
+    <textarea name="content" id="editor"></textarea>
+    <script>
+      ClassicEditor
+      	.create( document.querySelector( '#editor' ) )
+      	.then( editor => {
+      		console.log( editor );
+      	} )
+      	.catch( error => {
+      		console.error( error );
+      	} );
+    </script>
+
+  </div>
   <button class="btn btn-block btn-outline-secondary">
     Create text component
   </button>

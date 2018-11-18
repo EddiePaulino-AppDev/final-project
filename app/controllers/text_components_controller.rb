@@ -1,6 +1,6 @@
 class TextComponentsController < ApplicationController
-   before_action :authenticate_user!, :except => [:show, :index]
-  
+  before_action :authenticate_user!, :except => [:show, :index]
+
   def index
     @text_components = TextComponent.all
 
@@ -22,6 +22,7 @@ class TextComponentsController < ApplicationController
 
     @text_component.section_id = params.fetch("section_id")
     @text_component.header = params.fetch("header")
+    @text_component.content = params.fetch("content")
 
     if @text_component.valid?
       @text_component.save
@@ -43,6 +44,7 @@ class TextComponentsController < ApplicationController
 
     @text_component.section_id = params.fetch("section_id")
     @text_component.header = params.fetch("header")
+    @text_component.content = params.fetch("content")
 
     if @text_component.valid?
       @text_component.save

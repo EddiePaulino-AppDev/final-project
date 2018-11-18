@@ -4,37 +4,76 @@
   <head>
 
   </head>
-  <div>
-    <ul class="nav nav-tabs" role="tablist">
-      <li class="nav-item" role="presentation">
-        <a class="nav-link active" role="tab" data-toggle="tab" aria-controls="summary" aria-selected="true" href="#summary"><%= Tab.where(topic_id: @topic.id).first.title %></a>
+  <div class="row">
+    <div class="col-2">
+      <div>
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <a class="nav-link active" role="tab" data-toggle="tab" aria-controls="summary" aria-selected="true" href="#summary"><%= Tab.where(topic_id: @topic.id).first.title %></a>
+          </li>
+          <% Tab.where(topic_id: @topic.id).drop(1).each do|tab| %>
+
+            <li class="nav-item" role="presentation">
+              <a class="nav-link" role="tab" data-toggle="tab" aria-controls="<%= tab.id %>" aria-selected="false" href="#<%= tab.id %>"><%= tab.title.to_s %></a>
+            </li>
+          <% end %>
+        </div>
       </li>
-      <% Tab.where(topic_id: @topic.id).drop(1).each do|tab| %>
-
-        <li class="nav-item" role="presentation">
-          <a class="nav-link" role="tab" data-toggle="tab" aria-controls="<%= tab.id %>" aria-selected="false" href="#<%= tab.id %>"><%= tab.title.to_s %></a>
-        </li>
-      <% end %>
-    </div>
-
-  </li>
-</ul>
-<div class="tab-content">
-  <div class="tab-pane fade active show" id="summary" aria-labelledby="summary-tab">
-    <p>Tab content goes here. Tab title: <%= Tab.where(topic_id: @topic.id).first.title %></p>
+    </ul>
   </div>
-  <% Tab.where(topic_id: @topic.id).drop(1).each do|tab| %>
-    <div class="tab-pane fade" id="<%= tab.id %>" aria-labelledby="<%= tab.id %>-tab">
-      <p>Tab content goes here. Tab title: <%= tab.title %></p>
-    </div>
-  <% end %>
+  <div class="col-10">
+    <div class="tab-content">
+      <div class="tab-pane fade active show" id="summary" aria-labelledby="summary-tab">
+        <p>Tab content goes here. Tab title: <%= Tab.where(topic_id: @topic.id).first.title %></p>
+        <% Section.where(tab_id: Tab.where(topic_id: @topic.id).first.id).each do |section| %>
+          <div class="container">
+            <h4><%= section.title %></h4>
+            <p>section content goes here. </p>
 
+          </div>
+        <% end %>
+        <form action="/sections/new">
+          <input type="hidden" id="tab_id" name="tab_id" class="form-control" value="<%= Tab.where(topic_id: @topic.id).first.id %>">
+          <input type="hidden" id="topic_id" name="topic_id" class="form-control" value="<%= @topic.id %>">
+
+          <button type="submit" class="btn btn-primary">
+            Add a section
+          </button>
+        </form>
+
+      </div>
+      <% Tab.where(topic_id: @topic.id).drop(1).each do|tab| %>
+        <div class="tab-pane fade" id="<%= tab.id %>" aria-labelledby="<%= tab.id %>-tab">
+          <p>Tab content goes here. Tab title: <%= tab.title %></p>
+          <% Section.where(tab_id: tab.id).each do |section| %>
+            <div class="container">
+              <h4><%= section.title %></h4>
+              <p>section content goes here. </p>
+
+            </div>
+          <% end %>
+          <form action="/sections/new">
+            <input type="hidden" id="tab_id" name="tab_id" class="form-control" value="<%= tab.id %>">
+            <input type="hidden" id="topic_id" name="topic_id" class="form-control" value="<%= @topic.id %>">
+
+            <button type="submit" class="btn btn-primary">
+              Add a section
+            </button>
+          </form>
+        </div>
+
+      <% end %>
+
+    </div>
+  </div>
 </div>
 
 <a href="/topics/<%= @topic.id %>/edit" class="btn btn-warning">
   Edit topic
 </a>
-
+<a href="/create_tab" class="btn btn-primary">
+  Add a tab
+</a>
 
 <h1>
   Topic #<%= @topic.id %> details
