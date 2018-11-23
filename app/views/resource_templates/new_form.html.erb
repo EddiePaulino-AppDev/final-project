@@ -1,0 +1,53 @@
+<!-- Validation failure messages -->
+<% if @resource.present? %>
+  <% if @resource.errors.any? %>
+    <% @resource.errors.full_messages.each do |message| %>
+      <div class="alert alert-danger">
+        <%= message %>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
+
+<h1>
+  Add a new resource
+</h1>
+
+<hr>
+
+<form action="/create_resource" method="post" class="form-horizontal" enctype="multipart/form-data">
+  <!-- Label and input for category -->
+  <div class="form-group">
+    <label for="category">
+      Category
+    </label>
+
+    <input type="text" id="category" name="category" class="form-control" value="<%= @resource.try(:category) %>">
+  </div>
+
+  <!-- Input for section_id -->
+  <div class="form-group">
+
+    <input type="hidden" id="section_id" name="section_id" class="form-control" value="<%= params.fetch("section_id") %>">
+  </div>
+
+  <!-- Label and input for resource -->
+  <div class="form-group">
+    <label for="resource">
+      Resource
+    </label>
+
+    <input type="file" id="resource" name="resource" class="form-control" value="<%= @resource.try(:resource) %>">
+
+  </div>
+
+  <button class="btn btn-block btn-outline-secondary">
+    Create resource
+  </button>
+</form>
+
+<hr>
+
+<a href="/resources">
+  Go back
+</a>

@@ -21,13 +21,12 @@ class TabsController < ApplicationController
     @tab = Tab.new
 
     @tab.title = params.fetch("title")
-    @tab.num_of_tabs = params.fetch("num_of_tabs")
     @tab.topic_id = params.fetch("topic_id")
 
     if @tab.valid?
       @tab.save
 
-      redirect_to("/tabs", :notice => "Tab created successfully.")
+      redirect_to("/topics/"+params.fetch("topic_id"), :notice => "Tab created successfully.")
     else
       render("tab_templates/new_form.html.erb")
     end
@@ -43,13 +42,12 @@ class TabsController < ApplicationController
     @tab = Tab.find(params.fetch("id_to_modify"))
 
     @tab.title = params.fetch("title")
-    @tab.num_of_tabs = params.fetch("num_of_tabs")
     @tab.topic_id = params.fetch("topic_id")
 
     if @tab.valid?
       @tab.save
 
-      redirect_to("/tabs/#{@tab.id}", :notice => "Tab updated successfully.")
+      redirect_to("/topics/"+params.fetch("topic_id"), :notice => "Tab updated successfully.")
     else
       render("tab_templates/edit_form.html.erb")
     end
@@ -60,6 +58,6 @@ class TabsController < ApplicationController
 
     @tab.destroy
 
-    redirect_to("/tabs", :notice => "Tab deleted successfully.")
+    redirect_to("/topics/"+@tab.topic_id, :notice => "Tab deleted successfully.")
   end
 end

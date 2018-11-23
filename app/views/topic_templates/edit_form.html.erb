@@ -12,12 +12,12 @@
 </h1>
 
 <hr>
-
+<div class="container">
 <form action="/update_topic/<%= @topic.id %>" method="post">
   <!-- Label and input for csi_section -->
   <div class="form-group">
     <label for="csi_section">
-      Csi section
+      CSI section
     </label>
 
     <input type="text" id="csi_section" name="csi_section" class="form-control" value="<%= @topic.csi_section %>">
@@ -35,7 +35,7 @@
   <!-- Label and input for engineering_discipline -->
   <div class="form-group">
     <label for="engineering_discipline">
-      Engineering discipline
+      Engineering Discipline
     </label>
 
     <input type="text" id="engineering_discipline" name="engineering_discipline" class="form-control" value="<%= @topic.engineering_discipline %>">
@@ -45,9 +45,12 @@
     Update topic
   </button>
 </form>
-
+</div>
 <hr>
-
-<a href="/topics">
+<a href="/delete_topic/<%= @topic.id %>">
+  Delete topic
+</a>
+<div></div>
+<a href="/topics/<%= @topic.id %>">
   Go back
 </a>

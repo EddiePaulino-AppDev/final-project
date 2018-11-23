@@ -4,133 +4,193 @@
   <head>
 
   </head>
-  <div class="row">
-    <div class="col-2">
-      <div>
-        <ul class="nav nav-tabs" role="tablist">
-          <li class="nav-item" role="presentation">
-            <a class="nav-link active" role="tab" data-toggle="tab" aria-controls="summary" aria-selected="true" href="#summary"><%= Tab.where(topic_id: @topic.id).first.title %></a>
-          </li>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-2">
+        <h2><%= @topic.title %></h2>
+        <dl style="line-height:90%">
+          <dt>
+            Engineering discipline
+          </dt>
+          <dd>
+            <%= @topic.engineering_discipline %>
+          </dd>
+          <dt>
+            CSI section
+          </dt>
+          <dd>
+            <%= @topic.csi_section %>
+          </dd>
+
+
+          <dt>
+            Created at
+          </dt>
+          <dd>
+            <%= time_ago_in_words(@topic.created_at) %> ago
+          </dd>
+
+          <dt>
+            Updated at
+          </dt>
+          <dd>
+            <%= time_ago_in_words(@topic.updated_at) %> ago
+          </dd>
+        </dl>
+        <div class="nav nav-tabs nav-fill flex-column" role="tablist">
+
+          <a class="nav-link active" role="tab" data-toggle="tab" aria-controls="summary" aria-selected="true" href="#summary"><%= Tab.where(topic_id: @topic.id).first.title %></a>
+
           <% Tab.where(topic_id: @topic.id).drop(1).each do|tab| %>
 
-            <li class="nav-item" role="presentation">
-              <a class="nav-link" role="tab" data-toggle="tab" aria-controls="<%= tab.id %>" aria-selected="false" href="#<%= tab.id %>"><%= tab.title.to_s %></a>
-            </li>
+            <a class="nav-link" role="tab" data-toggle="tab" aria-controls="<%= tab.id %>" aria-selected="false" href="#<%= tab.id %>"><%= tab.title.to_s %></a>
+
           <% end %>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <div class="col-10">
-    <div class="tab-content">
-      <div class="tab-pane fade active show" id="summary" aria-labelledby="summary-tab">
-        <p>Tab content goes here. Tab title: <%= Tab.where(topic_id: @topic.id).first.title %></p>
-        <% Section.where(tab_id: Tab.where(topic_id: @topic.id).first.id).each do |section| %>
-          <div class="container">
-            <h4><%= section.title %></h4>
-            <p>section content goes here. </p>
-
-          </div>
-        <% end %>
-        <form action="/sections/new">
-          <input type="hidden" id="tab_id" name="tab_id" class="form-control" value="<%= Tab.where(topic_id: @topic.id).first.id %>">
-          <input type="hidden" id="topic_id" name="topic_id" class="form-control" value="<%= @topic.id %>">
-
-          <button type="submit" class="btn btn-primary">
-            Add a section
-          </button>
-        </form>
-
-      </div>
-      <% Tab.where(topic_id: @topic.id).drop(1).each do|tab| %>
-        <div class="tab-pane fade" id="<%= tab.id %>" aria-labelledby="<%= tab.id %>-tab">
-          <p>Tab content goes here. Tab title: <%= tab.title %></p>
-          <% Section.where(tab_id: tab.id).each do |section| %>
-            <div class="container">
-              <h4><%= section.title %></h4>
-              <p>section content goes here. </p>
-
-            </div>
-          <% end %>
-          <form action="/sections/new">
-            <input type="hidden" id="tab_id" name="tab_id" class="form-control" value="<%= tab.id %>">
+          <form action="/tabs/new">
             <input type="hidden" id="topic_id" name="topic_id" class="form-control" value="<%= @topic.id %>">
 
             <button type="submit" class="btn btn-primary">
-              Add a section
+              Add a tab
             </button>
           </form>
-        </div>
+          <a href="/topics/<%= @topic.id %>/edit" >
+            Edit topic
+          </a>
 
-      <% end %>
+        </div>
+      </div>
+      <div class="col-8">
+        <div class="tab-content flex-column">
+          <div class="tab-pane fade active show" id="summary" aria-labelledby="summary-tab">
+
+            <!--       ADD A SECTION-->
+
+            <form action="/sections/new" style="float: right;">
+              <input type="hidden" id="tab_id" name="tab_id" class="form-control" value="<%= Tab.where(topic_id: @topic.id).first.id %>">
+              <input type="hidden" id="topic_id" name="topic_id" class="form-control" value="<%= @topic.id %>">
+
+              <button type="submit" class="btn btn-primary">
+                Add a section
+              </button>
+            </form>
+
+            <a  href="/tabs/<%= Tab.where(topic_id: @topic.id).first.id %>/edit" style="float: right;">
+              Edit the <%= Tab.where(topic_id: @topic.id).first.title %> tab
+            </a>
+
+            <% Section.where(tab_id: Tab.where(topic_id: @topic.id).first.id).each do |section| %>
+              <div class="container">
+                <h4><%= section.title %></h4>
+                <% TextComponent.where(section_id: section.id).each do |text_component| %>
+                  <h3><%= text_component.header %></h3>
+                  <p><%= text_component.content %></p>
+                  <a href="/text_components/<%= text_component.id %>/edit"> Edit Text Component</a>
+                <% end %>
+                <% Resource.where(section_id: section.id).each do |resource| %>
+                  <h3><%= resource.category %></h3>
+                  <h4><%= resource.created_at %></h4>
+                  <img src="<%= resource.resource %>" class="img-responsive" width="600px" height="600px">
+                  <div></div>
+                  <a href="/resources/<%= resource.id %>/edit"> Edit Resource</a>
+
+                <% end %>
+              </div>
+
+              <div class="form-inline">
+                <!--      ADD TEXT_COMPONENT-->
+                <form action="/text_components/new">
+                  <input type="hidden" id="section_id" name="section_id" class="form-control" value="<%= section.id %>">
+
+                  <button type="submit" class="btn btn-primary">
+                    Add a text component
+                  </button>
+                </form>
+                <!--     ADD RESOURCE FILE-->
+                <form action="/resources/new">
+                  <input type="hidden" id="section_id" name="section_id" class="form-control" value="<%= section.id %>">
+
+                  <button type="submit" class="btn btn-primary">
+                    Add a resource
+                  </button>
+                </form>
+              </div>
+
+            <% end %>
+
+
+          </div>
+          <% Tab.where(topic_id: @topic.id).drop(1).each do|tab| %>
+            <div class="tab-pane fade" id="<%= tab.id %>" aria-labelledby="<%= tab.id %>-tab">
+              <!--       ADD A SECTION-->
+
+              <form action="/sections/new" style="float: right;">
+                <input type="hidden" id="tab_id" name="tab_id" class="form-control" value="<%= tab.id %>">
+                <input type="hidden" id="topic_id" name="topic_id" class="form-control" value="<%= @topic.id %>">
+
+                <button type="submit" class="btn btn-primary">
+                  Add a section
+                </button>
+              </form>
+
+              <a href="/tabs/<%= tab.id %>/edit" style="float: right;">
+                Edit the <%= tab.title %> tab
+              </a>
+
+              <% Section.where(tab_id: tab.id).each do |section| %>
+                <div class="container">
+                  <h4><%= section.title %></h4>
+                  <% TextComponent.where(section_id: section.id).each do |text_component| %>
+                    <h3><%= text_component.header %></h3>
+                    <p><%= text_component.content %></p>
+                    <a href="/text_components/<%= text_component.id %>/edit"> Edit Text Component</a>
+                  <% end %>
+                  <% Resource.where(section_id: section.id).each do |resource| %>
+                    <h3><%= resource.category %></h3>
+                    <h4><%= resource.created_at %></h4>
+                    <img src="<%= resource.resource %>" class="img-responsive" width="600px" height="600px">
+                    <a href="/resources/<%= resource.id %>/edit"> Edit Resource</a>
+                  <% end %>
+
+                </div>
+                <div class="form-inline">
+                  <!--      ADD TEXT_COMPONENT-->
+                  <form action="/text_components/new">
+                    <input type="hidden" id="section_id" name="section_id" class="form-control" value="<%= section.id %>">
+
+                    <button type="submit" class="btn btn-primary">
+                      Add a text component
+                    </button>
+                  </form>
+                  <!--     ADD RESOURCE FILE-->
+                  <form action="/resources/new">
+                    <input type="hidden" id="section_id" name="section_id" class="form-control" value="<%= section.id %>">
+
+                    <button type="submit" class="btn btn-primary">
+                      Add a resource
+                    </button>
+                  </form>
+                </div>
+              <% end %>
+
+
+            </div>
+
+          <% end %>
+
+        </div>
+      </div>
+
+      <!--  Ads COLUMN-->
+      <div class="col-2">
+        <h4> Ads go here</h4>
+        <img style="max-height:auto; max-width:300px;" src="http://construction.krends.com/wp-content/uploads/2015/03/shutterstock_151394975.jpg">
+
+
+      </div>
+
 
     </div>
   </div>
-</div>
-
-<a href="/topics/<%= @topic.id %>/edit" class="btn btn-warning">
-  Edit topic
-</a>
-<a href="/create_tab" class="btn btn-primary">
-  Add a tab
-</a>
-
-<h1>
-  Topic #<%= @topic.id %> details
-</h1>
-
-<a href="/topics/<%= @topic.id %>/edit">
-  Edit topic
-</a>
-
-<hr>
-
-<dl>
-  <dt>
-    Csi section
-  </dt>
-  <dd>
-    <%= @topic.csi_section %>
-  </dd>
-
-  <dt>
-    Title
-  </dt>
-  <dd>
-    <%= @topic.title %>
-  </dd>
-
-  <dt>
-    Engineering discipline
-  </dt>
-  <dd>
-    <%= @topic.engineering_discipline %>
-  </dd>
-
-  <dt>
-    Created at
-  </dt>
-  <dd>
-    <%= time_ago_in_words(@topic.created_at) %> ago
-  </dd>
-
-  <dt>
-    Updated at
-  </dt>
-  <dd>
-    <%= time_ago_in_words(@topic.updated_at) %> ago
-  </dd>
-</dl>
-
-<a href="/delete_topic/<%= @topic.id %>">
-  Delete topic
-</a>
-
-<hr>
-
-<a href="/topics">
-  Go back
-</a>
 
 
 </body>

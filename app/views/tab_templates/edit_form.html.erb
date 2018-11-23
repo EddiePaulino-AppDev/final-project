@@ -12,7 +12,7 @@
 </h1>
 
 <hr>
-
+<div class="container">
 <form action="/update_tab/<%= @tab.id %>" method="post">
   <!-- Label and input for title -->
   <div class="form-group">
@@ -23,31 +23,23 @@
     <input type="text" id="title" name="title" class="form-control" value="<%= @tab.title %>">
   </div>
 
-  <!-- Label and input for num_of_tabs -->
-  <div class="form-group">
-    <label for="num_of_tabs">
-      Num of tabs
-    </label>
-
-    <input type="text" id="num_of_tabs" name="num_of_tabs" class="form-control" value="<%= @tab.num_of_tabs %>">
-  </div>
 
   <!-- Label and input for tab_id -->
   <div class="form-group">
-    <label for="topic_id">
-      Topic
-    </label>
 
-    <input type="text" id="topic_id" name="topic_id" class="form-control" value="<%= @tab.topic_id %>">
+    <input type="hidden" id="topic_id" name="topic_id" class="form-control" value="<%= @tab.topic_id %>">
   </div>
 
   <button class="btn btn-block btn-outline-secondary">
     Update tab
   </button>
 </form>
-
+</div>
 <hr>
-
-<a href="/tabs">
+<a href="/delete_tab/<%= @tab.id %>">
+  Delete tab
+</a>
+<div></div>
+<a href="/topics/<%= @tab.topic_id %>">
   Go back
 </a>
