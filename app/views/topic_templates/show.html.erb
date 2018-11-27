@@ -79,11 +79,12 @@
             </a>
 
             <% Section.where(tab_id: Tab.where(topic_id: @topic.id).first.id).each do |section| %>
+                     <a href="/sections/<%= section.id %>/edit">Edit the <%= section.title %> Section</a>
               <div class="container">
                 <h4><%= section.title %></h4>
                 <% TextComponent.where(section_id: section.id).each do |text_component| %>
                   <h3><%= text_component.header %></h3>
-                  <p><%= text_component.content %></p>
+                  <div><%= raw text_component.content %></div>
                   <a href="/text_components/<%= text_component.id %>/edit"> Edit Text Component</a>
                 <% end %>
                 <% Resource.where(section_id: section.id).each do |resource| %>
@@ -114,7 +115,7 @@
                   </button>
                 </form>
               </div>
-
+<hr>
             <% end %>
 
 
@@ -137,11 +138,12 @@
               </a>
 
               <% Section.where(tab_id: tab.id).each do |section| %>
+                 <a href="/sections/<%= section.id %>/edit">Edit the <%= section.title %> Section</a>
                 <div class="container">
                   <h4><%= section.title %></h4>
                   <% TextComponent.where(section_id: section.id).each do |text_component| %>
                     <h3><%= text_component.header %></h3>
-                    <p><%= text_component.content %></p>
+                    <p><%= raw text_component.content %></p>
                     <a href="/text_components/<%= text_component.id %>/edit"> Edit Text Component</a>
                   <% end %>
                   <% Resource.where(section_id: section.id).each do |resource| %>
@@ -183,7 +185,7 @@
       <!--  Ads COLUMN-->
       <div class="col-2">
         <h4> Ads go here</h4>
-        <img style="max-height:auto; max-width:300px;" src="http://construction.krends.com/wp-content/uploads/2015/03/shutterstock_151394975.jpg">
+        <img style="max-height:auto; max-width:200px;" src="http://construction.krends.com/wp-content/uploads/2015/03/shutterstock_151394975.jpg">
 
 
       </div>

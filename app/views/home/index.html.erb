@@ -7,8 +7,8 @@
 
     <!-- Expand the number of characters we can use in the document beyond basic ASCII 🎉 -->
     <meta charset="utf-8">
-<!--    google verification meta tag-->
-<meta name="google-site-verification" content="Ncj69X48IxGWiH6x-4cWnthrl3BRC-rwuOxjrPRMhGk" />
+    <!--    google verification meta tag-->
+    <meta name="google-site-verification" content="Ncj69X48IxGWiH6x-4cWnthrl3BRC-rwuOxjrPRMhGk" />
 
     <!-- Connect Font Awesome CSS -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.2/css/all.css">
@@ -29,10 +29,12 @@
   </head>
 
   <body>
-
+<div class="container">
+  
     <div class="row justify-content-end" style="margin:10px">
       <% if current_user == nil %>
         <a href="/users/sign_in" class="nav-link">Sign In</a>
+        <a href="/users/sign_up" class="nav-link">Sign Up</a>
         <a href="/about_us" class="nav-link">About Us</a>
       <% else %>
         <div>
@@ -53,11 +55,45 @@
     </div>
 
 
-    <!--Home image-->
-    <div class="row justify-content-center">
-
-      <img src="https://s3.amazonaws.com/sitebuilderreport-assets/stock_photos/files/000/044/278/small/designer-drawing-website-mockup_373x_2x.jpg?1515709901" style="margin:10px">
+    <!--Home image carousel-->
+    <div class="row justify-content-center" style="margin:10px">
+      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+          <div class="carousel-item active" style="width:800px;height:400px">
+            <img class="d-block w-100" src="https://images.freeimages.com/images/large-previews/3a6/rain-on-sea-ii-1368899.jpg" alt="First slide" style="width:100%;height:100%">
+            <div class="carousel-caption d-none d-md-block">
+              <h5 style="background:black">Collaboratively created design & construction handbooks</h5>
+            </div>
+          </div>
+          <div class="carousel-item" style="width:800px;height:400px">
+            <img class="d-block w-100" src="https://picjumbo.com/wp-content/uploads/clean-setup-keyboard-and-glossy-desktop-display-2210x1473.jpg" alt="Second slide" style="width:100%;height:100%">
+            <div class="carousel-caption d-none d-md-block">
+              <h5 style="background:black">Community discussion around content areas</h5>
+            </div>
+          </div>
+          <div class="carousel-item" style="width:800px;height:400px">
+            <img class="d-block w-100" src="https://picjumbo.com/wp-content/uploads/creative-designer-photographer-workspace-desk-setup-2210x1475.jpg" alt="Third slide" style="width:100%;height:100%">
+            <div class="carousel-caption d-none d-md-block">
+              <h5 style="background:black">Stay up to date with the latest developments</h5>
+            </div>
+          </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
     </div>
+
 
     <!--Search bar-->
     <div class="row justify-content-center">
@@ -73,34 +109,128 @@
         </div>
       </form>
     </div>
-    
-   <!-- Google custom search-->
-<script>
-  (function() {
-    var cx = '017062161739936208105:pwopiokatuq';
-    var gcse = document.createElement('script');
-    gcse.type = 'text/javascript';
-    gcse.async = true;
-    gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(gcse, s);
-  })();
-</script>
-<gcse:search></gcse:search>
 
+    <!-- Google custom search-->
+    <script>
+      (function() {
+        var cx = '017062161739936208105:pwopiokatuq';
+        var gcse = document.createElement('script');
+        gcse.type = 'text/javascript';
+        gcse.async = true;
+        gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(gcse, s);
+      })();
+    </script>
+    <gcse:search></gcse:search>
 
-
-
-    <div class="row justify-content-center">
-
-      <p class="text-muted">A Prototype by Eddie Paulino</p>
-    </div>
 
     <hr class="my-4">
 
+
     <!--List of topics-->
     <div class="row justify-content-center">
-      <h3>Browse Topics</h3>
+      <h3>Browse Topics by Discipline</h3>
+    </div>
+   
+
+<!--List of topics by discipline using tabs-->
+<ul class="nav nav-tabs justify-content-center">
+  <li class="nav-item">
+    <a class="nav-link active show" data-toggle="tab" href="#architecture">Architecture</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#civil-engineering">Civil Engineering</a>
+  </li>
+
+</ul>
+<div id="myTabContent" class="tab-content">
+  <div class="tab-pane fade active show" id="architecture">
+                <table class="table">
+                  <tr>
+
+                    <th>
+                      Topic
+                    </th>
+                    <th>
+                      CSI Section
+                    </th>
+                    <th>
+                      Discipline
+                    </th>
+                    <th>
+                    </th>
+                  </tr>
+
+                  <% @topic.where(:engineering_discipline => "Architecture").each do |topic| %>
+                    <tr>
+
+                      <td>
+                        <%= topic.title %>
+                      </td>
+                      <td>
+                        <%= topic.csi_section %>
+                      </td>
+                      <td>
+                        <%= topic.engineering_discipline %>
+                      </td>
+
+                      <td>
+                        <a href="/topics/<%= topic.id %>" class="btn btn-primary">
+                          Show topic
+                        </a>
+                      </td>
+                    </tr>
+                  <% end %>
+                </table>
+  </div>
+  <div class="tab-pane fade" id="civil-engineering">
+    <table class="table">
+                  <tr>
+
+                    <th>
+                      Topic
+                    </th>
+                    <th>
+                      CSI Section
+                    </th>
+                    <th>
+                      Discipline
+                    </th>
+                    <th>
+                    </th>
+                  </tr>
+
+                  <% @topic.where(:engineering_discipline => "Civil Engineering").each do |topic| %>
+                    <tr>
+
+                      <td>
+                        <%= topic.title %>
+                      </td>
+                      <td>
+                        <%= topic.csi_section %>
+                      </td>
+                      <td>
+                        <%= topic.engineering_discipline %>
+                      </td>
+
+                      <td>
+                        <a href="/topics/<%= topic.id %>" class="btn btn-primary">
+                          Show topic
+                        </a>
+                      </td>
+                    </tr>
+                  <% end %>
+                </table>
+  </div>
+
+</div>
+
+   <hr class="my-4">
+
+    <!--List of changes-->
+    <div class="row justify-content-center">
+      <h3>Recent Changes</h3>
     </div>
 
 
@@ -109,7 +239,7 @@
 
       <div class="col-md-2">
         <div class="card border-primary mb-3" style="max-width: 20rem;">
-          <h3 class="card-header">Transportation</h3>
+          <h6 class="card-header">Recent Changes</h6>
           <ul class="list-group list-group-flush">
             <li class="list-group-item">Vertical Curve Design</li>
             <li class="list-group-item">Horizontal Curve Design</li>
@@ -131,44 +261,13 @@
       </div>
     </div>
 
-    <!--List of Topics-->
-    <h1>
-      All topics
-    </h1>
 
-    <a href="/topics/new">
-      Add a new topic
-    </a>
+    <div class="row justify-content-center">
 
-    <hr>
-
-    <table class="table">
-      <tr>
-
-        <th>
-          Title
-        </th>
-
-        <th>
-        </th>
-      </tr>
-
-      <% @topic.each do |topic| %>
-        <tr>
-
-          <td>
-            <%= topic.title %>
-          </td>
-
-          <td>
-            <a href="/topics/<%= topic.id %>" class="btn btn-primary">
-              Show topic
-            </a>
-          </td>
-        </tr>
-      <% end %>
-    </table>
-
+      <p class="text-muted">A Prototype by Eddie Paulino</p>
+    </div>
+    
+    </div>
   </body>
 
 

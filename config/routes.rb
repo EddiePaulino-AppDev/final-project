@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
  
+  mount Ckeditor::Engine => '/ckeditor'
   # Routes for the Resource resource:
 
   # CREATE

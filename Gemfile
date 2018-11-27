@@ -7,6 +7,7 @@ end
 
 
 gem "carrierwave"
+gem 'mini_magick'
 gem "cloudinary"
 gem 'ckeditor'
 gem "activeadmin"
