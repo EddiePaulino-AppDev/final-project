@@ -19,13 +19,22 @@ class TopicsController < ApplicationController
 
   def create_row
     @topic = Topic.new
+    @tab = Tab.new
+    @section = Section.new
 
     @topic.csi_section = params.fetch("csi_section")
     @topic.title = params.fetch("title")
     @topic.engineering_discipline = params.fetch("engineering_discipline")
 
+    @tab.title = "Summary"
+    @tab.topic_id = @topic.id
+    @section.title = "Summary"
+    @section.tab_id = @tab.id
+    
     if @topic.valid?
       @topic.save
+      @tab.save
+      @section.save
 
       redirect_to("/topics", :notice => "Topic created successfully.")
     else
