@@ -1,5 +1,6 @@
 class TopicsController < ApplicationController
- before_action :authenticate_user!, :except => [:show, :index]
+  before_action :authenticate_user!, :except => [:show, :index]
+
   def index
     @topics = Topic.all
 
@@ -13,27 +14,28 @@ class TopicsController < ApplicationController
   end
 
   def new_form
-
     render("topic_templates/new_form.html.erb")
   end
 
   def create_row
     @topic = Topic.new
-    @tab = Tab.new
-    @section = Section.new
 
     @topic.csi_section = params.fetch("csi_section")
     @topic.title = params.fetch("title")
     @topic.engineering_discipline = params.fetch("engineering_discipline")
 
-    @tab.title = "Summary"
-    @tab.topic_id = @topic.id
-    @section.title = "Summary"
-    @section.tab_id = @tab.id
-    
     if @topic.valid?
       @topic.save
+      
+      @tab = Tab.new
+      @tab.title = "Summary"
+      @tab.topic_id = @topic.id
       @tab.save
+      
+      @section = Section.new
+      @section.title = "Summary"
+      @section.tab_id = @tab.id
+
       @section.save
 
       redirect_to("/topics", :notice => "Topic created successfully.")
