@@ -8,7 +8,7 @@ end
 gem "ransack"
 gem "carrierwave"
 gem 'mini_magick'
-gem "cloudinary"
+gem "cloudinary", "1.10.1.pre.rc"
 gem 'ckeditor'
 gem "activeadmin"
 gem "devise"
