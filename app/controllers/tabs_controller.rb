@@ -58,6 +58,6 @@ class TabsController < ApplicationController
 
     @tab.destroy
 
-    redirect_to("/topics/"+@tab.topic_id, :notice => "Tab deleted successfully.")
+    redirect_to("/topics/"+@tab.topic_id.to_s, :notice => "Tab deleted successfully.")
   end
 end
