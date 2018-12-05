@@ -13,38 +13,38 @@
 
 <hr>
 <div class="container">
-<form action="/update_topic/<%= @topic.id %>" method="post">
-  <!-- Label and input for csi_section -->
-  <div class="form-group">
-    <label for="csi_section">
-      CSI section
-    </label>
+  <form action="/update_topic/<%= @topic.id %>" method="post">
+    <!-- Label and input for csi_section -->
+    <div class="form-group">
+      <label for="csi_section">
+        CSI section
+      </label>
 
-    <input type="text" id="csi_section" name="csi_section" class="form-control" value="<%= @topic.csi_section %>">
-  </div>
+      <input type="text" id="csi_section" name="csi_section" class="form-control" value="<%= @topic.csi_section %>">
+    </div>
 
-  <!-- Label and input for title -->
-  <div class="form-group">
-    <label for="title">
-      Title
-    </label>
+    <!-- Label and input for title -->
+    <div class="form-group">
+      <label for="title">
+        Title
+      </label>
 
-    <input type="text" id="title" name="title" class="form-control" value="<%= @topic.title %>">
-  </div>
+      <input type="text" id="title" name="title" class="form-control" value="<%= @topic.title %>">
+    </div>
 
-  <!-- Label and input for engineering_discipline -->
-  <div class="form-group">
-    <label for="engineering_discipline">
-      Engineering Discipline
-    </label>
+    <!-- Label and input for discipline -->
+    <div class="form-group">
+      <label for="discipline">
+        Discipline
+      </label>
 
-    <input type="text" id="engineering_discipline" name="engineering_discipline" class="form-control" value="<%= @topic.engineering_discipline %>">
-  </div>
+      <%= select_tag("discipline", options_for_select(disciplines, @topic.discipline),:class => "form-control") %>
+    </div>
 
-  <button class="btn btn-block btn-outline-secondary">
-    Update topic
-  </button>
-</form>
+    <button class="btn btn-block btn-outline-secondary">
+      Update topic
+    </button>
+  </form>
 </div>
 <hr>
 <a href="/delete_topic/<%= @topic.id %>">

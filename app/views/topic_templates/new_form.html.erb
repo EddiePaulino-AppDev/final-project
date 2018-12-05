@@ -8,7 +8,7 @@
     <% end %>
   <% end %>
 <% end %>
-
+<div class="container">
 <h1>
   Add a new topic
 </h1>
@@ -34,13 +34,12 @@
     <input type="text" id="title" name="title" class="form-control" value="<%= @topic.try(:title) %>">
   </div>
 
-  <!-- Label and input for engineering_discipline -->
+  <!-- Label and input for discipline -->
   <div class="form-group">
-    <label for="engineering_discipline">
-      Engineering discipline
+    <label for="discipline">
+      Discipline
     </label>
-
-    <input type="text" id="engineering_discipline" name="engineering_discipline" class="form-control" value="<%= @topic.try(:engineering_discipline) %>">
+<%= select_tag("discipline", options_for_select(disciplines),:class => "form-control") %>
   </div>
 
   <button class="btn btn-block btn-outline-secondary">
@@ -53,3 +52,4 @@
 <a href="/topics">
   Go back
 </a>
+</div>

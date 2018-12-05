@@ -22,7 +22,7 @@ class TopicsController < ApplicationController
 
     @topic.csi_section = params.fetch("csi_section")
     @topic.title = params.fetch("title")
-    @topic.engineering_discipline = params.fetch("engineering_discipline")
+    @topic.discipline = params.fetch("discipline")
 
     if @topic.valid?
       @topic.save
@@ -31,13 +31,7 @@ class TopicsController < ApplicationController
       @tab.title = "Summary"
       @tab.topic_id = @topic.id
       @tab.save
-      
-      @section = Section.new
-      @section.title = "Summary"
-      @section.tab_id = @tab.id
-
-      @section.save
-
+  
       redirect_to("/topics", :notice => "Topic created successfully.")
     else
       render("topic_templates/new_form.html.erb")
@@ -55,7 +49,7 @@ class TopicsController < ApplicationController
 
     @topic.csi_section = params.fetch("csi_section")
     @topic.title = params.fetch("title")
-    @topic.engineering_discipline = params.fetch("engineering_discipline")
+    @topic.discipline = params.fetch("discipline")
 
     if @topic.valid?
       @topic.save

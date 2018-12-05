@@ -20,14 +20,14 @@ class TextComponentsController < ApplicationController
   def create_row
     @text_component = TextComponent.new
 
-    @text_component.section_id = params.fetch("section_id")
+    @text_component.tab_id = params.fetch("tab_id")
     @text_component.header = params.fetch("header")
     @text_component.content = params.fetch("content")
 
     if @text_component.valid?
       @text_component.save
 
-      redirect_to("/text_components", :notice => "Text component created successfully.")
+      redirect_to("/topics", :notice => "Text component created successfully.")
     else
       render("text_component_templates/new_form.html.erb")
     end
@@ -42,7 +42,7 @@ class TextComponentsController < ApplicationController
   def update_row
     @text_component = TextComponent.find(params.fetch("id_to_modify"))
 
-    @text_component.section_id = params.fetch("section_id")
+    @text_component.tab_id = params.fetch("tab_id")
     @text_component.header = params.fetch("header")
     @text_component.content = params.fetch("content")
 

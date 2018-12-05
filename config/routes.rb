@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
   # Routes for the Resource resource:
 
+
+resources :attachments, only: [:index, :new, :create, :destroy]
+
   # CREATE
   get("/resources/new", { :controller => "resources", :action => "new_form" })
   post("/create_resource", { :controller => "resources", :action => "create_row" })
@@ -44,24 +47,7 @@ Rails.application.routes.draw do
   # DELETE
   get("/delete_text_component/:id_to_remove", { :controller => "text_components", :action => "destroy_row" })
 
-  #------------------------------
 
-  # Routes for the Section resource:
-
-  # CREATE
-  get("/sections/new", { :controller => "sections", :action => "new_form" })
-  post("/create_section", { :controller => "sections", :action => "create_row" })
-
-  # READ
-  get("/sections", { :controller => "sections", :action => "index" })
-  get("/sections/:id_to_display", { :controller => "sections", :action => "show" })
-
-  # UPDATE
-  get("/sections/:prefill_with_id/edit", { :controller => "sections", :action => "edit_form" })
-  post("/update_section/:id_to_modify", { :controller => "sections", :action => "update_row" })
-
-  # DELETE
-  get("/delete_section/:id_to_remove", { :controller => "sections", :action => "destroy_row" })
 
   #------------------------------
 

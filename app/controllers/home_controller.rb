@@ -7,8 +7,9 @@ before_action :authenticate_user!, :except => [:about_us, :search, :index]
     end
     
     def search
-    @topic = Topic.all
-    
+
+    @q = Topic.ransack(params[:q])
+  @topic = @q.result
     render("home/search_results.html.erb")
     end
         

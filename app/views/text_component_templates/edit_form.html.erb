@@ -16,11 +16,8 @@
 <form action="/update_text_component/<%= @text_component.id %>" method="post">
   <!-- Label and input for tab_id -->
   <div class="form-group">
-    <label for="section_id">
-      Section
-    </label>
 
-    <input type="text" id="section_id" name="section_id" class="form-control" value="<%= @text_component.section_id %>">
+    <input type="hidden" id="tab_id" name="tab_id" class="form-control" value="<%= params.fetch("tab_id") %>">
   </div>
 
   <!-- Label and input for header -->

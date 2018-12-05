@@ -17,9 +17,9 @@
 <hr>
 
 <form action="/create_text_component" method="post">
-  <!-- input for section_id -->
+  <!-- input for tab_id -->
   <div class="form-group">
-    <input type="hidden" id="section_id" name="section_id" class="form-control" value="<%= params.fetch("section_id") %>">
+    <input type="hidden" id="tab_id" name="tab_id" class="form-control" value="<%= params.fetch("tab_id") %>">
   </div>
 
   <!-- Label and input for header -->
@@ -31,20 +31,30 @@
     <input type="text" id="header" name="header" class="form-control" value="<%= @text_component.try(:header) %>">
 
   </div>
+
+
   <div class="form-group">
     <label for="content">
       Body
     </label>
-    <textarea name="content" id="editor"></textarea>
-    <script>
+    <textarea name="content" id="editor" value="<%= @text_component.try(:content) %>"></textarea>
+        <script>
         ClassicEditor
             .create( document.querySelector( '#editor' ) )
             .catch( error => {
                 console.error( error );
             } );
     </script>
-
   </div>
+  
+  
+  
+  
+  
+
+  
+  
+  
   <button class="btn btn-block btn-outline-secondary">
     Create text component
   </button>

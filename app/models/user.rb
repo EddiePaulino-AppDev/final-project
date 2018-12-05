@@ -20,9 +20,13 @@
 #  first_name             :string
 #  last_name              :string
 #  middle_initial         :string
+#  confirmation_token     :string
+#  confirmed_at           :datetime
+#  confirmation_sent_at   :datetime
 #
 # Indexes
 #
+#  index_users_on_confirmation_token    (confirmation_token) UNIQUE
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
@@ -35,8 +39,7 @@ class User < ApplicationRecord
          
   validates :first_name, :presence => true
   validates :last_name, :presence => true
-  validates :company, :presence => true
-  validates :title, :presence => true
+
   
   # has_many :posts, :class_name => "Post", :foreign_key => "user_id"
   

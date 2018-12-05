@@ -19,13 +19,13 @@ class ResourcesController < ApplicationController
     @resource = Resource.new
 
     @resource.category = params.fetch("category")
-    @resource.section_id = params.fetch("section_id")
+    @resource.tab_id = params.fetch("tab_id")
     @resource.resource = params[:resource]
 
     if @resource.valid?
       @resource.save
 
-      redirect_to("/resources", :notice => "Resource created successfully.")
+      redirect_to("/topics", :notice => "Resource created successfully.")
     else
       render("resource_templates/new_form.html.erb")
     end
@@ -41,7 +41,7 @@ class ResourcesController < ApplicationController
     @resource = Resource.find(params.fetch("id_to_modify"))
 
     @resource.category = params.fetch("category")
-    @resource.section_id = params.fetch("section_id")
+    @resource.tab_id = params.fetch("tab_id")
     @resource.resource = params[:resource]
 
     if @resource.valid?

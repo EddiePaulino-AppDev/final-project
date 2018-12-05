@@ -1,55 +1,69 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-</head>
+  <head>
+  </head>
 
-<body>
-  
+  <body>
+
+    <div class="container">
+
+      <h3>Search entry:"<%= params.fetch("search_entry") %>"</h3>
+
+      <!--List of Topics-->
+      <h1>
+        Topic Search Results
+      </h1>
 
 
-<h3>Search entry:"<%= params.fetch("search_entry") %>"</h3>
+      <hr>
+      <%= search_form_for @q do |f| %>
+        <p class="lead">Narrow results:</p>
 
-<!--List of Topics-->
-<h1>
-  All topics
-</h1>
+        <div class="form-group">
+          <%= f.label :discipline_cont, "Topics containing discipline:" %>
+          <%= f.text_field :discipline_cont, :class => "form-control", :value => params.fetch("search_entry") %>
+        </div>
 
-<a href="/topics/new">
-  Add a new topic
-</a>
 
-<hr>
+        <%= f.submit :class => "btn btn-primary btn-block" %>
 
-<table class="table">
-  <tr>
+        <a href="/topics/search?search_entry=" class="btn btn-default btn-block">Clear filters</a>
+      <% end %>
+      <hr>
+      <% if @q.result == nil %>
+        <h3>No Results</h3>
+      <% else %>
+        <table class="table">
+          <tr>
 
-    <th>
-      Title
-    </th>
+            <th>
+              Title
+            </th>
 
-    <th>
-    </th>
-  </tr>
+            <th>
+            </th>
+          </tr>
 
-  <% @topic.each do |topic| %>
-  <tr>
-    
-    <td>
-      <%= topic.title %>
-    </td>
+          <% @topic.each do |topic| %>
+            <tr>
 
-    
-    <td>
-      <a href="/topics/<%= topic.id %>" class="btn btn-primary">
-        Show topic
-      </a>
-    </td>
-  </tr>
-  <% end %>
-</table>
-  
-  
-  
-</body>
+              <td>
+                <%= topic.title %>
+              </td>
+
+
+              <td>
+                <a href="/topics/<%= topic.id %>" class="btn btn-primary">
+                  Show topic
+                </a>
+              </td>
+            </tr>
+          <% end %>
+
+        </table>
+      <% end %>
+    </div>
+
+  </body>
 </html>

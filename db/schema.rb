@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181124010117) do
+ActiveRecord::Schema.define(version: 20181128013312) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -57,39 +57,32 @@ ActiveRecord::Schema.define(version: 20181124010117) do
 
   create_table "resources", force: :cascade do |t|
     t.string "category"
-    t.integer "section_id"
+    t.integer "tab_id"
     t.string "resource"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "sections", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "title"
-    t.integer "tab_id"
-  end
-
   create_table "tabs", force: :cascade do |t|
     t.string "title"
     t.integer "num_of_tabs"
+    t.integer "topic_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "topic_id"
   end
 
   create_table "text_components", force: :cascade do |t|
+    t.integer "tab_id"
     t.string "header"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "section_id"
     t.text "content"
   end
 
   create_table "topics", force: :cascade do |t|
     t.string "csi_section"
     t.string "title"
-    t.string "engineering_discipline"
+    t.string "discipline"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -112,6 +105,10 @@ ActiveRecord::Schema.define(version: 20181124010117) do
     t.string "first_name"
     t.string "last_name"
     t.string "middle_initial"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

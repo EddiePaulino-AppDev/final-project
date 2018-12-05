@@ -3,7 +3,7 @@ class CreateTopics < ActiveRecord::Migration[5.1]
     create_table :topics do |t|
       t.string :csi_section
       t.string :title
-      t.string :engineering_discipline
+      t.string :discipline
 
       t.timestamps
     end

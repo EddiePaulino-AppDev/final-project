@@ -16,14 +16,18 @@ require "sprockets/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module FinalProject
+module OSDesignGuide
   class Application < Rails::Application
     config.generators do |g|
       g.test_framework nil
       g.factory_bot false
       g.scaffold_stylesheet false
     end
-
+    # If youre using Heroku, you need to make a change to the config/application.rb file so that it properly compiles the Ckeditor assets:
+    config.assets.precompile += Ckeditor.assets
+    config.assets.precompile += %w( ckeditor/* )
+    config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
+    
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
 

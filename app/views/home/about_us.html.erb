@@ -1,21 +1,153 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-  <style>
-    body {background-image: url("http://fc04.deviantart.net/fs71/f/2011/019/6/d/dune__atreides_final_by_angelitoon-d37l1yh.jpg");
-    }
-  </style>
-</head>
+  <head>
+<style>
+body, html {
+    height: 100%;
+}
 
-<body>
-  
-  <h2>
-  Goal: To collect and share the sum of all human knowledge on the theory and practice of Engineering.  
-    
-  </h2>
+.parallax { 
+    /* The image used */
+    background-image: url("http://sf.co.ua/13/02/wallpaper-768.jpg");
 
-  
-  
-</body>
+    /* Full height */
+    height: 100%; 
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height:400px;
+}
+</style>
+  </head>
+
+  <body>
+    <div class="parallax"></div>
+    <div class="jumbotron">
+      <h1 class="display-3">Open Source Design Guide</h1>
+      <p class="lead">
+        The Vision: To collaboratively create a web based design guide engineers and architects can use to find the latest and greatest design practices and resources.
+      </p>
+      <hr class="my-4">
+
+
+      <!--  ACCORDION-->
+      <div class="accordion" id="accordionExample">
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+              <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                The numbers
+              </button>
+            </h5>
+          </div>
+
+          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body">
+              <p>Total # of Contributors: <%= User.count %></p>
+              <p>Total Number of Topics: <%= Topic.count %></p>
+
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingTwo">
+            <h5 class="mb-0">
+              <button class="btn btn-outline-primary collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                The Lessons Learned Blog
+              </button>
+            </h5>
+          </div>
+          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+            <div class="card-body">
+              A blog to host a collection of articles from industry practioners sharing their recent project experiences to provide our community of engineers and architects with insights and knowledge they can apply to their own projects.
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingThree">
+            <h5 class="mb-0">
+              <button class="btn btn-outline-primary collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                The Topic Template
+              </button>
+            </h5>
+          </div>
+          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+            <div class="card-body">
+              <h5>The template is meant to provide a consistent structure to how collaborators will share the resources and practices they use to design typical components on their project. The template includes the following list of tabs:</h5>
+
+              <div class="row">
+                <div class="col-2">
+                  <div class="nav nav-tabs nav-fill flex-column" role="tablist">
+
+                    <a class="nav-link active" role="tab" data-toggle="tab" aria-controls="summary" aria-selected="true" href="#summary">Summary</a>
+                    <a class="nav-link" role="tab" data-toggle="tab" aria-controls="regulations" aria-selected="false" href="#regulations">Regulations</a>
+                    <a class="nav-link" role="tab" data-toggle="tab" aria-controls="details" aria-selected="false" href="#details">Drawing Details</a>
+                    <a class="nav-link" role="tab" data-toggle="tab" aria-controls="specifications" aria-selected="false" href="#specifications"> Specifications</a>
+                    <a class="nav-link" role="tab" data-toggle="tab" aria-controls="schedule" aria-selected="false" href="#schedule">Scheduling</a>
+                    <a class="nav-link" role="tab" data-toggle="tab" aria-controls="estimate" aria-selected="false" href="#estimate">Cost Estimating</a>
+                    <a class="nav-link" role="tab" data-toggle="tab" aria-controls="products" aria-selected="false" href="#products">Products/Suppliers</a>
+                    <a class="nav-link" role="tab" data-toggle="tab" aria-controls="other" aria-selected="false" href="#other">Other</a>
+
+                  </div>
+                </div>
+
+                <div class="col-10">
+
+
+                  <div class="tab-content flex-column">
+                    <div class="tab-pane fade active show" id="summary" aria-labelledby="summary-tab">
+                      <p>Add example content here</p>
+                      <hr>
+
+
+                    </div>
+
+                    <div class="tab-pane fade" id="regulations" aria-labelledby="regulations-tab">
+                      <p>Add example content here</p>
+                      <hr>
+                    </div>
+                    <div class="tab-pane fade" id="details" aria-labelledby="details-tab">
+                      <p>Add example content here</p>
+                      <hr>
+                    </div>
+                    <div class="tab-pane fade" id="specifications" aria-labelledby="specifications-tab">
+                      <p>Add example content here</p>
+                      <hr>
+                    </div>
+                    <div class="tab-pane fade" id="schedule" aria-labelledby="schedule-tab">
+                      <p>Add example content here</p>
+                      <hr>
+                    </div>
+                    <div class="tab-pane fade" id="estimate" aria-labelledby="estimate-tab">
+                      <p>Add example content here</p>
+                      <hr>
+                    </div>
+                    <div class="tab-pane fade" id="products" aria-labelledby="products-tab">
+                      <p>Add example content here</p>
+                      <hr>
+                    </div>
+                    <div class="tab-pane fade" id="other" aria-labelledby="other-tab">
+                      <p>Add example content here</p>
+                      <hr>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+    <div class="text-muted" style="text-align:center">OS Design Guide.</div>
+
+  </body>
 </html>

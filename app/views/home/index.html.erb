@@ -2,7 +2,7 @@
 <html>
 
   <head>
-    <title>Design Wiki</title>
+    <title>OS Design Guide</title>
     <%= csrf_meta_tags %>
 
     <!-- Expand the number of characters we can use in the document beyond basic ASCII 🎉 -->
@@ -29,244 +29,235 @@
   </head>
 
   <body>
-<div class="container">
-  
-    <div class="row justify-content-end" style="margin:10px">
-      <% if current_user == nil %>
-        <a href="/users/sign_in" class="nav-link">Sign In</a>
-        <a href="/users/sign_up" class="nav-link">Sign Up</a>
-        <a href="/about_us" class="nav-link">About Us</a>
-      <% else %>
-        <div>
-          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" >
+    <div class="container">
 
-            <%= current_user.first_name %>
+      <div class="row justify-content-end" style="margin:10px">
+        <% if current_user == nil %>
+          <a href="/users/sign_in" class="nav-link">Sign In</a>
+          <a href="/users/sign_up" class="nav-link">Sign Up</a>
+          <a href="/about_us" class="nav-link">About Us</a>
+        <% else %>
+          <div>
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" >
+
+              <%= current_user.first_name %> <%= current_user.last_name %>
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="/users/edit">Edit Profile</a>
+              <a class="dropdown-item" href="/users/sign_out" data-method="delete">Log Out</a>
+
+            </div>
+          </div>
+
+          <a href="/about_us" class="nav-link">About Us</a>
+        <% end %>
+
+      </div>
+
+
+      <!--Home image carousel-->
+      <div class="row justify-content-center" style="margin:10px">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+          </ol>
+          <div class="carousel-inner">
+            <div class="carousel-item active" style="width:800px;height:400px">
+              <img class="d-block w-100" src="https://images.freeimages.com/images/large-previews/3a6/rain-on-sea-ii-1368899.jpg" alt="First slide" style="width:100%;height:100%">
+              <div class="carousel-caption d-none d-md-block">
+                <h5 style="background:black">Collaboratively created design & construction handbooks</h5>
+              </div>
+            </div>
+            <div class="carousel-item" style="width:800px;height:400px">
+              <img class="d-block w-100" src="https://picjumbo.com/wp-content/uploads/clean-setup-keyboard-and-glossy-desktop-display-2210x1473.jpg" alt="Second slide" style="width:100%;height:100%">
+              <div class="carousel-caption d-none d-md-block">
+                <h5 style="background:black">Community discussion around content areas</h5>
+              </div>
+            </div>
+            <div class="carousel-item" style="width:800px;height:400px">
+              <img class="d-block w-100" src="https://picjumbo.com/wp-content/uploads/creative-designer-photographer-workspace-desk-setup-2210x1475.jpg" alt="Third slide" style="width:100%;height:100%">
+              <div class="carousel-caption d-none d-md-block">
+                <h5 style="background:black">Stay up to date with the latest developments</h5>
+              </div>
+            </div>
+          </div>
+          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
           </a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="/users/edit">Edit Profile</a>
-            <a class="dropdown-item" href="/users/sign_out" data-method="delete">Log Out</a>
-
-          </div>
+          <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
         </div>
-
-        <a href="/about_us" class="nav-link">About Us</a>
-      <% end %>
-
-    </div>
-
-
-    <!--Home image carousel-->
-    <div class="row justify-content-center" style="margin:10px">
-      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner">
-          <div class="carousel-item active" style="width:800px;height:400px">
-            <img class="d-block w-100" src="https://images.freeimages.com/images/large-previews/3a6/rain-on-sea-ii-1368899.jpg" alt="First slide" style="width:100%;height:100%">
-            <div class="carousel-caption d-none d-md-block">
-              <h5 style="background:black">Collaboratively created design & construction handbooks</h5>
-            </div>
-          </div>
-          <div class="carousel-item" style="width:800px;height:400px">
-            <img class="d-block w-100" src="https://picjumbo.com/wp-content/uploads/clean-setup-keyboard-and-glossy-desktop-display-2210x1473.jpg" alt="Second slide" style="width:100%;height:100%">
-            <div class="carousel-caption d-none d-md-block">
-              <h5 style="background:black">Community discussion around content areas</h5>
-            </div>
-          </div>
-          <div class="carousel-item" style="width:800px;height:400px">
-            <img class="d-block w-100" src="https://picjumbo.com/wp-content/uploads/creative-designer-photographer-workspace-desk-setup-2210x1475.jpg" alt="Third slide" style="width:100%;height:100%">
-            <div class="carousel-caption d-none d-md-block">
-              <h5 style="background:black">Stay up to date with the latest developments</h5>
-            </div>
-          </div>
-        </div>
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </a>
       </div>
-    </div>
 
 
-    <!--Search bar-->
-    <div class="row justify-content-center">
-      <form class="form-row" action="/topics/search" >
-        <div class="col">
+      <!--Search bar-->
+      <div class="row justify-content-center">
+        <form class="form-row" action="/topics/search" >
+          <div class="col">
+          </div>
+          <div class="col">
+            <label class="sr-only" for="search_bar"></label>
+            <input type="text" class="form-control" name="search_entry" id="search_bar" placeholder="Search OS Design Guide" style="min-width:600px;">
+          </div>
+          <div class="col">
+            <button class="btn btn-secondary" type="submit">Search</button>
+          </div>
+        </form>
+      </div>
+
+
+      <hr class="my-4">
+
+
+      <!--List of topics-->
+      <div class="row justify-content-center">
+        <h3>Browse Topics by Discipline</h3>
+      </div>
+
+
+      <!--List of topics by discipline using tabs-->
+      <ul class="nav nav-tabs justify-content-center">
+        <li class="nav-item">
+          <a class="nav-link active show" data-toggle="tab" href="#<%= disciplines.first.gsub(" ","-") %>"><%= disciplines.first %></a>
+        </li>
+
+
+        <% disciplines.drop(1).each do |discipline| %>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#<%= discipline.gsub(" ","-") %>"><%= discipline %></a>
+          </li>
+        <% end %>
+      </ul>
+      <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade active show" id="<%= disciplines.first.gsub(" ","-") %>">
+          <table class="table">
+            <tr>
+
+              <th>
+                Topic
+              </th>
+              <th>
+                CSI Section
+              </th>
+              <th>
+                Discipline
+              </th>
+              <th>
+              </th>
+            </tr>
+
+            <% @topic.where(:discipline => disciplines.first).each do |topic| %>
+              <tr>
+
+                <td>
+                  <%= topic.title %>
+                </td>
+                <td>
+                  <%= topic.csi_section %>
+                </td>
+                <td>
+                  <%= topic.discipline %>
+                </td>
+
+                <td>
+                  <a href="/topics/<%= topic.id %>" class="btn btn-primary">
+                    Show topic
+                  </a>
+                </td>
+              </tr>
+            <% end %>
+          </table>
         </div>
-        <div class="col">
-          <label class="sr-only" for="search_bar"></label>
-          <input type="text" class="form-control" name="search_entry" id="search_bar" placeholder="Search Design Wiki" style="min-width:600px;">
+        <% disciplines.drop(1).each do |discipline| %>
+        <div class="tab-pane fade" id="<%= discipline.gsub(" ","-") %>">
+          <table class="table">
+            <tr>
+
+              <th>
+                Topic
+              </th>
+              <th>
+                CSI Section
+              </th>
+              <th>
+                Discipline
+              </th>
+              <th>
+              </th>
+            </tr>
+
+            <% @topic.where(:discipline => discipline).each do |topic| %>
+              <tr>
+
+                <td>
+                  <%= topic.title %>
+                </td>
+                <td>
+                  <%= topic.csi_section %>
+                </td>
+                <td>
+                  <%= topic.discipline %>
+                </td>
+
+                <td>
+                  <a href="/topics/<%= topic.id %>" class="btn btn-primary">
+                    Show topic
+                  </a>
+                </td>
+              </tr>
+            <% end %>
+          </table>
         </div>
-        <div class="col">
-          <button class="btn btn-secondary" type="submit">Search</button>
-        </div>
-      </form>
-    </div>
-
-    <!-- Google custom search-->
-    <script>
-      (function() {
-        var cx = '017062161739936208105:pwopiokatuq';
-        var gcse = document.createElement('script');
-        gcse.type = 'text/javascript';
-        gcse.async = true;
-        gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(gcse, s);
-      })();
-    </script>
-    <gcse:search></gcse:search>
-
-
-    <hr class="my-4">
-
-
-    <!--List of topics-->
-    <div class="row justify-content-center">
-      <h3>Browse Topics by Discipline</h3>
-    </div>
-   
-
-<!--List of topics by discipline using tabs-->
-<ul class="nav nav-tabs justify-content-center">
-  <li class="nav-item">
-    <a class="nav-link active show" data-toggle="tab" href="#architecture">Architecture</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" data-toggle="tab" href="#civil-engineering">Civil Engineering</a>
-  </li>
-
-</ul>
-<div id="myTabContent" class="tab-content">
-  <div class="tab-pane fade active show" id="architecture">
-                <table class="table">
-                  <tr>
-
-                    <th>
-                      Topic
-                    </th>
-                    <th>
-                      CSI Section
-                    </th>
-                    <th>
-                      Discipline
-                    </th>
-                    <th>
-                    </th>
-                  </tr>
-
-                  <% @topic.where(:engineering_discipline => "Architecture").each do |topic| %>
-                    <tr>
-
-                      <td>
-                        <%= topic.title %>
-                      </td>
-                      <td>
-                        <%= topic.csi_section %>
-                      </td>
-                      <td>
-                        <%= topic.engineering_discipline %>
-                      </td>
-
-                      <td>
-                        <a href="/topics/<%= topic.id %>" class="btn btn-primary">
-                          Show topic
-                        </a>
-                      </td>
-                    </tr>
-                  <% end %>
-                </table>
-  </div>
-  <div class="tab-pane fade" id="civil-engineering">
-    <table class="table">
-                  <tr>
-
-                    <th>
-                      Topic
-                    </th>
-                    <th>
-                      CSI Section
-                    </th>
-                    <th>
-                      Discipline
-                    </th>
-                    <th>
-                    </th>
-                  </tr>
-
-                  <% @topic.where(:engineering_discipline => "Civil Engineering").each do |topic| %>
-                    <tr>
-
-                      <td>
-                        <%= topic.title %>
-                      </td>
-                      <td>
-                        <%= topic.csi_section %>
-                      </td>
-                      <td>
-                        <%= topic.engineering_discipline %>
-                      </td>
-
-                      <td>
-                        <a href="/topics/<%= topic.id %>" class="btn btn-primary">
-                          Show topic
-                        </a>
-                      </td>
-                    </tr>
-                  <% end %>
-                </table>
-  </div>
-
-</div>
-
-   <hr class="my-4">
-
-    <!--List of changes-->
-    <div class="row justify-content-center">
-      <h3>Recent Changes</h3>
-    </div>
-
-
-    <div class="row justify-content-center">
-
-
-      <div class="col-md-2">
-        <div class="card border-primary mb-3" style="max-width: 20rem;">
-          <h6 class="card-header">Recent Changes</h6>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">Vertical Curve Design</li>
-            <li class="list-group-item">Horizontal Curve Design</li>
-            <li class="list-group-item">Traffic Signal Timing</li>
-          </ul>
-        </div>
+        <% end %>
 
       </div>
 
-      <div class="col-md-2">
-        <div class="card border-primary mb-3" style="max-width: 20rem;">
-          <div class="card-header">Construction</div>
-          <div class="card-body">
-            <h4 class="card-title">Estimating</h4>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      <hr class="my-4">
+
+      <!--List of changes-->
+      <div class="row justify-content-center">
+        <h3>Recent Changes</h3>
+      </div>
+
+
+      <div class="row justify-content-center">
+
+
+        <div class="col-md-2">
+          <div class="card border-primary mb-3" style="max-width: 20rem;">
+            <h6 class="card-header">Recent Changes</h6>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Vertical Curve Design</li>
+              <li class="list-group-item">Horizontal Curve Design</li>
+              <li class="list-group-item">Traffic Signal Timing</li>
+            </ul>
           </div>
+
         </div>
 
+        <div class="col-md-2">
+          <div class="card border-primary mb-3" style="max-width: 20rem;">
+            <div class="card-header">Construction</div>
+            <div class="card-body">
+              <h4 class="card-title">Estimating</h4>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+          </div>
+
+        </div>
       </div>
-    </div>
 
 
-    <div class="row justify-content-center">
+      <div class="row justify-content-center">
 
-      <p class="text-muted">A Prototype by Eddie Paulino</p>
-    </div>
-    
+        <p class="text-muted">Open Source Design Guide</p>
+      </div>
+
     </div>
   </body>
 
