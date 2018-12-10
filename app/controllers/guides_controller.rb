@@ -4,7 +4,7 @@ class GuidesController < ApplicationController
   def index
     @q = Guide.ransack(params[:q])
     @guides = @q.result(distinct: true)
-    
+
     render("guide_templates/index.html.erb")
   end
 
@@ -29,11 +29,46 @@ class GuidesController < ApplicationController
       @guide.save
 
       @tab = Tab.new
-      @tab.title = "Summary"
+      @tab.title = "Design Summary"
       @tab.guide_id = @guide.id
       @tab.save
 
-      redirect_to("/guides", :notice => "Guide created successfully.")
+      @tab = Tab.new
+      @tab.title = "Regulations"
+      @tab.guide_id = @guide.id
+      @tab.save
+
+      @tab = Tab.new
+      @tab.title = "Drawing Details"
+      @tab.guide_id = @guide.id
+      @tab.save
+
+      @tab = Tab.new
+      @tab.title = "Specifications"
+      @tab.guide_id = @guide.id
+      @tab.save
+
+      @tab = Tab.new
+      @tab.title = "Scheduling"
+      @tab.guide_id = @guide.id
+      @tab.save
+
+      @tab = Tab.new
+      @tab.title = "Cost Estimating"
+      @tab.guide_id = @guide.id
+      @tab.save
+
+      @tab = Tab.new
+      @tab.title = "Products/Suppliers"
+      @tab.guide_id = @guide.id
+      @tab.save
+
+      @tab = Tab.new
+      @tab.title = "Other"
+      @tab.guide_id = @guide.id
+      @tab.save
+
+      redirect_to("/guides/" + @guide.id.to_s, :notice => "Guide created successfully.")
     else
       render("guide_templates/new_form.html.erb")
     end
