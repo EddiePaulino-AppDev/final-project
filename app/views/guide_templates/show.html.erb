@@ -9,26 +9,31 @@
       <div class="row">
         <div class="col-2">
           <h2><%= @guide.title %></h2>
-          <!--TRACKING LINKS-->
-          <% if TrackedGuide.find_by({ :user_id => current_user.id, :guide_id => @guide.id }) == nil %>
-            <form action="/create_tracked_guide" method="post">
-              <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
-              <input type="hidden" id="user_id" name="user_id" class="form-control" value="<%= current_user.id %>">
-              <button type="submit" class="btn btn-link">
-                Track this guide
-                <i class="far fa-bookmark"></i>
-              </button>
-            </form>
+          <% if current_user == nil %>
           <% else %>
-            <form action="/delete_tracked_guide/<%= TrackedGuide.find_by({ :user_id => current_user.id, :guide_id => @guide.id }).id %>">
-              <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
-              <button type="submit" class="btn btn-link">
-                Untrack this guide
-                <i class="fas fa-bookmark"></i>
-              </button>
-            </form>
+            <!--TRACKING LINKS-->
+            <% if TrackedGuide.find_by({ :user_id => current_user.id, :guide_id => @guide.id }) == nil %>
+              <form action="/create_tracked_guide" method="post">
+                <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
+                <input type="hidden" id="user_id" name="user_id" class="form-control" value="<%= current_user.id %>">
+                <button type="submit" class="btn btn-link">
+                  Track this guide
+                  <i class="far fa-bookmark"></i>
+                </button>
+              </form>
+            <% else %>
+              <form action="/delete_tracked_guide/<%= TrackedGuide.find_by({ :user_id => current_user.id, :guide_id => @guide.id }).id %>">
+                <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
+                <button type="submit" class="btn btn-link">
+                  Untrack this guide
+                  <i class="fas fa-bookmark"></i>
+                </button>
+              </form>
+            <% end %>
           <% end %>
           <!-- END TRACKING LINKS-->
+
+
           <dl style="line-height:90%">
             <dt>
               Discipline
@@ -67,16 +72,22 @@
               <a class="nav-link" role="tab" data-toggle="tab" aria-controls="<%= tab.id %>" aria-selected="false" href="#<%= tab.id %>"><%= tab.title.to_s %></a>
 
             <% end %>
-            <form action="/tabs/new">
-              <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
 
-              <button type="submit" class="btn btn-primary">
-                Add a tab
-              </button>
-            </form>
-            <a href="/guides/<%= @guide.id %>/edit" >
-              Edit guide
-            </a>
+            <!--  ADD A TAB & EDIT GUIDE -->
+            <% if current_user == nil %>
+            <% else %>
+              <form action="/tabs/new">
+                <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
+
+                <button type="submit" class="btn btn-primary">
+                  Add a tab
+                </button>
+              </form>
+              <a href="/guides/<%= @guide.id %>/edit" >
+                Edit guide
+              </a>
+            <% end %>
+            <!--     END ADD A TAB & EDIT GUIDE-->
 
           </div>
         </div>
@@ -84,21 +95,26 @@
           <div class="tab-content flex-column">
             <div class="tab-pane fade active show" id="summary" aria-labelledby="summary-tab">
 
-
+                  <% if current_user == nil %>
+                  <a  href="/users/sign_in" style="float: right;">Sign in to contribute to this guide.</a>
+                  <% else %>
               <a  href="/tabs/<%= Tab.where(guide_id: @guide.id).first.id %>/edit" style="float: right;">
                 Edit the <%= Tab.where(guide_id: @guide.id).first.title %> tab
               </a>
-
+<% end %>
 
               <div class="container">
 
                 <% TextComponent.where(tab_id: Tab.where(guide_id: @guide.id).first.id).each do |text_component| %>
                   <h3><%= text_component.header %></h3>
                   <div><%= raw text_component.content %></div>
-                  <form action="/text_components/<%= text_component.id %>/edit">
-                    <input type="hidden" name="tab_id" id="tab_id" class="form-control" value="<%= text_component.tab_id %>">
-                    <button type="submit" class="btn btn-link">Edit Text Component</button>
-                  </form>
+                  <% if current_user == nil %>
+                  <% else %>
+                    <form action="/text_components/<%= text_component.id %>/edit">
+                      <input type="hidden" name="tab_id" id="tab_id" class="form-control" value="<%= text_component.tab_id %>">
+                      <button type="submit" class="btn btn-link">Edit Text Component</button>
+                    </form>
+                  <% end %>
                   <hr>
                 <% end %>
                 <% Resource.where(tab_id: Tab.where(guide_id: @guide.id).first.id).each do |resource| %>
@@ -107,24 +123,36 @@
                   <img src="<%= resource.resource %>" class="img-responsive" style="max-height:auto; max-width:100%;">
                   <a href="<%= resource.resource %>"><%= resource.category %></a>
                   <div></div>
-
-                  <form action="/resources/<%= resource.id %>/edit">
-                    <input type="hidden" name="tab_id" id="tab_id" class="form-control" value="<%= resource.tab_id %>">
-                    <button type="submit" class="btn btn-link">Edit Resource</button>
-                  </form>
+                  <% if current_user == nil %>
+                  <% else %>
+                    <form action="/resources/<%= resource.id %>/edit">
+                      <input type="hidden" name="tab_id" id="tab_id" class="form-control" value="<%= resource.tab_id %>">
+                      <button type="submit" class="btn btn-link">Edit Resource</button>
+                    </form>
+                  <% end %>
                   <hr>
                 <% end %>
                 <% YoutubeVideo.where(tab_id: Tab.where(guide_id: @guide.id).first.id).each do |youtube_video| %>
                   <h4><%= youtube_video.description %></h4>
                   <iframe width="560" height="315" src="<%= youtube_video.url_link.gsub(".com/watch?v=",".com/embed/") %>?start=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                   <div></div>
-                  <a href="/youtube_videos/<%= youtube_video.id %>/edit"> Replace or remove this Youtube video</a>
+                  <% if current_user == nil %>
+                  <% else %>
+                    <form action="/youtube_videos/<%= youtube_video.id %>/edit">
+                      <input type="hidden" name="tab_id" id="tab_id" class="form-control" value="<%= youtube_video.tab_id %>">
+                      <button type="submit" class="btn btn-link">Replace or remove this Youtube video</button>
+                    </form>
+
+                  <% end %>
+                  <hr>
                 <% end %>
-                <hr>
+
               </div>
 
 
               <!--DROPDOWN BUTTONS TO ADD CONTENT-->
+                                <% if current_user == nil %>
+                  <% else %>
               <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                 <button type="button" class="btn btn-primary">Add Content</button>
                 <div class="btn-group" role="group">
@@ -155,6 +183,7 @@
                   </div>
                 </div>
               </div>
+              <% end %>
               <hr>
               <!--END DROPDOWN BUTTONS-->
 
@@ -163,37 +192,60 @@
             <% Tab.where(guide_id: @guide.id).drop(1).each do|tab| %>
               <div class="tab-pane fade" id="<%= tab.id %>" aria-labelledby="<%= tab.id %>-tab">
 
-
+<% if current_user == nil %>
+                  <a  href="/users/sign_in" style="float: right;">Sign in to contribute to this guide.</a>
+                  <% else %>
                 <a href="/tabs/<%= tab.id %>/edit" style="float: right;">
                   Edit the <%= tab.title %> tab
                 </a>
 
-
+<% end %>
                 <div class="container">
 
                   <% TextComponent.where(tab_id: tab.id).each do |text_component| %>
                     <h3><%= text_component.header %></h3>
                     <p><%= raw text_component.content %></p>
-                    <a href="/text_components/<%= text_component.id %>/edit"> Edit Text Component</a>
+                    <% if current_user == nil %>
+                    <% else %>
+                      <form action="/text_components/<%= text_component.id %>/edit">
+                        <input type="hidden" name="tab_id" id="tab_id" class="form-control" value="<%= text_component.tab_id %>">
+                        <button type="submit" class="btn btn-link">Edit Text Component</button>
+                      </form>
+                    <% end %>
                     <hr>
                   <% end %>
                   <% Resource.where(tab_id: tab.id).each do |resource| %>
                     <h3><%= resource.category %></h3>
                     <h4><%= resource.created_at %></h4>
                     <img src="<%= resource.resource %>" class="img-responsive" style="max-height:auto; max-width:100%;">
-                    <a href="/resources/<%= resource.id %>/edit"> Edit Resource</a>
+                    <% if current_user == nil %>
+                    <% else %>
+                      <form action="/resources/<%= resource.id %>/edit">
+                        <input type="hidden" name="tab_id" id="tab_id" class="form-control" value="<%= resource.tab_id %>">
+                        <button type="submit" class="btn btn-link">Edit Resource</button>
+                      </form>
+                    <% end %>
                     <hr>
                   <% end %>
                   <% YoutubeVideo.where(tab_id: tab.id).each do |youtube_video| %>
                     <h3><%= youtube_video.description %></h3>
                     <iframe width="560" height="315" src="<%= youtube_video.url_link.gsub(".com/watch?v=",".com/embed/") %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     <div></div>
-                    <a href="/youtube_videos/<%= youtube_video.id %>/edit"> Replace or remove this Youtube video</a>
+                    <% if current_user == nil %>
+                    <% else %>
+                      <form action="/youtube_videos/<%= youtube_video.id %>/edit">
+                        <input type="hidden" name="tab_id" id="tab_id" class="form-control" value="<%= youtube_video.tab_id %>">
+                        <button type="submit" class="btn btn-link">Replace or remove this Youtube video</button>
+                      </form>
+
+                    <% end %>
                     <hr>
                   <% end %>
 
                 </div>
                 <!--DROPDOWN BUTTONS TO ADD CONTENT-->
+                                  <% if current_user == nil %>
+                  <% else %>
                 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                   <button type="button" class="btn btn-primary">Add Content</button>
                   <div class="btn-group" role="group">
@@ -224,6 +276,7 @@
                     </div>
                   </div>
                 </div>
+                <% end %>
                 <hr>
                 <!--END DROPDOWN BUTTONS-->
 
