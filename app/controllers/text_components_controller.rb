@@ -27,7 +27,7 @@ class TextComponentsController < ApplicationController
     if @text_component.valid?
       @text_component.save
 
-      redirect_to("/topics", :notice => "Text component created successfully.")
+      redirect_to("/guides", :notice => "Text component created successfully.")
     else
       render("text_component_templates/new_form.html.erb")
     end

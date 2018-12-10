@@ -70,7 +70,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/topics/new">Create a topic</a>
+            <a class="nav-link" href="/guides/new">Create a guide</a>
           </li>
         </ul>
         <ul class="navbar-nav">
@@ -92,6 +92,7 @@
                 <%= current_user.first_name %> <%= current_user.last_name %>
               </a>
               <div class="dropdown-menu">
+                <a class="dropdown-item" href="/tracked_guides">View Tracked Guides</a>
                 <a class="dropdown-item" href="/users/edit">Edit Profile</a>
                 <a class="dropdown-item" href="/users/sign_out" data-method="delete">Log Out</a>
 
@@ -100,7 +101,7 @@
 
           <% end %>
           <li class="nav-item">
-            <form class="form-inline my-2 my-lg-0" action="/topics/search">
+            <form class="form-inline my-2 my-lg-0" action="/guides/search">
               <label class="sr-only" for="search_bar"></label>
               <input class="form-control mr-sm-2" type="text" name="search_entry" id="search_bar"  placeholder="Search">
               <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>

@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: topics
+# Table name: guides
 #
 #  id          :integer          not null, primary key
 #  csi_section :string
@@ -10,6 +10,7 @@
 #  updated_at  :datetime         not null
 #
 
-class Topic < ApplicationRecord
+class Guide < ApplicationRecord
   has_many :tabs, :dependent => :destroy
+  has_many :tracked_guides, :dependent => :destroy
 end

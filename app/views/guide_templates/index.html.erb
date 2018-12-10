@@ -1,0 +1,88 @@
+<div class="container">
+  <h1>
+    Guide Search Results for: "<%= params.fetch("search_entry") %>"
+  </h1>
+
+  <%= search_form_for @q do |f| %>
+    <p class="lead">Narrow results:</p>
+
+    <div class="form-group">
+      <%= f.label :discipline_cont, "Guides containing discipline:" %>
+      <%= f.text_field :discipline_cont, :class => "form-control" %>
+    </div>
+
+    <%= f.submit :class => "btn btn-primary btn-block" %>
+  <% end %>
+  <form action="/guides">
+    <input type="hidden" name="search_entry" value="">
+    <button class="btn btn-default btn-block" type="submit">
+      Clear filters
+    </button>
+  </form>
+  <hr>
+
+  <table class="table">
+    <tr>
+      <th>
+        ID
+      </th>
+
+      <th>
+        Csi section
+      </th>
+
+      <th>
+        Title
+      </th>
+
+      <th>
+        Discipline
+      </th>
+
+      <th>
+        Created at
+      </th>
+
+      <th>
+        Updated at
+      </th>
+
+      <th>
+      </th>
+    </tr>
+
+    <% @guides.each do |guide| %>
+      <tr>
+        <td>
+          <%= guide.id %>
+        </td>
+
+        <td>
+          <%= guide.csi_section %>
+        </td>
+
+        <td>
+          <%= guide.title %>
+        </td>
+
+        <td>
+          <%= guide.discipline %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(guide.created_at) %> ago
+        </td>
+
+        <td>
+          <%= time_ago_in_words(guide.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/guides/<%= guide.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>

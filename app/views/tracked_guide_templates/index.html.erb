@@ -1,0 +1,59 @@
+<div class="container">
+  <h1>
+    Tracked guides
+  </h1>
+
+  <hr>
+
+  <table class="table">
+    <tr>
+
+      <th>
+        Guide
+      </th>
+      
+      <th>
+        Discipline
+      </th>
+      <th>
+        CSI Section
+      </th>
+
+      <th>
+      </th>
+    </tr>
+
+    <% @tracked_guides.each do |tracked_guide| %>
+      <tr>
+
+        <td>
+          <%= Guide.find_by(:id => tracked_guide.guide_id).title %>
+        </td>
+        <td>
+          <%= Guide.find_by(:id => tracked_guide.guide_id).discipline %>
+        </td>
+
+        <td>
+          <%= Guide.find_by(:id => tracked_guide.guide_id).csi_section %>
+        </td>
+
+
+        <td>
+          <form action="guides/<%= tracked_guide.guide_id %>">
+            <button type="submit" class="btn btn-link">
+              View the guide
+                   <i class="fas fa-eye"></i>
+              </button>
+          </form>
+            <form action="/delete_tracked_guide/<%= tracked_guide.id %>">
+              <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= tracked_guide.guide_id %>">
+              <button type="submit" class="btn btn-link">
+                Untrack this guide
+                <i class="fas fa-bookmark"></i>
+              </button>
+            </form>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>

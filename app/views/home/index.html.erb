@@ -107,12 +107,15 @@
 
       <!--Search bar-->
       <div class="row justify-content-center">
-        <form class="form-row" action="/topics/search" >
+        <form class="form-row" action="/guides" >
           <div class="col">
           </div>
           <div class="col">
             <label class="sr-only" for="search_bar"></label>
+            
             <input type="text" class="form-control" name="search_entry" id="search_bar" placeholder="Search OS Design Guide" style="min-width:600px;">
+
+            
           </div>
           <div class="col">
             <button class="btn btn-secondary" type="submit">Search</button>
@@ -124,13 +127,13 @@
       <hr class="my-4">
 
 
-      <!--List of topics-->
+      <!--List of guides-->
       <div class="row justify-content-center">
-        <h3>Browse Topics by Discipline</h3>
+        <h3>Browse Guides by Discipline</h3>
       </div>
 
 
-      <!--List of topics by discipline using tabs-->
+      <!--List of guides by discipline using tabs-->
       <ul class="nav nav-tabs justify-content-center">
         <li class="nav-item">
           <a class="nav-link active show" data-toggle="tab" href="#<%= disciplines.first.gsub(" ","-") %>"><%= disciplines.first %></a>
@@ -149,7 +152,7 @@
             <tr>
 
               <th>
-                Topic
+                Guide
               </th>
               <th>
                 CSI Section
@@ -161,22 +164,22 @@
               </th>
             </tr>
 
-            <% @topic.where(:discipline => disciplines.first).each do |topic| %>
+            <% @guide.where(:discipline => disciplines.first).each do |guide| %>
               <tr>
 
                 <td>
-                  <%= topic.title %>
+                  <%= guide.title %>
                 </td>
                 <td>
-                  <%= topic.csi_section %>
+                  <%= guide.csi_section %>
                 </td>
                 <td>
-                  <%= topic.discipline %>
+                  <%= guide.discipline %>
                 </td>
 
                 <td>
-                  <a href="/topics/<%= topic.id %>" class="btn btn-primary">
-                    Show topic
+                  <a href="/guides/<%= guide.id %>" class="btn btn-primary">
+                    Show guide
                   </a>
                 </td>
               </tr>
@@ -189,7 +192,7 @@
             <tr>
 
               <th>
-                Topic
+                Guide
               </th>
               <th>
                 CSI Section
@@ -201,22 +204,22 @@
               </th>
             </tr>
 
-            <% @topic.where(:discipline => discipline).each do |topic| %>
+            <% @guide.where(:discipline => discipline).each do |guide| %>
               <tr>
 
                 <td>
-                  <%= topic.title %>
+                  <%= guide.title %>
                 </td>
                 <td>
-                  <%= topic.csi_section %>
+                  <%= guide.csi_section %>
                 </td>
                 <td>
-                  <%= topic.discipline %>
+                  <%= guide.discipline %>
                 </td>
 
                 <td>
-                  <a href="/topics/<%= topic.id %>" class="btn btn-primary">
-                    Show topic
+                  <a href="/guides/<%= guide.id %>" class="btn btn-primary">
+                    Show guide
                   </a>
                 </td>
               </tr>

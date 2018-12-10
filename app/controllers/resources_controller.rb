@@ -25,7 +25,7 @@ class ResourcesController < ApplicationController
     if @resource.valid?
       @resource.save
 
-      redirect_to("/topics", :notice => "Resource created successfully.")
+      redirect_to("/guides", :notice => "Resource created successfully.")
     else
       render("resource_templates/new_form.html.erb")
     end

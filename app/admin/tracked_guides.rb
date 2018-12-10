@@ -1,5 +1,5 @@
-ActiveAdmin.register Topic do
-  permit_params :csi_section, :title, :discipline
+ActiveAdmin.register TrackedGuide do
+  permit_params :user_id, :guide_id
 
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters

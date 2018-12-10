@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181128013312) do
+ActiveRecord::Schema.define(version: 20181210035710) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -55,6 +55,14 @@ ActiveRecord::Schema.define(version: 20181128013312) do
     t.index ["type"], name: "index_ckeditor_assets_on_type"
   end
 
+  create_table "guides", force: :cascade do |t|
+    t.string "csi_section"
+    t.string "title"
+    t.string "discipline"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "resources", force: :cascade do |t|
     t.string "category"
     t.integer "tab_id"
@@ -66,7 +74,7 @@ ActiveRecord::Schema.define(version: 20181128013312) do
   create_table "tabs", force: :cascade do |t|
     t.string "title"
     t.integer "num_of_tabs"
-    t.integer "topic_id"
+    t.integer "guide_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -79,10 +87,9 @@ ActiveRecord::Schema.define(version: 20181128013312) do
     t.text "content"
   end
 
-  create_table "topics", force: :cascade do |t|
-    t.string "csi_section"
-    t.string "title"
-    t.string "discipline"
+  create_table "tracked_guides", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "guide_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -111,6 +118,14 @@ ActiveRecord::Schema.define(version: 20181128013312) do
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "youtube_videos", force: :cascade do |t|
+    t.integer "tab_id"
+    t.string "url_link"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

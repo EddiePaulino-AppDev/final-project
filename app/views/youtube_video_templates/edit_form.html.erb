@@ -1,0 +1,53 @@
+<!-- Validation failure messages -->
+<% if @youtube_video.errors.any? %>
+  <% @youtube_video.errors.full_messages.each do |message| %>
+    <div class="alert">
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<h1>
+  Edit youtube video #<%= @youtube_video.id %>
+</h1>
+
+<hr>
+
+<form action="/update_youtube_video/<%= @youtube_video.id %>" method="post">
+  <!-- Label and input for tab_id -->
+  <div class="form-group">
+    <label for="tab_id">
+      Tab
+    </label>
+
+    <input type="text" id="tab_id" name="tab_id" class="form-control" value="<%= @youtube_video.tab_id %>">
+  </div>
+
+  <!-- Label and input for url_link -->
+  <div class="form-group">
+    <label for="url_link">
+      Html link
+    </label>
+
+    <input type="text" id="url_link" name="url_link" class="form-control" value="<%= @youtube_video.url_link %>">
+  </div>
+
+  <!-- Label and input for description -->
+  <div class="form-group">
+    <label for="description">
+      Description
+    </label>
+
+    <input type="text" id="description" name="description" class="form-control" value="<%= @youtube_video.description %>">
+  </div>
+
+  <button class="btn btn-block btn-outline-secondary">
+    Update youtube video
+  </button>
+</form>
+
+<hr>
+
+<a href="/youtube_videos">
+  Go back
+</a>

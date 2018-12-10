@@ -1,5 +1,37 @@
 Rails.application.routes.draw do
  
+  # Routes for the Tracked guide resource:
+
+  # CREATE
+  post("/create_tracked_guide", { :controller => "tracked_guides", :action => "create_row" })
+
+  # READ
+  get("/tracked_guides", { :controller => "tracked_guides", :action => "index" })
+
+  # DELETE
+  get("/delete_tracked_guide/:id_to_remove", { :controller => "tracked_guides", :action => "destroy_row" })
+
+  #------------------------------
+
+  # Routes for the Youtube video resource:
+
+  # CREATE
+  get("/youtube_videos/new", { :controller => "youtube_videos", :action => "new_form" })
+  post("/create_youtube_video", { :controller => "youtube_videos", :action => "create_row" })
+
+  # READ
+  get("/youtube_videos", { :controller => "youtube_videos", :action => "index" })
+  get("/youtube_videos/:id_to_display", { :controller => "youtube_videos", :action => "show" })
+
+  # UPDATE
+  get("/youtube_videos/:prefill_with_id/edit", { :controller => "youtube_videos", :action => "edit_form" })
+  post("/update_youtube_video/:id_to_modify", { :controller => "youtube_videos", :action => "update_row" })
+
+  # DELETE
+  get("/delete_youtube_video/:id_to_remove", { :controller => "youtube_videos", :action => "destroy_row" })
+
+  #------------------------------
+
   mount Ckeditor::Engine => '/ckeditor'
   # Routes for the Resource resource:
 
@@ -27,7 +59,6 @@ resources :attachments, only: [:index, :new, :create, :destroy]
    # Home screen
   # get("/",{:controller => "home", :action => "index"})
     root "home#index"
-  get("/topics/search",{:controller => "home", :action => "search"})
   get("/about_us",{:controller =>"home", :action =>"about_us"})
   
   # Routes for the Text component resource:
@@ -70,22 +101,22 @@ resources :attachments, only: [:index, :new, :create, :destroy]
 
   #------------------------------
 
-  # Routes for the Topic resource:
+  # Routes for the Guide resource:
 
   # CREATE
-  get("/topics/new", { :controller => "topics", :action => "new_form" })
-  post("/create_topic", { :controller => "topics", :action => "create_row" })
+  get("/guides/new", { :controller => "guides", :action => "new_form" })
+  post("/create_guide", { :controller => "guides", :action => "create_row" })
 
   # READ
-  get("/topics", { :controller => "topics", :action => "index" })
-  get("/topics/:id_to_display", { :controller => "topics", :action => "show" })
+  get("/guides", { :controller => "guides", :action => "index" })
+  get("/guides/:id_to_display", { :controller => "guides", :action => "show" })
 
   # UPDATE
-  get("/topics/:prefill_with_id/edit", { :controller => "topics", :action => "edit_form" })
-  post("/update_topic/:id_to_modify", { :controller => "topics", :action => "update_row" })
+  get("/guides/:prefill_with_id/edit", { :controller => "guides", :action => "edit_form" })
+  post("/update_guide/:id_to_modify", { :controller => "guides", :action => "update_row" })
 
   # DELETE
-  get("/delete_topic/:id_to_remove", { :controller => "topics", :action => "destroy_row" })
+  get("/delete_guide/:id_to_remove", { :controller => "guides", :action => "destroy_row" })
 
   #------------------------------
 

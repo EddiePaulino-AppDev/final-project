@@ -27,7 +27,7 @@
   <!-- Label and input for tab_id -->
   <div class="form-group">
 
-    <input type="hidden" id="topic_id" name="topic_id" class="form-control" value="<%= @tab.topic_id %>">
+    <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @tab.guide_id %>">
   </div>
 
   <button class="btn btn-block btn-outline-secondary">
@@ -40,6 +40,6 @@
   Delete tab
 </a>
 <div></div>
-<a href="/topics/<%= @tab.topic_id %>">
+<a href="/guides/<%= @tab.guide_id %>">
   Go back
 </a>

@@ -1,6 +1,6 @@
 <!-- Validation failure messages -->
-<% if @topic.errors.any? %>
-  <% @topic.errors.full_messages.each do |message| %>
+<% if @guide.errors.any? %>
+  <% @guide.errors.full_messages.each do |message| %>
     <div class="alert">
       <%= message %>
     </div>
@@ -8,19 +8,19 @@
 <% end %>
 
 <h1>
-  Edit topic #<%= @topic.id %>
+  Edit guide #<%= @guide.id %>
 </h1>
 
 <hr>
 <div class="container">
-  <form action="/update_topic/<%= @topic.id %>" method="post">
+  <form action="/update_guide/<%= @guide.id %>" method="post">
     <!-- Label and input for csi_section -->
     <div class="form-group">
       <label for="csi_section">
         CSI section
       </label>
 
-      <input type="text" id="csi_section" name="csi_section" class="form-control" value="<%= @topic.csi_section %>">
+      <input type="text" id="csi_section" name="csi_section" class="form-control" value="<%= @guide.csi_section %>">
     </div>
 
     <!-- Label and input for title -->
@@ -29,7 +29,7 @@
         Title
       </label>
 
-      <input type="text" id="title" name="title" class="form-control" value="<%= @topic.title %>">
+      <input type="text" id="title" name="title" class="form-control" value="<%= @guide.title %>">
     </div>
 
     <!-- Label and input for discipline -->
@@ -38,19 +38,19 @@
         Discipline
       </label>
 
-      <%= select_tag("discipline", options_for_select(disciplines, @topic.discipline),:class => "form-control") %>
+      <%= select_tag("discipline", options_for_select(disciplines, @guide.discipline),:class => "form-control") %>
     </div>
 
     <button class="btn btn-block btn-outline-secondary">
-      Update topic
+      Update guide
     </button>
   </form>
 </div>
 <hr>
-<a href="/delete_topic/<%= @topic.id %>">
-  Delete topic
+<a href="/delete_guide/<%= @guide.id %>">
+  Delete guide
 </a>
 <div></div>
-<a href="/topics/<%= @topic.id %>">
+<a href="/guides/<%= @guide.id %>">
   Go back
 </a>
