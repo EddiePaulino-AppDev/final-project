@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-130254865-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'UA-130254865-1');
-</script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130254865-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      
+      gtag('config', 'UA-130254865-1');
+    </script>
 
     <title>OS Design Guide</title>
     <%= csrf_meta_tags %>
@@ -41,16 +41,16 @@
         color: #fff;
       }
     </style>
-    
-    
-<!--google adsense-->
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-  (adsbygoogle = window.adsbygoogle || []).push({
-    google_ad_client: "ca-pub-3216373775176943",
-    enable_page_level_ads: true
-  });
-</script>
+
+
+    <!--google adsense-->
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-3216373775176943",
+        enable_page_level_ads: true
+      });
+    </script>
   </head>
 
   <body>
@@ -100,8 +100,10 @@
             </li>
 
           <% end %>
+          <a href="#/lessons_learned" class="nav-link">Lessons Learned Blog</a>
+
           <li class="nav-item">
-            <form class="form-inline my-2 my-lg-0" action="/guides/search">
+            <form class="form-inline my-2 my-lg-0" action="/guides">
               <label class="sr-only" for="search_bar"></label>
               <input class="form-control mr-sm-2" type="text" name="search_entry" id="search_bar"  placeholder="Search">
               <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
