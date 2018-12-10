@@ -25,9 +25,9 @@ class YoutubeVideosController < ApplicationController
     if @youtube_video.valid?
       @youtube_video.save
 
-      redirect_to("/youtube_videos", :notice => "Youtube video created successfully.")
+      redirect_to("/guides/"+params.fetch("guide_id").to_s, :notice => "Youtube video created successfully.")
     else
-      render("youtube_video_templates/new_form.html.erb")
+      render("/guides/"+params.fetch("guide_id").to_s)
     end
   end
 

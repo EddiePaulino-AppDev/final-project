@@ -132,7 +132,7 @@
                   <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                     <form action="/text_components/new">
                       <input type="hidden" id="tab_id" name="tab_id" class="form-control" value="<%= Tab.where(guide_id: @guide.id).first.id %>">
-
+                      <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
                       <button type="submit" class="dropdown-item">
                         Add a text component
                       </button>
@@ -140,14 +140,14 @@
 
                     <form action="/resources/new">
                       <input type="hidden" id="tab_id" name="tab_id" class="form-control" value="<%= Tab.where(guide_id: @guide.id).first.id %>">
-
+                      <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
                       <button type="submit" class="dropdown-item">
                         Add a resource
                       </button>
                     </form>
                     <form action="/youtube_videos/new">
                       <input type="hidden" id="tab_id" name="tab_id" class="form-control" value="<%= Tab.where(guide_id: @guide.id).first.id %>">
-
+                      <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
                       <button type="submit" class="dropdown-item">
                         Add a Youtube video
                       </button>
@@ -187,6 +187,7 @@
                   <% YoutubeVideo.where(tab_id: tab.id).each do |youtube_video| %>
                     <h3><%= youtube_video.description %></h3>
                     <iframe width="560" height="315" src="<%= youtube_video.url_link.gsub(".com/watch?v=",".com/embed/") %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <div></div>
                     <a href="/youtube_videos/<%= youtube_video.id %>/edit"> Replace or remove this Youtube video</a>
                     <hr>
                   <% end %>
@@ -199,18 +200,25 @@
                     <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                       <form action="/text_components/new">
-                        <input type="hidden" id="tab_id" name="tab_id" class="form-control" value="<%= Tab.where(guide_id: @guide.id).first.id %>">
-
+                        <input type="hidden" id="tab_id" name="tab_id" class="form-control" value="<%= tab.id %>">
+                        <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
                         <button type="submit" class="dropdown-item">
                           Add a text component
                         </button>
                       </form>
 
                       <form action="/resources/new">
-                        <input type="hidden" id="tab_id" name="tab_id" class="form-control" value="<%= Tab.where(guide_id: @guide.id).first.id %>">
-
+                        <input type="hidden" id="tab_id" name="tab_id" class="form-control" value="<%= tab.id %>">
+                        <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
                         <button type="submit" class="dropdown-item">
                           Add a resource
+                        </button>
+                      </form>
+                      <form action="/youtube_videos/new">
+                        <input type="hidden" id="tab_id" name="tab_id" class="form-control" value="<%= tab.id %>">
+                        <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
+                        <button type="submit" class="dropdown-item">
+                          Add a Youtube video
                         </button>
                       </form>
                     </div>
