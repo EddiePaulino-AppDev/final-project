@@ -11,6 +11,6 @@
 // about supported directives.
 //
 //= require rails-ujs
-//= require ckeditor/init
 //= require cloudinary
+//= require ckeditor/init
 //= require_tree .

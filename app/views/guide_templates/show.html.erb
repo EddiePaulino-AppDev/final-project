@@ -76,18 +76,46 @@
             <!--  ADD A TAB & EDIT GUIDE -->
             <% if current_user == nil %>
             <% else %>
-              <form action="/tabs/new">
-                <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                Add a tab
+              </button>
 
-                <button type="submit" class="btn btn-primary">
-                  Add a tab
-                </button>
-              </form>
+              <!-- add tab Modal -->
+              <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle">Add a tab</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form action="/create_tab" method="post" id="tabform">
+                        <div class="form-group">
+                          <label for="title" class="col-form-label">Tab title</label>
+                          <input type="text" class="form-control" name="title" id="title">
+                          <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
+                        </div>
+
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="submit" form="tabform" class="btn btn-primary">Add tab</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--END add tab MODAL-->
               <a href="/guides/<%= @guide.id %>/edit" >
                 Edit guide
               </a>
+
             <% end %>
             <!--     END ADD A TAB & EDIT GUIDE-->
+
 
           </div>
         </div>
@@ -95,13 +123,13 @@
           <div class="tab-content flex-column">
             <div class="tab-pane fade active show" id="summary" aria-labelledby="summary-tab">
 
-                  <% if current_user == nil %>
-                  <a  href="/users/sign_in" style="float: right;">Sign in to contribute to this guide.</a>
-                  <% else %>
-              <a  href="/tabs/<%= Tab.where(guide_id: @guide.id).first.id %>/edit" style="float: right;">
-                Edit the <%= Tab.where(guide_id: @guide.id).first.title %> tab
-              </a>
-<% end %>
+              <% if current_user == nil %>
+                <a  href="/users/sign_up" style="float: right;">Create an account to contribute to this guide.</a>
+              <% else %>
+                <a  href="/tabs/<%= Tab.where(guide_id: @guide.id).first.id %>/edit" style="float: right;">
+                  Edit the <%= Tab.where(guide_id: @guide.id).first.title %> tab
+                </a>
+              <% end %>
 
               <div class="container">
 
@@ -151,8 +179,6 @@
 
 
               <!--DROPDOWN BUTTONS TO ADD CONTENT-->
-                                <% if current_user == nil %>
-                  <% else %>
               <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                 <button type="button" class="btn btn-primary">Add Content</button>
                 <div class="btn-group" role="group">
@@ -183,7 +209,6 @@
                   </div>
                 </div>
               </div>
-              <% end %>
               <hr>
               <!--END DROPDOWN BUTTONS-->
 
@@ -192,14 +217,14 @@
             <% Tab.where(guide_id: @guide.id).drop(1).each do|tab| %>
               <div class="tab-pane fade" id="<%= tab.id %>" aria-labelledby="<%= tab.id %>-tab">
 
-<% if current_user == nil %>
-                  <a  href="/users/sign_in" style="float: right;">Sign in to contribute to this guide.</a>
-                  <% else %>
-                <a href="/tabs/<%= tab.id %>/edit" style="float: right;">
-                  Edit the <%= tab.title %> tab
-                </a>
+                <% if current_user == nil %>
+                  <a  href="/users/sign_up" style="float: right;">Create an account to contribute to this guide.</a>
+                <% else %>
+                  <a href="/tabs/<%= tab.id %>/edit" style="float: right;">
+                    Edit the <%= tab.title %> tab
+                  </a>
 
-<% end %>
+                <% end %>
                 <div class="container">
 
                   <% TextComponent.where(tab_id: tab.id).each do |text_component| %>
@@ -244,8 +269,6 @@
 
                 </div>
                 <!--DROPDOWN BUTTONS TO ADD CONTENT-->
-                                  <% if current_user == nil %>
-                  <% else %>
                 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                   <button type="button" class="btn btn-primary">Add Content</button>
                   <div class="btn-group" role="group">
@@ -276,7 +299,6 @@
                     </div>
                   </div>
                 </div>
-                <% end %>
                 <hr>
                 <!--END DROPDOWN BUTTONS-->
 
@@ -292,6 +314,18 @@
         <div class="col-2">
           <h4> Ads go here</h4>
           <img style="max-height:auto; max-width:100%;" src="http://construction.krends.com/wp-content/uploads/2015/03/shutterstock_151394975.jpg">
+
+
+        </div>
+
+
+      </div>
+    </div>
+
+
+  </body>
+</html>
+">
 
 
         </div>
