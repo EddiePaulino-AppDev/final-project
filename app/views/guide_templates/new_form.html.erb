@@ -9,47 +9,50 @@
   <% end %>
 <% end %>
 <div class="container">
-<h1>
-  Add a new guide
-</h1>
+  <h1>
+    Add a new guide
+  </h1>
 
-<hr>
+  <hr>
 
-<form action="/create_guide" method="post">
-  <!-- Label and input for csi_section -->
-  <div class="form-group">
-    <label for="csi_section">
-      Csi section
-    </label>
+  <form action="/create_guide" method="post">
+    
+    <!-- Label and input for title -->
+    <div class="form-group">
+      <label for="title">
+        Title
+      </label>
 
-    <input type="text" id="csi_section" name="csi_section" class="form-control" value="<%= @guide.try(:csi_section) %>">
-  </div>
+      <input type="text" id="title" name="title" class="form-control" value="<%= @guide.try(:title) %>">
+    </div>
+    
+    <!-- Label and input for discipline -->
+    <div class="form-group">
+      <label for="discipline">
+        Discipline
+      </label>
+      <%= select_tag("discipline", options_for_select(disciplines),:class => "form-control") %>
+    </div>
+    
+    <!-- Label and input for csi_section -->
+    <div class="form-group">
+      <label for="csi_section">
+        Csi section
+      </label>
 
-  <!-- Label and input for title -->
-  <div class="form-group">
-    <label for="title">
-      Title
-    </label>
+      <input type="text" id="csi_section" name="csi_section" class="form-control" value="<%= @guide.try(:csi_section) %>">
+    </div>
 
-    <input type="text" id="title" name="title" class="form-control" value="<%= @guide.try(:title) %>">
-  </div>
 
-  <!-- Label and input for discipline -->
-  <div class="form-group">
-    <label for="discipline">
-      Discipline
-    </label>
-<%= select_tag("discipline", options_for_select(disciplines),:class => "form-control") %>
-  </div>
 
-  <button class="btn btn-block btn-outline-secondary">
-    Create guide
-  </button>
-</form>
+    <button class="btn btn-block btn-outline-secondary">
+      Create guide
+    </button>
+  </form>
 
-<hr>
+  <hr>
 
-<a href="/guides">
-  Go back
-</a>
+  <a href="/">
+    Go back
+  </a>
 </div>

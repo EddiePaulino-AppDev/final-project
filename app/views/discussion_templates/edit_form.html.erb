@@ -1,0 +1,53 @@
+<!-- Validation failure messages -->
+<% if @discussion.errors.any? %>
+  <% @discussion.errors.full_messages.each do |message| %>
+    <div class="alert">
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<h1>
+  Edit discussion #<%= @discussion.id %>
+</h1>
+
+<hr>
+
+<form action="/update_discussion/<%= @discussion.id %>" method="post">
+  <!-- Label and input for tab_id -->
+  <div class="form-group">
+    <label for="tab_id">
+      Tab
+    </label>
+
+    <input type="text" id="tab_id" name="tab_id" class="form-control" value="<%= @discussion.tab_id %>">
+  </div>
+
+  <!-- Label and input for guide_id -->
+  <div class="form-group">
+    <label for="guide_id">
+      Guide
+    </label>
+
+    <input type="text" id="guide_id" name="guide_id" class="form-control" value="<%= @discussion.guide_id %>">
+  </div>
+
+  <!-- Label and input for title -->
+  <div class="form-group">
+    <label for="title">
+      Title
+    </label>
+
+    <input type="text" id="title" name="title" class="form-control" value="<%= @discussion.title %>">
+  </div>
+
+  <button class="btn btn-block btn-outline-secondary">
+    Update discussion
+  </button>
+</form>
+
+<hr>
+
+<a href="/discussions">
+  Go back
+</a>

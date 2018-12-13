@@ -1,4 +1,5 @@
 class YoutubeVideosController < ApplicationController
+    before_action :authenticate_user!
   def index
     @youtube_videos = YoutubeVideo.all
 
@@ -27,7 +28,8 @@ class YoutubeVideosController < ApplicationController
 
       redirect_to("/guides/"+params.fetch("guide_id").to_s, :notice => "Youtube video created successfully.")
     else
-      render("/guides/"+params.fetch("guide_id").to_s)
+      @guide = Guide.find(params.fetch("guide_id"))
+      render("guide_templates/show.html.erb")
     end
   end
 
@@ -47,9 +49,10 @@ class YoutubeVideosController < ApplicationController
     if @youtube_video.valid?
       @youtube_video.save
 
-      redirect_to("/youtube_videos/#{@youtube_video.id}", :notice => "Youtube video updated successfully.")
+      redirect_to("/guides/"+params.fetch("guide_id"), :notice => "Youtube video updated successfully.")
     else
-      render("youtube_video_templates/edit_form.html.erb")
+      @guide = Guide.find(params.fetch("guide_id"))
+      render("guide_templates/show.html.erb")
     end
   end
 
@@ -58,6 +61,6 @@ class YoutubeVideosController < ApplicationController
 
     @youtube_video.destroy
 
-    redirect_to("/youtube_videos", :notice => "Youtube video deleted successfully.")
+    redirect_to("/guides/"+params.fetch("guide_id"), :notice => "Youtube video deleted successfully.")
   end
 end

@@ -1,0 +1,74 @@
+<h1>
+  All discussions
+</h1>
+
+<a href="/discussions/new">
+  Add a new discussion
+</a>
+
+<hr>
+
+<table class="table">
+  <tr>
+    <th>
+      ID
+    </th>
+
+    <th>
+      Tab
+    </th>
+
+    <th>
+      Guide
+    </th>
+
+    <th>
+      Title
+    </th>
+
+    <th>
+      Created at
+    </th>
+
+    <th>
+      Updated at
+    </th>
+
+    <th>
+    </th>
+  </tr>
+
+  <% @discussions.each do |discussion| %>
+  <tr>
+    <td>
+      <%= discussion.id %>
+    </td>
+
+    <td>
+      <%= discussion.tab_id %>
+    </td>
+
+    <td>
+      <%= discussion.guide_id %>
+    </td>
+
+    <td>
+      <%= discussion.title %>
+    </td>
+
+    <td>
+      <%= time_ago_in_words(discussion.created_at) %> ago
+    </td>
+
+    <td>
+      <%= time_ago_in_words(discussion.updated_at) %> ago
+    </td>
+
+    <td>
+      <a href="/discussions/<%= discussion.id %>">
+        Show details
+      </a>
+    </td>
+  </tr>
+  <% end %>
+</table>

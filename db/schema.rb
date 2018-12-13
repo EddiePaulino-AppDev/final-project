@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181210035710) do
+ActiveRecord::Schema.define(version: 20181212131353) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -55,12 +55,29 @@ ActiveRecord::Schema.define(version: 20181210035710) do
     t.index ["type"], name: "index_ckeditor_assets_on_type"
   end
 
+  create_table "comments", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "discussion_id"
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "discussions", force: :cascade do |t|
+    t.integer "tab_id"
+    t.integer "guide_id"
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "guides", force: :cascade do |t|
     t.string "csi_section"
     t.string "title"
     t.string "discipline"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "tags"
   end
 
   create_table "resources", force: :cascade do |t|

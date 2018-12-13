@@ -36,11 +36,12 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable
-         
+
   validates :first_name, :presence => true
   validates :last_name, :presence => true
-has_many :tracked_guides, :dependent => :destroy
-  
+  has_many :tracked_guides, :dependent => :destroy
+  has_many :comments, :dependent => :destroy
+  has_many :discussions, :through => :comments, :source => :discussion
   # has_many :posts, :class_name => "Post", :foreign_key => "user_id"
-  
+
 end

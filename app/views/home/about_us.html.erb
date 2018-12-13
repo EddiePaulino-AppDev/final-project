@@ -2,26 +2,26 @@
 <html>
 
   <head>
-<style>
-body, html {
-    height: 100%;
-}
-
-.parallax { 
-    /* The image used */
-    background-image: url("http://sf.co.ua/13/02/wallpaper-768.jpg");
-
-    /* Full height */
-    height: 100%; 
-
-    /* Create the parallax scrolling effect */
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    height:400px;
-}
-</style>
+    <style>
+      body, html {
+          height: 100%;
+      }
+      
+      .parallax {
+          /* The image used */
+          background-image: url("http://sf.co.ua/13/02/wallpaper-768.jpg");
+      
+          /* Full height */
+          height: 100%;
+      
+          /* Create the parallax scrolling effect */
+          background-attachment: fixed;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          height:400px;
+      }
+    </style>
   </head>
 
   <body>
@@ -49,7 +49,7 @@ body, html {
             <div class="card-body">
               <p>Total # of Registered Users: <%= User.count %></p>
               <p>Total Number of Guides: <%= Guide.count %></p>
-
+              <p>Total Number of Discussions: <%= Discussion.count %></p>
             </div>
           </div>
         </div>
@@ -90,10 +90,11 @@ body, html {
                     <a class="nav-link"  role="tab" data-toggle="tab" aria-controls="schedule" aria-selected="false" href="#schedule">Scheduling</a>
                     <a class="nav-link"  role="tab" data-toggle="tab" aria-controls="estimate" aria-selected="false" href="#estimate">Cost Estimating</a>
                     <a class="nav-link"  role="tab" data-toggle="tab" aria-controls="products" aria-selected="false" href="#products">Products/Suppliers</a>
-                    <a class="nav-link" role="tab" data-toggle="tab" aria-controls="other" aria-selected="false" href="#other">Other</a>
+                    <a class="nav-link" role="tab" data-toggle="tab" aria-controls="other" aria-selected="false" href="#other">Other Resources</a>
+                    <a class="nav-link" role="tab" data-toggle="tab" aria-controls="discussion" aria-selected="false" href="#discussion">Discussions</a>
 
                   </div>
-                </div>
+                </div>`
 
                 <div class="col-10">
 
@@ -131,6 +132,10 @@ body, html {
                       <hr>
                     </div>
                     <div class="tab-pane fade" id="other" aria-labelledby="other-tab">
+                      <p>Add example content here</p>
+                      <hr>
+                    </div>
+                    <div class="tab-pane fade" id="discussion" aria-labelledby="discussion-tab">
                       <p>Add example content here</p>
                       <hr>
                     </div>

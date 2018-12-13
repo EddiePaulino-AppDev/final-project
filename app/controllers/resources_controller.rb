@@ -1,4 +1,5 @@
 class ResourcesController < ApplicationController
+    before_action :authenticate_user!
   def index
     @resources = Resource.all
 
@@ -25,9 +26,10 @@ class ResourcesController < ApplicationController
     if @resource.valid?
       @resource.save
 
-      redirect_to("/guides", :notice => "Resource created successfully.")
+      redirect_to("/guides/"+params.fetch("guide_id"), :notice => "Resource created successfully.")
     else
-      render("resource_templates/new_form.html.erb")
+      @guide = Guide.find(params.fetch("guide_id"))
+      render("guide_templates/show.html.erb")
     end
   end
 
@@ -47,9 +49,10 @@ class ResourcesController < ApplicationController
     if @resource.valid?
       @resource.save
 
-      redirect_to("/resources/#{@resource.id}", :notice => "Resource updated successfully.")
+      redirect_to("/guides/"+params.fetch("guide_id"), :notice => "Resource updated successfully.")
     else
-      render("resource_templates/edit_form.html.erb")
+      @guide = Guide.find(params.fetch("guide_id"))
+      render("guide_templates/show.html.erb")
     end
   end
 
@@ -58,6 +61,6 @@ class ResourcesController < ApplicationController
 
     @resource.destroy
 
-    redirect_to("/resources", :notice => "Resource deleted successfully.")
+    redirect_to("/guides/"+params.fetch("guide_id"), :notice => "Resource deleted successfully.")
   end
 end

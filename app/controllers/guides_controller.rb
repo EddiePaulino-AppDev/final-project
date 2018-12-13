@@ -2,7 +2,7 @@ class GuidesController < ApplicationController
   before_action :authenticate_user!, :except => [:show, :index]
 
   def index
-    @q = Guide.ransack(params[:q])
+    @q = Guide.ransack(tags_cont_any: params.fetch("search_entry").split(/[\s,'+-:~]/))
     @guides = @q.result(distinct: true)
 
     render("guide_templates/index.html.erb")
@@ -24,7 +24,8 @@ class GuidesController < ApplicationController
     @guide.csi_section = params.fetch("csi_section")
     @guide.title = params.fetch("title")
     @guide.discipline = params.fetch("discipline")
-
+    @guide.tags = params.fetch("csi_section")+", "+params.fetch("title")+", "+params.fetch("discipline")
+    
     if @guide.valid?
       @guide.save
 
@@ -64,7 +65,12 @@ class GuidesController < ApplicationController
       @tab.save
 
       @tab = Tab.new
-      @tab.title = "Other"
+      @tab.title = "Other Resources"
+      @tab.guide_id = @guide.id
+      @tab.save
+      
+      @tab = Tab.new
+      @tab.title = "Discussions"
       @tab.guide_id = @guide.id
       @tab.save
 
@@ -86,6 +92,7 @@ class GuidesController < ApplicationController
     @guide.csi_section = params.fetch("csi_section")
     @guide.title = params.fetch("title")
     @guide.discipline = params.fetch("discipline")
+    @guide.tags = params.fetch("csi_section")+", "+params.fetch("title")+", "+params.fetch("discipline")
 
     if @guide.valid?
       @guide.save
@@ -101,6 +108,6 @@ class GuidesController < ApplicationController
 
     @guide.destroy
 
-    redirect_to("/guides", :notice => "Guide deleted successfully.")
+    redirect_to("/", :notice => "Guide deleted successfully.")
   end
 end

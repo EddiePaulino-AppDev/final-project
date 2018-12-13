@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  before_action :authenticate_user!, :except => [:about_us, :search, :index]
+  before_action :authenticate_user!, :except => [:about_us, :index]
 
   def index
     @guide = Guide.all

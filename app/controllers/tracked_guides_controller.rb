@@ -1,4 +1,5 @@
 class TrackedGuidesController < ApplicationController
+    before_action :authenticate_user!
   def index
     @tracked_guides = TrackedGuide.all
 

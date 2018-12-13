@@ -1,4 +1,42 @@
 Rails.application.routes.draw do
+  # Routes for the Discussion resource:
+
+  # CREATE
+  get("/discussions/new", { :controller => "discussions", :action => "new_form" })
+  post("/create_discussion", { :controller => "discussions", :action => "create_row" })
+
+  # READ
+  get("/discussions", { :controller => "discussions", :action => "index" })
+  get("/discussions/:id_to_display", { :controller => "discussions", :action => "show" })
+
+  # UPDATE
+  get("/discussions/:prefill_with_id/edit", { :controller => "discussions", :action => "edit_form" })
+  post("/update_discussion/:id_to_modify", { :controller => "discussions", :action => "update_row" })
+
+  # DELETE
+  get("/delete_discussion/:id_to_remove", { :controller => "discussions", :action => "destroy_row" })
+
+  #------------------------------
+
+  # Routes for the Comment resource:
+
+  # CREATE
+  get("/comments/new", { :controller => "comments", :action => "new_form" })
+  post("/create_comment", { :controller => "comments", :action => "create_row" })
+
+  # READ
+  get("/comments", { :controller => "comments", :action => "index" })
+  get("/comments/:id_to_display", { :controller => "comments", :action => "show" })
+
+  # UPDATE
+  get("/comments/:prefill_with_id/edit", { :controller => "comments", :action => "edit_form" })
+  post("/update_comment/:id_to_modify", { :controller => "comments", :action => "update_row" })
+
+  # DELETE
+  get("/delete_comment/:id_to_remove", { :controller => "comments", :action => "destroy_row" })
+
+  #------------------------------
+
   mount Ckeditor::Engine => '/ckeditor'
   # Routes for the Tracked guide resource:
 

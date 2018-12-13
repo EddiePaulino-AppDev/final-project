@@ -1,5 +1,5 @@
 class TabsController < ApplicationController
-   before_action :authenticate_user!, :except => [:show, :index]
+   before_action :authenticate_user!
    
   def index
     @tabs = Tab.all
@@ -28,7 +28,8 @@ class TabsController < ApplicationController
 
       redirect_to("/guides/"+params.fetch("guide_id"), :notice => "Tab created successfully.")
     else
-      render("tab_templates/new_form.html.erb")
+      @guide = Guide.find(@tab.guide_id))
+      render("guide_templates/show.html.erb")
     end
   end
 
@@ -49,7 +50,8 @@ class TabsController < ApplicationController
 
       redirect_to("/guides/"+params.fetch("guide_id"), :notice => "Tab updated successfully.")
     else
-      render("tab_templates/edit_form.html.erb")
+      @guide = Guide.find(@tab.guide_id))
+      render("guide_templates/show.html.erb")
     end
   end
 

@@ -4,3 +4,8 @@
   white-space: nowrap;
   color: #fff;
 }
+
+div.hidden { 
+  display: none; 
+  
+}

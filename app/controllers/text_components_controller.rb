@@ -27,9 +27,10 @@ class TextComponentsController < ApplicationController
     if @text_component.valid?
       @text_component.save
 
-      redirect_to("/guides", :notice => "Text component created successfully.")
+      redirect_to("/guides/" + params.fetch("guide_id"), :notice => "Text component created successfully.")
     else
-      render("text_component_templates/new_form.html.erb")
+      @guide = Guide.find(params.fetch("guide_id"))
+      render("guide_templates/show.html.erb")
     end
   end
 
@@ -49,9 +50,10 @@ class TextComponentsController < ApplicationController
     if @text_component.valid?
       @text_component.save
 
-      redirect_to("/text_components/#{@text_component.id}", :notice => "Text component updated successfully.")
+      redirect_to("/guides/"+params.fetch("guide_id"), :notice => "Text component updated successfully.")
     else
-      render("text_component_templates/edit_form.html.erb")
+      @guide = Guide.find(params.fetch("guide_id"))
+      render("guide_templates/show.html.erb")
     end
   end
 
@@ -60,6 +62,6 @@ class TextComponentsController < ApplicationController
 
     @text_component.destroy
 
-    redirect_to("/text_components", :notice => "Text component deleted successfully.")
+    redirect_to("/guides/"+params.fetch("guide_id"), :notice => "Text component deleted successfully.")
   end
 end
