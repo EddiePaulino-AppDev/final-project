@@ -50,7 +50,7 @@ class TabsController < ApplicationController
 
       redirect_to("/guides/"+params.fetch("guide_id"), :notice => "Tab updated successfully.")
     else
-      @guide = Guide.find(@tab.guide_id))
+      @guide = Guide.find(@tab.guide_id)
       render("guide_templates/show.html.erb")
     end
   end
