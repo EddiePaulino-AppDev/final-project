@@ -398,12 +398,12 @@
                   <% end %>
                   <% YoutubeVideo.where(tab_id: tab.id).each do |youtube_video| %>
                     <h3><%= youtube_video.description %></h3>
-                                          <div class="row">
+                    <div class="row">
                       <div class="col-sm-8">
-                    <div class="embed-responsive embed-responsive-16by9">
+                        <div class="embed-responsive embed-responsive-16by9">
 
-                      <iframe class="embed-responsive-item" src="<%= youtube_video.url_link.gsub(".com/watch?v=",".com/embed/") %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                      </div></div>
+                          <iframe class="embed-responsive-item" src="<%= youtube_video.url_link.gsub(".com/watch?v=",".com/embed/") %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
                       </div>
                       <% if current_user == nil %>
                       <% else %>
