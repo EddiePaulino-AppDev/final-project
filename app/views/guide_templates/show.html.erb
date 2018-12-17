@@ -15,8 +15,12 @@
 
   </head>
   <body>
+
+    <!-- start container-->
     <div class="container-fluid">
+      <!--start row-->
       <div class="row">
+        <!--   start 2 column-->
         <div class="col-2">
           <h3><%= @guide.title %></h3>
           <% if current_user == nil %>
@@ -175,7 +179,7 @@
           </div>
         </div>
 
-
+        <!--   start 8 column-->
         <div class="col-8">
           <div class="tab-content flex-column">
 
@@ -188,22 +192,22 @@
                   <% else %>
                     <div class="row">
                       <!-- Button trigger modal -->
-                      <button type="button" class="btn btn-link" data-toggle="modal" data-target="#TabEditModalCenter">
+                      <button type="button" class="btn btn-link" data-toggle="modal" data-target="#TabEditModalCenter<%= tab.id %>">
                         <i class="far fa-edit"></i>
                         Edit the <%= tab.title %> tab
                       </button>
                       <!-- edit tab Modal -->
-                      <div class="modal fade" id="TabEditModalCenter" tabindex="-1" role="dialog" aria-labelledby="TabEditModalCenterTitle" aria-hidden="true">
+                      <div class="modal fade" id="TabEditModalCenter<%= tab.id %>" tabindex="-1" role="dialog" aria-labelledby="TabEditModalCenterTitle<%= tab.id %>" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLongTitle">Edit tab Descriptors</h5>
+                              <h5 class="modal-title" id="TabEditModalLongTitle<%= tab.id %>">Edit tab Descriptors</h5>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>
                             </div>
                             <div class="modal-body">
-                              <form action="/update_tab" method="post" id="TabEditForm">
+                              <form action="/update_tab" method="post" id="TabEditForm<%= tab.id %>">
                                 <div class="form-group">
                                   <label for="title" class="col-form-label">Tab title</label>
                                   <input type="text" class="form-control" name="title" id="title" value="<%= tab.try(:title) %>">
@@ -215,7 +219,7 @@
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                              <button type="submit" form="TabEditForm" class="btn btn-primary">Update the <%= tab.title %> tab descriptors</button>
+                              <button type="submit" form="TabEditForm<%= tab.id %>" class="btn btn-primary">Update the <%= tab.title %> tab descriptors</button>
                               <a href="#" id="show_more">More</a>
 
                               <div id="more" class="hidden">
@@ -357,173 +361,171 @@
                       <!-- card  -->
                       <hr>
 
-                    </div>   </div>
+
+                <% end %>
+
+              <% else %>
+
+                <!--  START CONTENT FOR TABS THAT ARE NOT THE DISCUSSION TAB-->
 
 
+                <% TextComponent.where(tab_id: tab.id).each do |text_component| %>
+                  <h3><%= text_component.header %></h3>
+                  <p><%= raw text_component.content %></p>
+                  <% if current_user == nil %>
+                  <% else %>
+                    <form action="/text_components/<%= text_component.id %>/edit">
+                      <input type="hidden" name="tab_id" id="tab_id" class="form-control" value="<%= text_component.tab_id %>">
+                      <input type="hidden" name="guide_id" id="guide_id" class="form-control" value="<%= @guide.id %>">
+                      <button type="submit" class="btn btn-link">Edit Text Component</button>
+                    </form>
                   <% end %>
+                  <hr>
+                <% end %>
+                <% Resource.where(tab_id: tab.id).each do |resource| %>
+                  <h3><%= resource.category %></h3>
+                  <h4><%= resource.created_at %></h4>
 
-                <% else %>
-
-                  <!--  START CONTENT FOR TABS THAT ARE NOT THE DISCUSSION TAB-->
-
-
-                  <% TextComponent.where(tab_id: tab.id).each do |text_component| %>
-                    <h3><%= text_component.header %></h3>
-                    <p><%= raw text_component.content %></p>
-                    <% if current_user == nil %>
-                    <% else %>
-                      <form action="/text_components/<%= text_component.id %>/edit">
-                        <input type="hidden" name="tab_id" id="tab_id" class="form-control" value="<%= text_component.tab_id %>">
-                        <input type="hidden" name="guide_id" id="guide_id" class="form-control" value="<%= @guide.id %>">
-                        <button type="submit" class="btn btn-link">Edit Text Component</button>
-                      </form>
-                    <% end %>
-                    <hr>
+                  <a href="<%= resource.resource %>"><img src="<%= resource.resource %>" class="img-fluid" style="max-height:500px">
+                  </a>
+                  <% if current_user == nil %>
+                  <% else %>
+                    <form action="/resources/<%= resource.id %>/edit">
+                      <input type="hidden" name="tab_id" id="tab_id" class="form-control" value="<%= resource.tab_id %>">
+                      <input type="hidden" name="guide_id" id="guide_id" class="form-control" value="<%= @guide.id %>">
+                      <button type="submit" class="btn btn-link">Edit Resource</button>
+                    </form>
                   <% end %>
-                  <% Resource.where(tab_id: tab.id).each do |resource| %>
-                    <h3><%= resource.category %></h3>
-                    <h4><%= resource.created_at %></h4>
+                  <hr>
+                <% end %>
+                <% YoutubeVideo.where(tab_id: tab.id).each do |youtube_video| %>
+                  <h3><%= youtube_video.description %></h3>
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <div class="embed-responsive embed-responsive-16by9">
 
-                    <a href="<%= resource.resource %>"><img src="<%= resource.resource %>" class="img-fluid" style="max-height:500px">
-                    </a>
-                    <% if current_user == nil %>
-                    <% else %>
-                      <form action="/resources/<%= resource.id %>/edit">
-                        <input type="hidden" name="tab_id" id="tab_id" class="form-control" value="<%= resource.tab_id %>">
-                        <input type="hidden" name="guide_id" id="guide_id" class="form-control" value="<%= @guide.id %>">
-                        <button type="submit" class="btn btn-link">Edit Resource</button>
-                      </form>
-                    <% end %>
-                    <hr>
-                  <% end %>
-                  <% YoutubeVideo.where(tab_id: tab.id).each do |youtube_video| %>
-                    <h3><%= youtube_video.description %></h3>
-                    <div class="row">
-                      <div class="col-sm-8">
-                        <div class="embed-responsive embed-responsive-16by9">
-
-                          <iframe class="embed-responsive-item" src="<%= youtube_video.url_link.gsub(".com/watch?v=",".com/embed/") %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        </div>
+                        <iframe class="embed-responsive-item" src="<%= youtube_video.url_link.gsub(".com/watch?v=",".com/embed/") %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                       </div>
                     </div>
-                    <% if current_user == nil %>
-                    <% else %>
+                  </div>
+                  <% if current_user == nil %>
+                  <% else %>
 
-                      <!-- Button trigger modal -->
-                      <button type="button" class="btn btn-link" data-toggle="modal" data-target="#YoutubeVideoEditModalCenter">
-                        <i class="far fa-edit"></i>
-                        Edit YoutubeVideo
-                      </button>
-                      <!-- edit guide Modal -->
-                      <div class="modal fade" id="YoutubeVideoEditModalCenter" tabindex="-1" role="dialog" aria-labelledby="YoutubeVideoEditModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="YoutubeVideoEditModalLongTitle">Edit Youtube video descriptors</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              <form action="/update_youtube_video" method="post" id="YoutubeVideoForm">
-                                <div class="form-group">
-                                  <label for="url_link" class="col-form-label">URL link</label>
-                                  <input type="text" class="form-control" name="url_link" id="url_link" value="<%= youtube_video.try(:url_link) %>">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#YoutubeVideoEditModalCenter">
+                      <i class="far fa-edit"></i>
+                      Edit YoutubeVideo
+                    </button>
+                    <!-- edit guide Modal -->
+                    <div class="modal fade" id="YoutubeVideoEditModalCenter" tabindex="-1" role="dialog" aria-labelledby="YoutubeVideoEditModalCenterTitle" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="YoutubeVideoEditModalLongTitle">Edit Youtube video descriptors</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <form action="/update_youtube_video" method="post" id="YoutubeVideoForm">
+                              <div class="form-group">
+                                <label for="url_link" class="col-form-label">URL link</label>
+                                <input type="text" class="form-control" name="url_link" id="url_link" value="<%= youtube_video.try(:url_link) %>">
 
-                                  <label for="description" class="col-form-label">Description</label>
-                                  <input type="text" class="form-control" name="description" id="description" value="<%= youtube_video.try(:description) %>">
+                                <label for="description" class="col-form-label">Description</label>
+                                <input type="text" class="form-control" name="description" id="description" value="<%= youtube_video.try(:description) %>">
 
-                                  <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
-                                  <input type="hidden" id="tab_id" name="tab_id" class="form-control" value="<%= youtube_video.try(:tab_id) %>">
-                                </div>
-
-                              </form>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                              <button type="submit" form="YoutubeVideoForm" class="btn btn-primary">Update Youtube video descriptors</button>
-                              <a href="#" id="show_more">More</a>
-
-                              <div id="more" class="hidden">
-                                <a href="/delete_youtube_video/<%= youtube_video.id %>" data-confirm="Are you sure?">
-                                  Delete youtube_video
-                                </a>
+                                <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
+                                <input type="hidden" id="tab_id" name="tab_id" class="form-control" value="<%= youtube_video.try(:tab_id) %>">
                               </div>
 
+                            </form>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" form="YoutubeVideoForm" class="btn btn-primary">Update Youtube video descriptors</button>
+                            <a href="#" id="show_more">More</a>
+
+                            <div id="more" class="hidden">
+                              <a href="/delete_youtube_video/<%= youtube_video.id %>" data-confirm="Are you sure?">
+                                Delete youtube_video
+                              </a>
                             </div>
+
                           </div>
                         </div>
                       </div>
-                      <!--END edit guide MODAL-->
-                    <% end %>
-                    <hr>
+                    </div>
+                    <!--END edit guide MODAL-->
                   <% end %>
+                  <hr>
+                <% end %>
 
 
-                  <!--DROPDOWN BUTTONS TO ADD CONTENT-->
-                  <% if current_user == nil %>
-                  <% else %>
-                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-plus"></i>
-                        Add Content</button>
-                      <div class="btn-group" role="group">
-                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                          <form action="/text_components/new">
-                            <input type="hidden" id="tab_id" name="tab_id" class="form-control" value="<%= tab.id %>">
-                            <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
-                            <button type="submit" class="dropdown-item">
-                              <i class="fas fa-font"></i>
-                              Add a text component
-                            </button>
-                          </form>
+                <!--DROPDOWN BUTTONS TO ADD CONTENT-->
+                <% if current_user == nil %>
+                <% else %>
+                  <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-plus"></i>
+                      Add Content</button>
+                    <div class="btn-group" role="group">
+                      <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                        <form action="/text_components/new">
+                          <input type="hidden" id="tab_id" name="tab_id" class="form-control" value="<%= tab.id %>">
+                          <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
+                          <button type="submit" class="dropdown-item">
+                            <i class="fas fa-font"></i>
+                            Add a text component
+                          </button>
+                        </form>
 
-                          <form action="/resources/new">
-                            <input type="hidden" id="tab_id" name="tab_id" class="form-control" value="<%= tab.id %>">
-                            <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
-                            <button type="submit" class="dropdown-item">
-                              <i class="fas fa-file"></i>
-                              Add a resource
-                            </button>
-                          </form>
-                          <form action="/youtube_videos/new">
-                            <input type="hidden" id="tab_id" name="tab_id" class="form-control" value="<%= tab.id %>">
-                            <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
-                            <button type="submit" class="dropdown-item">
-                              <i class="fab fa-youtube"></i>
-                              Add a Youtube video
-                            </button>
-                          </form>
-                        </div>
+                        <form action="/resources/new">
+                          <input type="hidden" id="tab_id" name="tab_id" class="form-control" value="<%= tab.id %>">
+                          <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
+                          <button type="submit" class="dropdown-item">
+                            <i class="fas fa-file"></i>
+                            Add a resource
+                          </button>
+                        </form>
+                        <form action="/youtube_videos/new">
+                          <input type="hidden" id="tab_id" name="tab_id" class="form-control" value="<%= tab.id %>">
+                          <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
+                          <button type="submit" class="dropdown-item">
+                            <i class="fab fa-youtube"></i>
+                            Add a Youtube video
+                          </button>
+                        </form>
                       </div>
                     </div>
-                    <hr>
-                  <% end %>
-
-                  <!--               END TO DISCUSSION TAB LOGIC-->
+                  </div>
+                  <hr>
                 <% end %>
-                <!--END DROPDOWN BUTTONS-->
+
+                <!--               END TO DISCUSSION TAB LOGIC-->
+              <% end %>
+              <!--END DROPDOWN BUTTONS-->
 
 
-              </div>
             </div>
+          </div>
 
-          <% end %>
-        </div>
-
+        <% end %>
       </div>
-
-
-      <!--  Ads COLUMN-->
-      <div class="col-2">
-        <h4> Ads go here</h4>
-        <img style="max-height:auto; max-width:100%;" src="http://construction.krends.com/wp-content/uploads/2015/03/shutterstock_151394975.jpg">
-
-      </div>
-
 
     </div>
+
+
+    <!--  Ads 2 COLUMN-->
+    <div class="col-2">
+<!--      <h4> Ads go here</h4>
+      <img style="max-height:auto; max-width:100%;" src="http://construction.krends.com/wp-content/uploads/2015/03/shutterstock_151394975.jpg">
+-->
+    </div>
+    <!-- END Ads 2 COLUMN-->
+
   </div>
+</div>
 
 
 </body>
