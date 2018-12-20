@@ -40,7 +40,7 @@
         Csi section
       </label>
 
-      <input type="text" id="csi_section" name="csi_section" class="form-control" value="<%= @guide.try(:csi_section) %>">
+      <%= select_tag("csi_section", options_for_select(csi_sections),:class => "form-control") %>
     </div>
 
 

@@ -1,96 +1,110 @@
 <div class="container">
   <h1>
-    Guide Search Results for: "<%= params.fetch("search_entry") %>"
+    Guide Search Results for: "<%= params.fetch("search_entry","") %>"
   </h1>
 
   <%= search_form_for @q do |f| %>
-    <p class="lead">Narrow results:</p>
-
     <div class="form-group">
-      <%= f.label :tags_cont_any, "search guides that contain:" %>
+      <%= f.label :tags_cont_any, "including results containing keywords:" %>
       <%= f.text_field :tags_cont_any, :name =>"search_entry", :class => "form-control" %>
     </div>
-    <%= f.submit :class => "btn btn-primary btn-block" %>
-  <% end %>
+    <div class="form-group">
+      <div class="row" style="padding-bottom:10px;">
+        <div class="col-4">
+          <%= f.label :discipline_eq, "filter by discipline:" %>
+          <%= select_tag("discipline", options_for_select(disciplines,:selected => params.fetch("discipline","")),:class => "form-control") %>
+        </div>
 
-  <form action="/guides">
-    <input type="hidden" name="search_entry" value="">
-    <button class="btn btn-default btn-block" type="submit">
-      Clear filters
-    </button>
-  </form>
-  <hr>
+        <div class="col-4">
+          <%= f.label :csi_section_eq, "filter by CSI Section:" %>
+          <%= select_tag("csi_section", options_for_select(csi_sections,:selected => params.fetch("csi_section","")),:class => "form-control") %>
+        </div>
+      </div>
+      <%= f.submit "Search with Filters", :class => "btn btn-primary btn-block" %>
+    <% end %>
 
-  <% if @guides.count == 0 %>
-    <h5>Your search for <strong>"<%= params.fetch("search_entry") %>"</strong> did not result in finding any guides. 
-      <p>Check your spelling and/or try different search terms.</p>
-    </h5>
-  <% else %>
-    <table class="table">
-      <tr>
-        <th>
-          ID
-        </th>
+    <form action="/guides">
+      <input type="hidden" name="search_entry" value="">
+      <button class="btn btn-default btn-block" type="submit">
+        Clear filters
+      </button>
+    </form>
+    <hr>
 
-        <th>
-          Csi section
-        </th>
-
-        <th>
-          Title
-        </th>
-
-        <th>
-          Discipline
-        </th>
-
-        <th>
-          Created at
-        </th>
-
-        <th>
-          Updated at
-        </th>
-
-        <th>
-        </th>
-      </tr>
-
-      <% @guides.each do |guide| %>
+    <% if @guides.count == 0 %>
+      <h5>
+        <p>Your search for <strong>"<%= params.fetch("search_entry") %>"</strong> did not result in finding any guides. </p>
+        <p>Check your spelling and/or try different search terms.</p>
+        <p>Consider using fewer filters.</p>
+        <p>If you are still unable to find a relevant guide, consider joining the community of contributors by creating the guide you are looking to find.</p>
+      </h5>
+    <% else %>
+      <table class="table">
         <tr>
-          <td>
-            <%= guide.id %>
-          </td>
+          <th>
+            ID
+          </th>
 
-          <td>
-            <%= guide.csi_section %>
-          </td>
+          <th>
+            Csi section
+          </th>
 
-          <td>
-            <%= guide.title %>
-          </td>
+          <th>
+            Title
+          </th>
 
-          <td>
-            <%= guide.discipline %>
-          </td>
+          <th>
+            Discipline
+          </th>
 
-          <td>
-            <%= time_ago_in_words(guide.created_at) %> ago
-          </td>
+          <th>
+            Created at
+          </th>
 
-          <td>
-            <%= time_ago_in_words(guide.updated_at) %> ago
-          </td>
+          <th>
+            Updated at
+          </th>
 
-          <td>
-            <a href="/guides/<%= guide.id %>" class="btn btn-primary">
-              <i class="fas fa-glasses"></i>
-              View Guide
-            </a>
-          </td>
+          <th>
+          </th>
         </tr>
 
-      <% end %>
-    </table>
-  <% end %>
+        <% @guides.each do |guide| %>
+          <tr>
+            <td>
+              <%= guide.id %>
+            </td>
+
+            <td>
+              <%= guide.csi_section %>
+            </td>
+
+            <td>
+              <%= guide.title %>
+            </td>
+
+            <td>
+              <%= guide.discipline %>
+            </td>
+
+            <td>
+              <%= time_ago_in_words(guide.created_at) %> ago
+            </td>
+
+            <td>
+              <%= time_ago_in_words(guide.updated_at) %> ago
+            </td>
+
+            <td>
+              <a href="/guides/<%= guide.id %>" class="btn btn-primary">
+                <i class="fas fa-glasses"></i>
+                View Guide
+              </a>
+            </td>
+          </tr>
+
+        <% end %>
+      </table>
+    <% end %>
+  </div>
 </div>

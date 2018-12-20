@@ -33,6 +33,7 @@
 
     <input type="text" id="header" name="header" class="form-control" value="<%= @text_component.try(:header) %>">
   </div>
+  
   <div class="form-group">
     <label for="content">
       Content
@@ -40,6 +41,7 @@
 
     <textarea id="content" name="content" class="ckeditor" rows="10" value="<%= @text_component.try(:content) %>"></textarea>
   </div>
+  
   <button class="btn btn-block btn-outline-secondary">
     Update text component
   </button>

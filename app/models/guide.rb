@@ -15,4 +15,6 @@ class Guide < ApplicationRecord
   has_many :tabs, :dependent => :destroy
   has_many :tracked_guides, :dependent => :destroy
   validates :title, uniqueness: true
+  validates :title, :discipline, :csi_section, presence: true
+  
 end

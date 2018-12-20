@@ -2,8 +2,8 @@ class GuidesController < ApplicationController
   before_action :authenticate_user!, :except => [:show, :index]
 
   def index
-    @q = Guide.ransack(tags_cont_any: params.fetch("search_entry").split(/[\s,'+-:~]/))
-    @guides = @q.result(distinct: true)
+      @q = Guide.ransack(tags_cont_any: params.fetch("search_entry","").split(/[\s,'+-:~]/), discipline_eq: params.fetch("discipline",""), csi_section_eq: params.fetch("csi_section",""))
+      @guides = @q.result(distinct: true)
 
     render("guide_templates/index.html.erb")
   end
@@ -24,8 +24,8 @@ class GuidesController < ApplicationController
     @guide.csi_section = params.fetch("csi_section")
     @guide.title = params.fetch("title")
     @guide.discipline = params.fetch("discipline")
-    @guide.tags = params.fetch("csi_section")+", "+params.fetch("title")+", "+params.fetch("discipline")
-    
+    @guide.tags = params.fetch("csi_section") + ", " + params.fetch("title") + ", " + params.fetch("discipline")
+
     if @guide.valid?
       @guide.save
 
@@ -68,7 +68,7 @@ class GuidesController < ApplicationController
       @tab.title = "Other Resources"
       @tab.guide_id = @guide.id
       @tab.save
-      
+
       @tab = Tab.new
       @tab.title = "Discussions"
       @tab.guide_id = @guide.id
@@ -92,7 +92,7 @@ class GuidesController < ApplicationController
     @guide.csi_section = params.fetch("csi_section")
     @guide.title = params.fetch("title")
     @guide.discipline = params.fetch("discipline")
-    @guide.tags = params.fetch("csi_section")+", "+params.fetch("title")+", "+params.fetch("discipline")
+    @guide.tags = params.fetch("csi_section") + ", " + params.fetch("title") + ", " + params.fetch("discipline")
 
     if @guide.valid?
       @guide.save
