@@ -220,6 +220,8 @@
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                               <button type="submit" form="TabEditForm<%= tab.id %>" class="btn btn-primary">Update the <%= tab.title %> tab descriptors</button>
+                              <% if ["Design Summary","Discussions"].include? tab.title %>
+                              <% else %>
                               <a href="#" id="show_more">More</a>
 
                               <div id="more" class="hidden">
@@ -227,7 +229,7 @@
                                   Delete the <%= tab.title %> tab
                                 </a>
                               </div>
-
+                              <% end %>
                             </div>
                           </div>
                         </div>

@@ -40,108 +40,83 @@
 
   <body>
     <%= render 'layouts/header' %>
+    <!--test-->
+    <div class="jumbotron d-flex justify-content-center" style="
+          background-image: url(http://sf.co.ua/13/02/wallpaper-768.jpg);
+          height: 100%;
+          background-attachment: fixed;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          height:300px; ">
+  
+        <form class="form-inline my-2 my-lg-0" action="/guides">
+          <label class="sr-only" for="search_bar"></label>
+          <input class="form-control form-control-lg mr-sm-2" type="text" name="search_entry" id="search_bar"  placeholder="Search Guides" style="width:400px">
+          <button class="btn btn-lg btn-secondary my-2 my-lg-0" type="submit">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+
+    </div>
+
 
     <div class="container">
-
-          <!--Home image carousel-->
-          <div class="row justify-content-center" style="margin:10px">
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-              <ol class="carousel-indicators">
-                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-              </ol>
-              <div class="carousel-inner">
-                <div class="carousel-item active" style="width:auto;height:400px">
-                  <img class="d-block w-100" src="https://cdnassets.hw.net/8b/16/ad10b7644b379890958adca8b519/construction.jpg" alt="First slide" style="height:100%">
-                  <div class="carousel-caption d-none d-md-block">
-                    <h5><span style="background:black">OS Design Guide</span></h5>
-                    <p><span style="background:black">Contribute your experience and knowledge with a collaborative community of designers</span></p>
-                  </div>
-                </div>
-                <div class="carousel-item" style="width:auto;height:400px">
-                  <img class="d-block w-100" src="https://picjumbo.com/wp-content/uploads/clean-setup-keyboard-and-glossy-desktop-display-2210x1473.jpg" alt="Second slide" style="height:100%">
-                  <div class="carousel-caption d-none d-md-block">
-                    <h5><span style="background:black">OS Design Guide</span></h5>
-                    <p><span style="background:black">Community discussions around guide specific content areas</span></p>
-                  </div>
-                </div>
-                <div class="carousel-item" style="width:auto;height:400px">
-                  <img class="d-block w-100" src="https://picjumbo.com/wp-content/uploads/creative-designer-photographer-workspace-desk-setup-2210x1475.jpg" alt="Third slide" style="height:100%">
-                  <div class="carousel-caption d-none d-md-block">
-                    <h5><span style="background:black">OS Design Guide</span></h5>
-                    <p><span style="background:black">Stay up-to-date with the latest developments</span></p>
-                  </div>
-                </div>
-              </div>
-              <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-              </a>
-              <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-              </a>
-            </div>
-          </div>
-
-
-        <!--Cards-->
-        <div class="row justify-content-center"> 
-          <div class="card border-primary mb-3" style="margin:20px; max-height: 200px;overflow-y: auto;">
-            <h6 class="card-header text-white" style="background-color:#3E3F3A;">Browse Guides by Discipline</h6>
-            <ul class="list-group list-group-flush">
-              <% disciplines.each do |discipline| %>
-                <% if discipline == "" %>
-                <% else %>
-                  <li class="list-group-item" style="padding:0;">
-                    <form action="/guides">
-                      <input class="form-control" type="hidden" name="search_entry" id="search_entry" value="">
-                      <input class="form-control" type="hidden" name="discipline" id="discipline" value="<%= discipline %>">
-                      <button class="btn btn-link" type="submit">
-                       <small><%= discipline %></small>
-                        <span class="badge badge-primary badge-pill"><%= Guide.where(:discipline => discipline).count %></span>
-                      </button>
-                    </form>
-                  </li>
-                <% end %>
+      <!--Cards-->
+      <div class="row justify-content-center">
+        <div class="card border-primary mb-3" style="margin:20px; max-height: 200px;overflow-y: auto;">
+          <h6 class="card-header text-white" style="background-color:#3E3F3A;">Browse Guides by Discipline</h6>
+          <ul class="list-group list-group-flush">
+            <% disciplines.each do |discipline| %>
+              <% if discipline == "" %>
+              <% else %>
+                <li class="list-group-item" style="padding:0;">
+                  <form action="/guides">
+                    <input class="form-control" type="hidden" name="search_entry" id="search_entry" value="">
+                    <input class="form-control" type="hidden" name="discipline" id="discipline" value="<%= discipline %>">
+                    <button class="btn btn-link" type="submit">
+                      <small><%= discipline %></small>
+                      <span class="badge badge-primary badge-pill"><%= Guide.where(:discipline => discipline).count %></span>
+                    </button>
+                  </form>
+                </li>
               <% end %>
-            </ul>
-          </div>
-          
-          <div class="card border-primary mb-3 offset-mb-1" style="margin:20px; max-height: 200px;overflow-y: auto;">
-            <h6 class="card-header text-white" style="background-color:#3E3F3A;">Recent Guide Changes</h6>
-            <ul class="list-group list-group-flush">
-              <% disciplines.each do |discipline| %>
-                <% if discipline == "" %>
-                <% else %>
-                  <li class="list-group-item" style="padding:5px;">
-                    <small><%= discipline %></small>
-                    <span class="badge badge-primary badge-pill"><%= Guide.where(:discipline => discipline).count %></span>
-                  </li>
-                <% end %>
-              <% end %>
-            </ul>
-          </div>
-     
-        
-          <div class="card border-primary mb-3 offset-mb-1" style="margin:20px; max-height: 200px;overflow-y: auto;">
-            <h6 class="card-header text-white" style="background-color:#3E3F3A;">Recent Guide Changes</h6>
-            <ul class="list-group list-group-flush">
-              <% disciplines.each do |discipline| %>
-                <% if discipline == "" %>
-                <% else %>
-                  <li class="list-group-item" style="padding:5px;">
-                    <small><%= discipline %></small>
-                    <span class="badge badge-primary badge-pill"><%= Guide.where(:discipline => discipline).count %></span>
-                  </li>
-                <% end %>
-              <% end %>
-            </ul>
-          </div>
+            <% end %>
+          </ul>
         </div>
-        <!--END CARDS-->
 
+        <div class="card border-primary mb-3 offset-mb-1" style="margin:20px; max-height: 200px;overflow-y: auto;">
+          <h6 class="card-header text-white" style="background-color:#3E3F3A;">Recent Guide Changes</h6>
+          <ul class="list-group list-group-flush">
+            <% disciplines.each do |discipline| %>
+              <% if discipline == "" %>
+              <% else %>
+                <li class="list-group-item" style="padding:5px;">
+                  <small><%= discipline %></small>
+                  <span class="badge badge-primary badge-pill"><%= Guide.where(:discipline => discipline).count %></span>
+                </li>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+
+
+        <div class="card border-primary mb-3 offset-mb-1" style="margin:20px; max-height: 200px;overflow-y: auto;">
+          <h6 class="card-header text-white" style="background-color:#3E3F3A;">Featured Lessons Learned Blog Articles</h6>
+          <ul class="list-group list-group-flush">
+            <% disciplines.each do |discipline| %>
+              <% if discipline == "" %>
+              <% else %>
+                <li class="list-group-item" style="padding:5px;">
+                  <small><%= discipline %></small>
+                  <span class="badge badge-primary badge-pill"><%= Guide.where(:discipline => discipline).count %></span>
+                </li>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+      <!--END CARDS-->
 
 
     </div>

@@ -19,7 +19,7 @@ Ckeditor.setup do |config|
   # Allowed attachment file types for upload.
   # Set to nil or [] (empty array) for all file types
   # By default: %w(doc docx xls odt ods pdf rar zip tar tar.gz swf)
-   config.attachment_file_types = %w(doc docx xls odt ods pdf rar zip tar tar.gz swf)
+   config.attachment_file_types = %w(mp4 doc docx xls odt ods pdf rar zip tar tar.gz swf)
 
   # Setup authorization to be run as a before filter
   # By default: there is no authorization.
@@ -44,12 +44,12 @@ Ckeditor.setup do |config|
   # To reduce the asset precompilation time, you can limit plugins and/or languages to those you need:
   # By default: nil (no limit)
   # config.assets_languages = ['en', 'uk']
-  # config.assets_plugins = ['image', 'smiley']
+  # config.assets_plugins = ['image', 'smiley', 'attach']
 
   # CKEditor CDN
   # More info here http://cdn.ckeditor.com/
   # By default: nil (CDN disabled)
-   config.cdn_url = '//cdn.ckeditor.com/4.7.1/standard/ckeditor.js'
+   config.cdn_url = '//cdn.ckeditor.com/4.11.2/full/ckeditor.js'
 
   # JS config url
   # Used when CKEditor CDN enabled

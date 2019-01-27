@@ -1,7 +1,14 @@
 CKEDITOR.editorConfig = function( config ) {
   config.language = 'en';
   config.uiColor = '#ffffff';
+  
+  config.fillEmptyBlocks = false;
+  config.autoParagraph = false;
+  config.removeDialogTabs = 'image:Upload';
+  config.removeDialogTabs = 'flash:Upload';
   /* Filebrowser routes */
+  
+  config.filebrowserBrowseUrl = '/browser/browse.php';
   // The location of an external file browser, that should be launched when "Browse Server" button is pressed.
   config.filebrowserBrowseUrl = "/ckeditor/attachment_files";
   // The location of an external file browser, that should be launched when "Browse Server" button is pressed in the Flash dialog.

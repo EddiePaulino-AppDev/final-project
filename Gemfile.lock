@@ -45,6 +45,14 @@ GIT
       turbolinks (~> 5)
       tzinfo-data
 
+GIT
+  remote: https://github.com/galetahub/ckeditor.git
+  revision: 2def63b8be9bac701869d70a4f6600772b42de3d
+  specs:
+    ckeditor (4.3.0)
+      orm_adapter (~> 0.5.0)
+      terrapin
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -129,15 +137,10 @@ GEM
       activemodel (>= 4.0.0)
       activesupport (>= 4.0.0)
       mime-types (>= 1.16)
-    ckeditor (4.2.4)
-      cocaine
-      orm_adapter (~> 0.5.0)
     climate_control (0.2.0)
     cloudinary (1.10.1.pre.rc)
       aws_cf_signer
       rest-client
-    cocaine (0.6.0)
-      terrapin (= 0.6.0)
     coderay (1.1.2)
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
@@ -404,7 +407,7 @@ DEPENDENCIES
   byebug
   capybara
   carrierwave
-  ckeditor
+  ckeditor!
   cloudinary (= 1.10.1.pre.rc)
   console_ip_whitelist!
   dev_toolbar!

@@ -1,11 +1,11 @@
 # encoding: utf-8
 class CkeditorPictureUploader < CarrierWave::Uploader::Base
   include Ckeditor::Backend::CarrierWave
-
+  include Cloudinary::CarrierWave
   # Include RMagick or ImageScience support:
   # include CarrierWave::RMagick
   include CarrierWave::MiniMagick
-  include Cloudinary::CarrierWave
+
   
 
   # include CarrierWave::ImageScience
@@ -15,9 +15,9 @@ class CkeditorPictureUploader < CarrierWave::Uploader::Base
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
-  def store_dir
-      "uploads/ckeditor/pictures/#{model.id}"
-  end
+  #def store_dir
+   #   "uploads/ckeditor/pictures/#{model.id}"
+  #end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url
@@ -31,6 +31,15 @@ class CkeditorPictureUploader < CarrierWave::Uploader::Base
   #   # do something
   # end
 
+  [:extract_content_type, :extract_size, :extract_dimensions].each do |method|
+    define_method :"#{method}_with_cloudinary" do
+      send(:"#{method}_without_cloudinary") if self.file.is_a?(CarrierWave::SanitizedFile)
+      {}
+    end
+    alias_method :"#{method}_without_cloudinary", method
+    alias_method method, :"#{method}_with_cloudinary"
+  end
+  
   process :extract_dimensions
 
   # Create different versions of your uploaded files:

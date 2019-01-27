@@ -58,7 +58,7 @@
       <a href="#/lessons_learned" class="nav-link">
         <i class="fas fa-newspaper"></i>
         Lessons Learned Blog</a>
-
+<% unless current_page?("/")%>
       <li class="nav-item">
         <form class="form-inline my-2 my-lg-0" action="/guides">
           <label class="sr-only" for="search_bar"></label>
@@ -68,6 +68,7 @@
             Search</button>
         </form>
       </li>
+      <% end %>
     </ul>
   </div>
 </nav>

@@ -9,7 +9,7 @@ gem "ransack"
 gem "carrierwave"
 gem 'mini_magick'
 gem "cloudinary", "1.10.1.pre.rc"
-gem 'ckeditor'
+gem 'ckeditor', github: "galetahub/ckeditor"
 gem "activeadmin"
 gem "devise"
 gem "jbuilder", "~> 2.5"
