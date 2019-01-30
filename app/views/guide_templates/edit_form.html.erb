@@ -31,15 +31,23 @@
 
       <input type="text" id="title" name="title" class="form-control" value="<%= @guide.title %>">
     </div>
+        <!-- Label and input for industries -->
+    <div class="form-group">
+      <label for="discipline">
+        Industries
+      </label>
 
+      <%= select_tag("industries", options_for_select(industries, :selected => @guide.try(:industry)), :class => "form-control") %>
+    </div>
     <!-- Label and input for discipline -->
     <div class="form-group">
       <label for="discipline">
         Discipline
       </label>
 
-      <%= select_tag("discipline", options_for_select(disciplines, @guide.discipline),:class => "form-control") %>
+      <%= select_tag("discipline", options_for_select(disciplines, :selected => @guide.try(:discipline)), :class => "form-control") %>
     </div>
+
 
     <button class="btn btn-block btn-outline-secondary">
       Update guide

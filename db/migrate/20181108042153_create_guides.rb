@@ -3,7 +3,6 @@ class CreateGuides < ActiveRecord::Migration[5.1]
     create_table :guides do |t|
       t.string :csi_section
       t.string :title
-      t.string :discipline
 
       t.timestamps
     end

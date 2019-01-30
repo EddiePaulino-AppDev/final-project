@@ -16,7 +16,7 @@
   <hr>
 
   <form action="/create_guide" method="post">
-    
+
     <!-- Label and input for title -->
     <div class="form-group">
       <label for="title">
@@ -25,24 +25,30 @@
 
       <input type="text" id="title" name="title" class="form-control" value="<%= @guide.try(:title) %>">
     </div>
-    
-    <!-- Label and input for discipline -->
+    <!-- Label and input for industries -->
     <div class="form-group">
       <label for="discipline">
-        Discipline
+        Industries
       </label>
-      <%= select_tag("discipline", options_for_select(disciplines),:class => "form-control") %>
+      <%= select_tag("industries", options_from_collection_for_select(Industry.all, :id, :name), :multiple => true, :class => "form-control") %>
     </div>
-    
+
+    <!-- Label and input for discipline, the database table must have rows of disciplines -->
+    <div class="form-group">
+      <label for="disciplines">
+        Disciplines
+      </label>
+      <%= select_tag("disciplines", options_from_collection_for_select(Discipline.all, :id, :name),:multiple =>  true, :class => "form-control") %>
+    </div>
+
     <!-- Label and input for csi_section -->
     <div class="form-group">
       <label for="csi_section">
-        Csi section
+        CSI section
       </label>
 
       <%= select_tag("csi_section", options_for_select(csi_sections),:class => "form-control") %>
     </div>
-
 
 
     <button class="btn btn-block btn-outline-secondary">

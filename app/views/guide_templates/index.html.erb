@@ -11,8 +11,12 @@
     <div class="form-group">
       <div class="row" style="padding-bottom:10px;">
         <div class="col-4">
+          <%= f.label :industries_eq, "filter by industry:" %>
+          <%= select_tag("industries", options_from_collection_for_select(Industry.all, :id, :name, params.fetch("industry")), :multiple => true, :class => "form-control") %>
+        </div>
+        <div class="col-4">
           <%= f.label :discipline_eq, "filter by discipline:" %>
-          <%= select_tag("discipline", options_for_select(disciplines,:selected => params.fetch("discipline","")),:class => "form-control") %>
+          <%= select_tag("discipline", options_for_select(Discipline.all,:selected => params.fetch("discipline","")),:class => "form-control") %>
         </div>
 
         <div class="col-4">
@@ -42,21 +46,19 @@
       <table class="table">
         <tr>
           <th>
-            ID
+            Title
           </th>
-
+          <th>
+            Industries
+          </th>
+          <th>
+            Disciplines
+          </th>
+          
           <th>
             Csi section
           </th>
-
-          <th>
-            Title
-          </th>
-
-          <th>
-            Discipline
-          </th>
-
+          
           <th>
             Created at
           </th>
@@ -72,21 +74,20 @@
         <% @guides.each do |guide| %>
           <tr>
             <td>
-              <%= guide.id %>
+              <%= guide.title %>
             </td>
-
+            
+            <td>
+              <%= guide.industries.pluck(:name).to_sentence %>
+            </td>
+            <td>
+              <%= guide.disciplines.pluck(:name).to_sentence %>
+            </td>
+            
             <td>
               <%= guide.csi_section %>
             </td>
-
-            <td>
-              <%= guide.title %>
-            </td>
-
-            <td>
-              <%= guide.discipline %>
-            </td>
-
+            
             <td>
               <%= time_ago_in_words(guide.created_at) %> ago
             </td>

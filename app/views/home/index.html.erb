@@ -64,19 +64,42 @@
     <div class="container">
       <!--Cards-->
       <div class="row justify-content-center">
+                
+    <!--    Browse guides by Industry-->
+        <div class="card border-primary mb-3" style="margin:20px; max-height: 200px;overflow-y: auto;">
+          <h6 class="card-header text-white" style="background-color:#3E3F3A;">Browse Guides by Industry</h6>
+          <ul class="list-group list-group-flush">
+            <% Industry.all.each do |industry| %>
+                <li class="list-group-item" style="padding:0;">
+                  <form action="/guides">
+                    <input class="form-control" type="hidden" name="search_entry" id="search_entry" value="">
+                    <input class="form-control" type="hidden" name="industry" id="industry" value="<%= industry.name %>">
+                    <input class="form-control" type="hidden" name="discipline" id="discipline" value="">
+                    <button class="btn btn-link" type="submit">
+                      <small><%= industry.name %></small>
+                      <span class="badge badge-primary badge-pill"><%= GuideIndustry.where(:industry_id => industry.id).count %></span>
+                    </button>
+                  </form>
+                </li>
+            <% end %>
+          </ul>
+        </div>
+        
+    <!--    Browse guides by discipline-->
         <div class="card border-primary mb-3" style="margin:20px; max-height: 200px;overflow-y: auto;">
           <h6 class="card-header text-white" style="background-color:#3E3F3A;">Browse Guides by Discipline</h6>
           <ul class="list-group list-group-flush">
-            <% disciplines.each do |discipline| %>
+            <% Discipline.all.each do |discipline| %>
               <% if discipline == "" %>
               <% else %>
                 <li class="list-group-item" style="padding:0;">
                   <form action="/guides">
                     <input class="form-control" type="hidden" name="search_entry" id="search_entry" value="">
-                    <input class="form-control" type="hidden" name="discipline" id="discipline" value="<%= discipline %>">
+                    <input class="form-control" type="hidden" name="discipline" id="discipline" value="<%= discipline.name %>">
+                    <input class="form-control" type="hidden" name="industry" id="industry" value="">
                     <button class="btn btn-link" type="submit">
-                      <small><%= discipline %></small>
-                      <span class="badge badge-primary badge-pill"><%= Guide.where(:discipline => discipline).count %></span>
+                      <small><%= discipline.name %></small>
+                      <span class="badge badge-primary badge-pill"><%= GuideDiscipline.where(:discipline_id => discipline.id).count %></span>
                     </button>
                   </form>
                 </li>
