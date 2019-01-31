@@ -3,7 +3,6 @@ class GuidesController < ApplicationController
 
   def index
       @q = Guide.ransack(tags_cont_any: params.fetch("search_entry","").split(/[\s,'+-:~]/), industries_name_eq: params.fetch("industry",""), disciplines_name_eq: params.fetch("discipline",""), csi_section_eq: params.fetch("csi_section",""))
-
       @guides = @q.result.includes(:industries, :disciplines)
 
     render("guide_templates/index.html.erb")
@@ -22,11 +21,11 @@ class GuidesController < ApplicationController
   def create_row
     @guide = Guide.new
 
-    @guide.csi_section = params.fetch("csi_section")
+    @guide.csi_section = params.fetch("csi_section","")
     @guide.title = params.fetch("title")
     
     #creating guide industries
-    params.fetch("industries").each do |industry|
+    params.fetch("industries",{}).each do |industry|
     @guide_industry = GuideIndustry.new
     @guide_industry.guide_id = @guide.id
     @guide_industry.industry_id = industry
@@ -34,16 +33,15 @@ class GuidesController < ApplicationController
     end
     
     #creating guide disciplines
-    params.fetch("disciplines").each do |discipline|
+    params.fetch("disciplines",{}).each do |discipline|
     @guide_discipline = GuideDiscipline.new
     @guide_discipline.guide_id = @guide.id
     @guide_discipline.discipline_id = discipline
     @guide_discipline.save
     end
     
-    @guide.tags = params.fetch("csi_section") + ", " + params.fetch("title") + ", " + params.fetch("discipline") + params.fetch("industry").join(", ")
+    @guide.tags = params.fetch("title")
     
-    redirect_to("/create_guide_discipline") and return
 
     if @guide.valid?
       @guide.save
@@ -108,14 +106,14 @@ class GuidesController < ApplicationController
   def update_row
     @guide = Guide.find(params.fetch("id_to_modify"))
 
-    @guide.csi_section = params.fetch("csi_section")
+    @guide.csi_section = params.fetch("csi_section", "")
     @guide.title = params.fetch("title")
     
     # updating industries
     GuideIndustry.where(:guide_id => @guide.id).each do |guide_industry|
     guide_industry.destroy
     end
-    params.fetch("industries").each do |industry|
+    params.fetch("industries",{}).each do |industry|
     @guide_industry = GuideIndustry.new
     @guide_industry.guide_id = @guide.id
     @guide_industry.industry_id = industry
@@ -126,7 +124,7 @@ class GuidesController < ApplicationController
     GuideDiscipline.where(:guide_id => @guide.id).each do |guide_discipline|
     guide_discipline.destroy
     end
-    params.fetch("disciplines").each do |discipline|
+    params.fetch("disciplines",{}).each do |discipline|
     @guide_discipline = GuideDiscipline.new
     @guide_discipline.guide_id = @guide.id
     @guide_discipline.discipline_id = discipline
@@ -135,7 +133,7 @@ class GuidesController < ApplicationController
     
     #
     
-    @guide.tags = params.fetch("csi_section") + ", " + params.fetch("title") + ", " + params.fetch("disciplines").join(", ") + params.fetch("industries").join(", ")
+    @guide.tags =  params.fetch("title") 
 
     if @guide.valid?
       @guide.save

@@ -9,11 +9,13 @@
     <tr>
 
       <th>
-        Guide
+        Title
       </th>
-
       <th>
-        Discipline
+        Industries
+      </th>
+      <th>
+        Disciplines
       </th>
       <th>
         CSI Section
@@ -30,7 +32,11 @@
           <%= Guide.find_by(:id => tracked_guide.guide_id).title %>
         </td>
         <td>
-          <%= Guide.find_by(:id => tracked_guide.guide_id).discipline %>
+          <%= Guide.find_by(:id => tracked_guide.guide_id).industries.pluck(:name).to_sentence %>
+        </td>
+
+        <td>
+          <%= Guide.find_by(:id => tracked_guide.guide_id).disciplines.pluck(:name).to_sentence %>
         </td>
 
         <td>

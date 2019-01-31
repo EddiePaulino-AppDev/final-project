@@ -70,6 +70,8 @@
           <h6 class="card-header text-white" style="background-color:#3E3F3A;">Browse Guides by Industry</h6>
           <ul class="list-group list-group-flush">
             <% Industry.all.each do |industry| %>
+                <% if industry.name == "" %>
+                <% else %>
                 <li class="list-group-item" style="padding:0;">
                   <form action="/guides">
                     <input class="form-control" type="hidden" name="search_entry" id="search_entry" value="">
@@ -81,6 +83,7 @@
                     </button>
                   </form>
                 </li>
+              <% end %>
             <% end %>
           </ul>
         </div>
@@ -90,7 +93,7 @@
           <h6 class="card-header text-white" style="background-color:#3E3F3A;">Browse Guides by Discipline</h6>
           <ul class="list-group list-group-flush">
             <% Discipline.all.each do |discipline| %>
-              <% if discipline == "" %>
+              <% if discipline.name == "" %>
               <% else %>
                 <li class="list-group-item" style="padding:0;">
                   <form action="/guides">
@@ -110,33 +113,13 @@
 
         <div class="card border-primary mb-3 offset-mb-1" style="margin:20px; max-height: 200px;overflow-y: auto;">
           <h6 class="card-header text-white" style="background-color:#3E3F3A;">Recent Guide Changes</h6>
-          <ul class="list-group list-group-flush">
-            <% disciplines.each do |discipline| %>
-              <% if discipline == "" %>
-              <% else %>
-                <li class="list-group-item" style="padding:5px;">
-                  <small><%= discipline %></small>
-                  <span class="badge badge-primary badge-pill"><%= Guide.where(:discipline => discipline).count %></span>
-                </li>
-              <% end %>
-            <% end %>
-          </ul>
+
         </div>
 
 
         <div class="card border-primary mb-3 offset-mb-1" style="margin:20px; max-height: 200px;overflow-y: auto;">
-          <h6 class="card-header text-white" style="background-color:#3E3F3A;">Featured Lessons Learned Blog Articles</h6>
-          <ul class="list-group list-group-flush">
-            <% disciplines.each do |discipline| %>
-              <% if discipline == "" %>
-              <% else %>
-                <li class="list-group-item" style="padding:5px;">
-                  <small><%= discipline %></small>
-                  <span class="badge badge-primary badge-pill"><%= Guide.where(:discipline => discipline).count %></span>
-                </li>
-              <% end %>
-            <% end %>
-          </ul>
+          <h6 class="card-header text-white" style="background-color:#3E3F3A;">Featured Community Board Articles</h6>
+
         </div>
       </div>
       <!--END CARDS-->

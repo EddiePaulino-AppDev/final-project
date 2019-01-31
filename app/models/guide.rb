@@ -5,11 +5,9 @@
 #  id          :integer          not null, primary key
 #  csi_section :string
 #  title       :string
-#  discipline  :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  tags        :text
-#  industries  :string
 #
 
 class Guide < ApplicationRecord
@@ -21,6 +19,6 @@ class Guide < ApplicationRecord
   has_many :guide_industries, :dependent => :destroy
   has_many :industries, :through => :guide_industries, :source => :industry
   validates :title, uniqueness: true
-  validates :title, :industries, :discipline, :csi_section, presence: true
+  validates :title, :csi_section, presence: true
   has_paper_trail
 end

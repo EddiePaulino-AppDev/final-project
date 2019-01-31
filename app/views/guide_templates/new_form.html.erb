@@ -27,7 +27,7 @@
     </div>
     <!-- Label and input for industries -->
     <div class="form-group">
-      <label for="discipline">
+      <label for="industries">
         Industries
       </label>
       <%= select_tag("industries", options_from_collection_for_select(Industry.all, :id, :name), :multiple => true, :class => "form-control") %>
