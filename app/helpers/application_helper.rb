@@ -11,6 +11,6 @@ module ApplicationHelper
   end
   
   def csi_sections
-  ["Unlisted", "","00 00 00","01 00 00"]
+  ["00 00 00","01 00 00", "Unlisted", ""]
   end
 end

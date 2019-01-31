@@ -5,27 +5,29 @@
 
   <%= search_form_for @q do |f| %>
     <div class="form-group">
-      <%= f.label :tags_cont_any, "including results containing keywords:" %>
-      <%= f.text_field :tags_cont_any, :name =>"search_entry", :class => "form-control" %>
+      <%= f.label :tags_cont_any, "Results containing keywords:" %>
+      <%= f.search_field :tags_cont_any, :name =>"search_entry", :value => params.fetch("search_entry",""), :class => "form-control" %>
     </div>
-    <div class="form-group">
+     <div class="form-group">
       <div class="row" style="padding-bottom:10px;">
-        <div class="col-4">
-          <%= f.label :industries_eq, "filter by industry:" %>
-          <%= select_tag("industries", options_from_collection_for_select(Industry.all, :id, :name, params.fetch("industry")), :multiple => true, :class => "form-control") %>
-        </div>
-        <div class="col-4">
-          <%= f.label :discipline_eq, "filter by discipline:" %>
-          <%= select_tag("discipline", options_for_select(Discipline.all,:selected => params.fetch("discipline","")),:class => "form-control") %>
-        </div>
-
-        <div class="col-4">
-          <%= f.label :csi_section_eq, "filter by CSI Section:" %>
-          <%= select_tag("csi_section", options_for_select(csi_sections,:selected => params.fetch("csi_section","")),:class => "form-control") %>
+          <div class="col-4">
+            <%= f.label :industries_name_eq, "filter by industry:" %>
+            <%= select_tag("industry", options_for_select(Industry.all.pluck(:name), :selected => params.fetch("industry","")), :class => "form-control") %>
+          </div>
+          <div class="col-4">
+            <%= f.label :disciplines_name_eq, "filter by discipline:" %>
+            <%= select_tag("discipline", options_for_select(Discipline.all.pluck(:name), :selected => params.fetch("discipline","")), :class => "form-control") %>
+          </div>
+  
+          <div class="col-4">
+            <%= f.label :csi_section_eq, "filter by CSI Section:" %>
+            <%= select_tag("csi_section", options_for_select(csi_sections,:selected => params.fetch("csi_section","")),:class => "form-control") %>
+          </div>
         </div>
       </div>
       <%= f.submit "Search with Filters", :class => "btn btn-primary btn-block" %>
     <% end %>
+   
 
     <form action="/guides">
       <input type="hidden" name="search_entry" value="">
@@ -46,25 +48,25 @@
       <table class="table">
         <tr>
           <th>
-            Title
+            <%= sort_link @q, :title, "Title" %>
           </th>
           <th>
-            Industries
+            <%= sort_link @q, :industries, "Industries" %>
           </th>
           <th>
-            Disciplines
-          </th>
-          
-          <th>
-            Csi section
+            <%= sort_link @q, :discipline, "Disciplines" %>
           </th>
           
           <th>
-            Created at
+            <%= sort_link @q, :csi_section, "CSI Section" %>
+          </th>
+          
+          <th>
+            <%= sort_link @q, :created_at, "Created At" %>
           </th>
 
           <th>
-            Updated at
+            <%= sort_link @q, :updated_at, "Updated At" %>
           </th>
 
           <th>

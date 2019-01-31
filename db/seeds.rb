@@ -16,4 +16,4 @@ Industry.create(name:"Telecommunication") if Rails.env.development?
 Industry.create(name:"Energy") if Rails.env.development?
 Industry.create(name:"Agriculture") if Rails.env.development?
 Industry.create(name:"Construction") if Rails.env.development?
-Industry.create(name:"Unlisted") if Rails.env.development?
+Industry.create(name:"Not Listed") if Rails.env.development?

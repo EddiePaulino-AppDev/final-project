@@ -2,8 +2,9 @@ class GuidesController < ApplicationController
   before_action :authenticate_user!, :except => [:show, :index]
 
   def index
-      @q = Guide.ransack(tags_cont_any: params.fetch("search_entry","").split(/[\s,'+-:~]/), industry_eq: params.fetch("industry",""), discipline_eq: params.fetch("discipline",""), csi_section_eq: params.fetch("csi_section",""))
-      @guides = @q.result(distinct: true)
+      @q = Guide.ransack(tags_cont_any: params.fetch("search_entry","").split(/[\s,'+-:~]/), industries_name_eq: params.fetch("industry",""), disciplines_name_eq: params.fetch("discipline",""), csi_section_eq: params.fetch("csi_section",""))
+
+      @guides = @q.result.includes(:industries, :disciplines)
 
     render("guide_templates/index.html.erb")
   end
