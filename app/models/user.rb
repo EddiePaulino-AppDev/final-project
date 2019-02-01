@@ -41,7 +41,7 @@ class User < ApplicationRecord
 
   validates :first_name, :presence => true
   validates :last_name, :presence => true
-  has_many :tracked_guides, :dependent => :destroy
+  has_many :stars, :dependent => :destroy
   has_many :comments, :dependent => :destroy
   has_many :discussions, :through => :comments, :source => :discussion
   # has_many :posts, :class_name => "Post", :foreign_key => "user_id"

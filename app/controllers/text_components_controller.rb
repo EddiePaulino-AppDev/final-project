@@ -21,7 +21,6 @@ class TextComponentsController < ApplicationController
     @text_component = TextComponent.new
 
     @text_component.tab_id = params.fetch("tab_id")
-    @text_component.header = params.fetch("header")
     @text_component.content = params.fetch("content")
 
     if @text_component.valid?
@@ -44,7 +43,6 @@ class TextComponentsController < ApplicationController
     @text_component = TextComponent.find(params.fetch("id_to_modify"))
 
     @text_component.tab_id = params.fetch("tab_id")
-    @text_component.header = params.fetch("header")
     @text_component.content = params.fetch("content")
 
     if @text_component.valid?

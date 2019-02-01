@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: tracked_guides
+# Table name: stars
 #
 #  id         :integer          not null, primary key
 #  user_id    :integer
@@ -9,7 +9,7 @@
 #  updated_at :datetime         not null
 #
 
-class TrackedGuide < ApplicationRecord
+class Star < ApplicationRecord
   belongs_to :user
   belongs_to :guide
 end

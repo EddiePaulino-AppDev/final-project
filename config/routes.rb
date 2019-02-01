@@ -38,61 +38,21 @@ Rails.application.routes.draw do
   #------------------------------
 
   mount Ckeditor::Engine => '/ckeditor'
-  # Routes for the Tracked guide resource:
+  # Routes for the star resource:
 
   # CREATE
-  post("/create_tracked_guide", { :controller => "tracked_guides", :action => "create_row" })
+  post("/create_star", { :controller => "stars", :action => "create_row" })
 
   # READ
-  get("/tracked_guides", { :controller => "tracked_guides", :action => "index" })
+  get("/stars", { :controller => "stars", :action => "index" })
 
   # DELETE
-  get("/delete_tracked_guide/:id_to_remove", { :controller => "tracked_guides", :action => "destroy_row" })
+  get("/delete_star/:id_to_remove", { :controller => "stars", :action => "destroy_row" })
 
   #------------------------------
 
-  # Routes for the Youtube video resource:
-
-  # CREATE
-  get("/youtube_videos/new", { :controller => "youtube_videos", :action => "new_form" })
-  post("/create_youtube_video", { :controller => "youtube_videos", :action => "create_row" })
-
-  # READ
-  get("/youtube_videos", { :controller => "youtube_videos", :action => "index" })
-  get("/youtube_videos/:id_to_display", { :controller => "youtube_videos", :action => "show" })
-
-  # UPDATE
-  get("/youtube_videos/:prefill_with_id/edit", { :controller => "youtube_videos", :action => "edit_form" })
-  post("/update_youtube_video/:id_to_modify", { :controller => "youtube_videos", :action => "update_row" })
-
-  # DELETE
-  get("/delete_youtube_video/:id_to_remove", { :controller => "youtube_videos", :action => "destroy_row" })
-
-  #------------------------------
 
  
-  # Routes for the Resource resource:
-
-
-resources :attachments, only: [:index, :new, :create, :destroy]
-
-  # CREATE
-  get("/resources/new", { :controller => "resources", :action => "new_form" })
-  post("/create_resource", { :controller => "resources", :action => "create_row" })
-
-  # READ
-  get("/resources", { :controller => "resources", :action => "index" })
-  get("/resources/:id_to_display", { :controller => "resources", :action => "show" })
-
-  # UPDATE
-  get("/resources/:prefill_with_id/edit", { :controller => "resources", :action => "edit_form" })
-  post("/update_resource/:id_to_modify", { :controller => "resources", :action => "update_row" })
-
-  # DELETE
-  get("/delete_resource/:id_to_remove", { :controller => "resources", :action => "destroy_row" })
-
-  #------------------------------
-
   devise_for :users
    # Home screen
   # get("/",{:controller => "home", :action => "index"})

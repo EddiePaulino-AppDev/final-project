@@ -1,6 +1,6 @@
-class CreateTrackedGuides < ActiveRecord::Migration[5.1]
+class CreateStars < ActiveRecord::Migration[5.1]
   def change
-    create_table :tracked_guides do |t|
+    create_table :stars do |t|
       t.integer :user_id
       t.integer :guide_id
 

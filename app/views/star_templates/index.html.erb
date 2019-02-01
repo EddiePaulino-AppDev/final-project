@@ -1,0 +1,65 @@
+<div class="container">
+  <h1>
+    Starred guides
+  </h1>
+
+  <hr>
+
+  <table class="table">
+    <tr>
+
+      <th>
+        Title
+      </th>
+      <th>
+        Industries
+      </th>
+      <th>
+        Disciplines
+      </th>
+      <th>
+        CSI Section
+      </th>
+
+      <th>
+      </th>
+    </tr>
+
+    <% @stars.each do |star| %>
+      <tr>
+
+        <td>
+          <%= Guide.find_by(:id => star.guide_id).title %>
+        </td>
+        <td>
+          <%= Guide.find_by(:id => star.guide_id).industries.pluck(:name).to_sentence %>
+        </td>
+
+        <td>
+          <%= Guide.find_by(:id => star.guide_id).disciplines.pluck(:name).to_sentence %>
+        </td>
+
+        <td>
+          <%= Guide.find_by(:id => star.guide_id).csi_section %>
+        </td>
+
+
+        <td>
+          <form action="guides/<%= star.guide_id %>">
+            <button type="submit" class="btn btn-link">
+              <i class="fas fa-glasses"></i>
+              View Guide
+            </button>
+          </form>
+          <form action="/delete_star/<%= star.id %>">
+            <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= star.guide_id %>">
+            <button type="submit" class="btn btn-link">
+              <i class="far fa-star"></i>
+              Un-star Guide
+            </button>
+          </form>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>

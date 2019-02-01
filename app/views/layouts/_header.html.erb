@@ -41,9 +41,9 @@
             <%= current_user.first_name %> <%= current_user.last_name %>
           </a>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="/tracked_guides">
-              <i class="fas fa-eye"></i>
-              View Tracked Guides</a>
+            <a class="dropdown-item" href="/stars">
+              <i class="fas fa-star"></i>
+              View Starred Guides</a>
             <a class="dropdown-item" href="/users/edit">
               <i class="fas fa-user-edit"></i>
               Edit Profile</a>
@@ -57,7 +57,7 @@
       <% end %>
       <a href="#/lessons_learned" class="nav-link">
         <i class="fas fa-newspaper"></i>
-        Community Boards</a>
+        Community Board</a>
 <% unless current_page?("/")%>
       <li class="nav-item">
         <form class="form-inline my-2 my-lg-0" action="/guides">

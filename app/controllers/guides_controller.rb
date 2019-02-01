@@ -23,6 +23,7 @@ class GuidesController < ApplicationController
 
     @guide.csi_section = params.fetch("csi_section","")
     @guide.title = params.fetch("title")
+    @guide.save
     
     #creating guide industries
     params.fetch("industries",{}).each do |industry|
@@ -31,7 +32,7 @@ class GuidesController < ApplicationController
     @guide_industry.industry_id = industry
     @guide_industry.save
     end
-    
+
     #creating guide disciplines
     params.fetch("disciplines",{}).each do |discipline|
     @guide_discipline = GuideDiscipline.new
@@ -50,46 +51,79 @@ class GuidesController < ApplicationController
       @tab.title = "Design Summary"
       @tab.guide_id = @guide.id
       @tab.save
+      @text_component = TextComponent.new
+      @text_component.content = nil
+      @text_component.tab_id = @tab.id
+      @text_component.save
 
       @tab = Tab.new
       @tab.title = "Regulations"
       @tab.guide_id = @guide.id
       @tab.save
+      @text_component = TextComponent.new
+      @text_component.content = nil
+      @text_component.tab_id = @tab.id
+      @text_component.save
 
       @tab = Tab.new
       @tab.title = "Drawing Details"
       @tab.guide_id = @guide.id
       @tab.save
+      @text_component = TextComponent.new
+      @text_component.content = nil
+      @text_component.tab_id = @tab.id
+      @text_component.save
 
       @tab = Tab.new
       @tab.title = "Specifications"
       @tab.guide_id = @guide.id
       @tab.save
+      @text_component = TextComponent.new
+      @text_component.content = nil
+      @text_component.tab_id = @tab.id
+      @text_component.save
 
       @tab = Tab.new
       @tab.title = "Scheduling"
       @tab.guide_id = @guide.id
       @tab.save
+      @text_component = TextComponent.new
+      @text_component.content = nil
+      @text_component.tab_id = @tab.id
+      @text_component.save
 
       @tab = Tab.new
       @tab.title = "Cost Estimating"
       @tab.guide_id = @guide.id
       @tab.save
+      @text_component = TextComponent.new
+      @text_component.content = nil
+      @text_component.tab_id = @tab.id
+      @text_component.save
 
       @tab = Tab.new
       @tab.title = "Products/Suppliers"
       @tab.guide_id = @guide.id
       @tab.save
-
+      @text_component = TextComponent.new
+      @text_component.content = nil
+      @text_component.tab_id = @tab.id
+      @text_component.save
+      
       @tab = Tab.new
       @tab.title = "Other Resources"
       @tab.guide_id = @guide.id
       @tab.save
+      @text_component = TextComponent.new
+      @text_component.content = nil
+      @text_component.tab_id = @tab.id
+      @text_component.save
 
       @tab = Tab.new
       @tab.title = "Discussions"
       @tab.guide_id = @guide.id
       @tab.save
+
 
       redirect_to("/guides/" + @guide.id.to_s, :notice => "Guide created successfully.")
     else

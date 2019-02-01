@@ -105,10 +105,9 @@ ActiveRecord::Schema.define(version: 20190130200348) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "resources", force: :cascade do |t|
-    t.string "category"
-    t.integer "tab_id"
-    t.string "resource"
+  create_table "stars", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "guide_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -123,17 +122,9 @@ ActiveRecord::Schema.define(version: 20190130200348) do
 
   create_table "text_components", force: :cascade do |t|
     t.integer "tab_id"
-    t.string "header"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "content"
-  end
-
-  create_table "tracked_guides", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "guide_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -170,14 +161,6 @@ ActiveRecord::Schema.define(version: 20190130200348) do
     t.text "object", limit: 1073741823
     t.datetime "created_at"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
-  end
-
-  create_table "youtube_videos", force: :cascade do |t|
-    t.integer "tab_id"
-    t.string "url_link"
-    t.string "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
 end

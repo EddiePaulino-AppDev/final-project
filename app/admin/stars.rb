@@ -1,4 +1,4 @@
-ActiveAdmin.register TrackedGuide do
+ActiveAdmin.register Star do
   permit_params :user_id, :guide_id
 
 # See permitted parameters documentation:

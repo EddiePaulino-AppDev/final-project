@@ -13,7 +13,7 @@
 class Guide < ApplicationRecord
 
   has_many :tabs, :dependent => :destroy
-  has_many :tracked_guides, :dependent => :destroy
+  has_many :stars, :dependent => :destroy
   has_many :guide_disciplines, :dependent => :destroy
   has_many :disciplines, :through => :guide_disciplines, :source => :discipline
   has_many :guide_industries, :dependent => :destroy
