@@ -24,29 +24,34 @@
         <div class="col-2">
           <h3><%= @guide.title %></h3>
           <% if current_user == nil %>
+            <i class="fas fa-star fa-2x" rel="tooltip" title="Stars from Users"></i> <span class="badge badge-primary badge-pill"> <%= Star.where(:guide_id => @guide.id).count %></span>
           <% else %>
-            <!--TRACKING LINKS-->
+            <!--STARRING LINKS-->
             <% if Star.find_by({ :user_id => current_user.id, :guide_id => @guide.id }) == nil %>
               <form action="/create_star" method="post">
                 <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
                 <input type="hidden" id="user_id" name="user_id" class="form-control" value="<%= current_user.id %>">
                 <button type="submit" class="btn btn-link">
-                  <i class="far fa-star fa-2x"></i> <span class="badge badge-primary badge-pill"> <%= Star.where(:guide_id => @guide.id).count %></span>
-                  
+                  <i class="far fa-star fa-2x" rel="tooltip" title="Star this guide"></i> <span class="badge badge-primary badge-pill"> <%= Star.where(:guide_id => @guide.id).count %></span>
+
                 </button>
               </form>
             <% else %>
               <form action="/delete_star/<%= Star.find_by({ :user_id => current_user.id, :guide_id => @guide.id }).id %>">
                 <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
                 <button type="submit" class="btn btn-link">
-                  <i class="fas fa-star fa-2x"></i> <span class="badge badge-primary badge-pill"> <%= Star.where(:guide_id => @guide.id).count %></span>
-                 
+                  <i class="fas fa-star fa-2x" rel="tooltip" title="Un-Star this guide"></i> <span class="badge badge-primary badge-pill"> <%= Star.where(:guide_id => @guide.id).count %></span>
+
                 </button>
               </form>
             <% end %>
           <% end %>
-          <!-- END TRACKING LINKS-->
+          <!-- END STARRING LINKS-->
 
+
+          <!--CONTRIBUTORS COUNT-->
+          <i class="fas fa-users fa-2x" rel="tooltip" title="Contributor count"></i> <span class="badge badge-primary badge-pill"> <%= Star.where(:guide_id => @guide.id).count %></span>
+          <!-- END CONTRIBUTORS COUNT-->
 
           <dl style="line-height:90%">
             <dt>
@@ -196,6 +201,8 @@
                   <% if current_user == nil %>
                     <a  href="/users/sign_up" style="float: right;">Create an account to contribute to this guide.</a>
                   <% else %>
+                    <% if ["Design Summary","Discussions"].include? tab.title %>
+                    <% else %>
                     <div class="row">
                       <!-- Button trigger modal -->
                       <button type="button" class="btn btn-link" data-toggle="modal" data-target="#TabEditModalCenter<%= tab.id %>">
@@ -226,8 +233,7 @@
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                               <button type="submit" form="TabEditForm<%= tab.id %>" class="btn btn-primary">Update the <%= tab.title %> tab title</button>
-                              <% if ["Design Summary","Discussions"].include? tab.title %>
-                              <% else %>
+
                                 <a href="#" id="show_more">More</a>
 
                                 <div id="more" class="hidden">
@@ -235,13 +241,14 @@
                                     Delete the <%= tab.title %> tab
                                   </a>
                                 </div>
-                              <% end %>
+                            
                             </div>
                           </div>
                         </div>
                       </div>
                       <!--END edit tab MODAL-->
                     </div>
+                    <% end %>
                   <% end %>
 
                   <!--   START DISCUSSION TAB LOGIC-->
@@ -301,19 +308,38 @@
 
                         <div class="card-body">
                           <ul class="list-unstyled pt-3">
-                            <% Comment.where(:discussion_id => discussion.id).each do |comment| %>
+                            <% Comment.where(:discussion_id => discussion.id).order(:cached_votes_up => :desc).each do |comment| %>
                               <!-- START COMMENTS-->
                               <li class="media mb-2">
                                 <div class="media-body">
-                                  <h6>
-                                    <h5><%= comment.user.first_name %> <%= comment.user.last_name %></h5>
-                                    <small style="float: right;">
-                                      <%= time_ago_in_words(comment.created_at) %> ago
-                                    </small>
-                                  </h6>
-                                  <%= comment.body %>
+                                    <p><%= comment.body %></p>
+
                                 </div>
+
                                 <!-- media-body -->
+                               <!-- footer-->
+                                <blockquote class="blockquote mb-0">
+                                    <div class="row justify-content-end">
+                                      <form action="/comments/<%= comment.id %>/upvote" method="post">
+                                        <input type="hidden" name="guide_id" value="<%= @guide.id %>">
+                                        <input type="hidden" name="comment_id" value="<%= comment.id %>">
+                                        <button type="submit" class="btn btn-secondary">
+                                          <i class="fas fa-angle-up"></i>
+                                        </button>
+                                      </form>
+
+                                      <h4><span class="badge"><%= comment.get_upvotes.size-comment.get_downvotes.size %></span></h4>
+                                      <form action="/comments/<%= comment.id %>/downvote" method="post">
+                                        <input type="hidden" name="guide_id" value="<%= @guide.id %>">
+                                        <input type="hidden" name="comment_id" value="<%= comment.id %>">
+                                        <button type="submit" class="btn btn-secondary">
+                                          <i class="fas fa-angle-down"></i>
+                                        </button>
+                                      </form>
+
+                                    </div>
+                                <footer class="blockquote-footer"><%= comment.user.first_name %> <%= comment.user.last_name %> <cite title="Source">posted <%= time_ago_in_words(comment.created_at) %> ago</cite></footer>
+                                </blockquote>
                               </li>
                               <hr>
                             <% end %>
@@ -341,7 +367,7 @@
                                       </label>
 
                                       <div class="input-group">
-                                        <input type="text" id="body" name="body" class="form-control" rows=2 placeholder="Add a comment..." required>
+                                        <textarea id="body" name="body" class="form-control" rows="3" placeholder="Add a comment..."></textarea>
 
                                         <span class="input-group-append">
                                           <button class="btn btn-primary" type="submit">
@@ -377,8 +403,29 @@
                     <!--  START CONTENT FOR TABS THAT ARE NOT THE DISCUSSION TAB-->
 
 
+                    <!--
+<ul class="nav nav-tabs">
+
+  <li class="nav-item show active dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Dropdown</a>
+    <div class="dropdown-menu show" x-placement="top-start" style=" transform: translate3d(0px, -152px, 0px); top: 0px; left: 0px; will-change: transform;">
+      <a class="dropdown-item" href="#dropdown1">Action1</a>
+      <a class="dropdown-item" href="#dropdown2">Action2</a>
+    </div>
+  </li>
+</ul>
+<div id="myTabContent" class="tab-content">
+  <div class="tab-pane fade show active" id="dropdown1">
+    <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork.</p>
+  </div>
+  <div class="tab-pane fade" id="dropdown2">
+    <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater.</p>
+  </div>
+</div>-->
+
+
                     <% TextComponent.where(tab_id: tab.id).each do |text_component| %>
-                      <p><%= raw text_component.content %></p>
+                      <%= raw text_component.content %>
                       <% if current_user == nil %>
                       <% else %>
                         <form action="/text_components/<%= text_component.id %>/edit">
@@ -392,7 +439,6 @@
                       <hr>
                     <% end %>
 
-                   
 
                   <% end %>
                   <!--END DROPDOWN BUTTONS-->

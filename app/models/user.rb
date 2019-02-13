@@ -46,5 +46,5 @@ class User < ApplicationRecord
   has_many :discussions, :through => :comments, :source => :discussion
   # has_many :posts, :class_name => "Post", :foreign_key => "user_id"
   has_paper_trail
-  
+  acts_as_voter
 end

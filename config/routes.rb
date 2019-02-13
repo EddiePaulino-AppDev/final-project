@@ -18,8 +18,6 @@ Rails.application.routes.draw do
 
   #------------------------------
 
-  # Routes for the Comment resource:
-
   # CREATE
   get("/comments/new", { :controller => "comments", :action => "new_form" })
   post("/create_comment", { :controller => "comments", :action => "create_row" })
@@ -31,7 +29,11 @@ Rails.application.routes.draw do
   # UPDATE
   get("/comments/:prefill_with_id/edit", { :controller => "comments", :action => "edit_form" })
   post("/update_comment/:id_to_modify", { :controller => "comments", :action => "update_row" })
-
+  
+  # Voting
+  post("/comments/:id/upvote", { :controller => "comments", :action => "upvote"})
+  post("/comments/:id/downvote", { :controller => "comments", :action => "downvote"})
+  
   # DELETE
   get("/delete_comment/:id_to_remove", { :controller => "comments", :action => "destroy_row" })
 

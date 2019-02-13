@@ -46,6 +46,18 @@ class CommentsController < ApplicationController
       render("guide_templates/show.html.erb")
     end
   end
+  
+  def upvote
+    @comment = Comment.find(params.fetch("comment_id"))
+    @comment.upvote_from current_user
+    redirect_to("/guides/"+params.fetch("guide_id"))
+  end
+
+  def downvote
+      @comment = Comment.find(params.fetch("comment_id"))
+      @comment.downvote_from current_user
+      redirect_to("/guides/"+params.fetch("guide_id"))
+  end
 
   def destroy_row
     @comment = Comment.find(params.fetch("id_to_remove"))

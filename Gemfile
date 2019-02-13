@@ -5,6 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+gem 'acts_as_votable', '~> 0.12.0'
 gem 'paper_trail'
 gem "ransack"
 gem "carrierwave"
