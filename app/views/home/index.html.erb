@@ -66,7 +66,7 @@
       <div class="row justify-content-center">
                 
     <!--    Browse guides by Industry-->
-        <div class="card border-primary mb-3" style="margin:20px; max-height: 200px;overflow-y: auto;">
+        <div class="card border-secondary mb-3" style="margin:20px; max-height: 200px;overflow-y: auto;">
           <h6 class="card-header text-white" style="background-color:#3E3F3A;">Browse Guides by Industry</h6>
           <ul class="list-group list-group-flush">
             <% Industry.all.each do |industry| %>
@@ -79,7 +79,7 @@
                     <input class="form-control" type="hidden" name="discipline" id="discipline" value="">
                     <button class="btn btn-link" type="submit">
                       <small><%= industry.name %></small>
-                      <span class="badge badge-primary badge-pill"><%= GuideIndustry.where(:industry_id => industry.id).count %></span>
+                      <span class="badge badge-secondary badge-pill"><%= GuideIndustry.where(:industry_id => industry.id).count %></span>
                     </button>
                   </form>
                 </li>
@@ -89,7 +89,7 @@
         </div>
         
     <!--    Browse guides by discipline-->
-        <div class="card border-primary mb-3" style="margin:20px; max-height: 200px;overflow-y: auto;">
+        <div class="card border-secondary mb-3" style="margin:20px; max-height: 200px;overflow-y: auto;">
           <h6 class="card-header text-white" style="background-color:#3E3F3A;">Browse Guides by Discipline</h6>
           <ul class="list-group list-group-flush">
             <% Discipline.all.each do |discipline| %>
@@ -102,7 +102,7 @@
                     <input class="form-control" type="hidden" name="industry" id="industry" value="">
                     <button class="btn btn-link" type="submit">
                       <small><%= discipline.name %></small>
-                      <span class="badge badge-primary badge-pill"><%= GuideDiscipline.where(:discipline_id => discipline.id).count %></span>
+                      <span class="badge badge-secondary badge-pill"><%= GuideDiscipline.where(:discipline_id => discipline.id).count %></span>
                     </button>
                   </form>
                 </li>
@@ -111,13 +111,13 @@
           </ul>
         </div>
 
-        <div class="card border-primary mb-3 offset-mb-1" style="margin:20px; max-height: 200px;overflow-y: auto;">
+        <div class="card border-secondary mb-3 offset-mb-1" style="margin:20px; max-height: 200px;overflow-y: auto;">
           <h6 class="card-header text-white" style="background-color:#3E3F3A;">Recent Guide Changes</h6>
 
         </div>
 
 
-        <div class="card border-primary mb-3 offset-mb-1" style="margin:20px; max-height: 200px;overflow-y: auto;">
+        <div class="card border-secondary mb-3 offset-mb-1" style="margin:20px; max-height: 200px;overflow-y: auto;">
           <h6 class="card-header text-white" style="background-color:#3E3F3A;">Featured Community Board Articles</h6>
 
         </div>

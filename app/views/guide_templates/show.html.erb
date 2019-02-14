@@ -11,46 +11,64 @@
           $('div#more').toggle();
         });
       });
+      
+
     </script>
 
   </head>
   <body>
 
     <!-- start container-->
-    <div class="container-fluid">
+    <div class="container-fluid" style="padding:10px">
       <!--start row-->
       <div class="row">
         <!--   start 2 column-->
         <div class="col-2">
           <h3><%= @guide.title %></h3>
           <% if current_user == nil %>
-            <i class="fas fa-star fa-2x" rel="tooltip" title="Stars from Users"></i> <span class="badge badge-primary badge-pill"> <%= Star.where(:guide_id => @guide.id).count %></span>
+           <div class="glyphicon">
+            <i class="fas fa-star" rel="tooltip" title="Stars from Users"></i> <span class="badge badge-secondary badge-pill"> <%= Star.where(:guide_id => @guide.id).count %> Stars</span>
+            </div>
           <% else %>
-            <!--STARRING LINKS-->
-            <% if Star.find_by({ :user_id => current_user.id, :guide_id => @guide.id }) == nil %>
-              <form action="/create_star" method="post">
-                <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
-                <input type="hidden" id="user_id" name="user_id" class="form-control" value="<%= current_user.id %>">
-                <button type="submit" class="btn btn-link">
-                  <i class="far fa-star fa-2x" rel="tooltip" title="Star this guide"></i> <span class="badge badge-primary badge-pill"> <%= Star.where(:guide_id => @guide.id).count %></span>
 
+            <!--STARRING LINKS-->
+
+         <div class="glyphicon float-left">
+          <i class="fas fa-star" rel="tooltip" title="Star count"></i> <span class="badge badge-secondary badge-pill"><%= Star.where(:guide_id => @guide.id).count %> Stars</span> 
+            </div>
+           
+              
+            <% if Star.find_by({ :user_id => current_user.id, :guide_id => @guide.id }) == nil %>
+
+              <form action="/create_star" method="post">
+                <input type="hidden" id="guide_id" name="guide_id" value="<%= @guide.id %>">
+                <input type="hidden" id="user_id" name="user_id" value="<%= current_user.id %>">
+                <button type="submit" class="btn" style="padding-left:5px; padding-right:5px; padding-bottom:0px; padding-top:0px; margin:1px">
+                  <i class="fas fa-plus" rel="tooltip" title="Star this guide"></i> 
                 </button>
               </form>
+
             <% else %>
               <form action="/delete_star/<%= Star.find_by({ :user_id => current_user.id, :guide_id => @guide.id }).id %>">
-                <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
-                <button type="submit" class="btn btn-link">
-                  <i class="fas fa-star fa-2x" rel="tooltip" title="Un-Star this guide"></i> <span class="badge badge-primary badge-pill"> <%= Star.where(:guide_id => @guide.id).count %></span>
-
+                <input type="hidden" id="guide_id" name="guide_id" value="<%= @guide.id %>">
+                <button type="submit" class="btn" style="padding-left:5px; padding-right:5px; padding-bottom:0px; padding-top:0px; margin:1px">
+                  <i class="fas fa-minus" rel="tooltip" title="Un-Star this guide"></i> 
                 </button>
               </form>
+
             <% end %>
+         
+         
+          
+          
           <% end %>
           <!-- END STARRING LINKS-->
 
 
           <!--CONTRIBUTORS COUNT-->
-          <i class="fas fa-users fa-2x" rel="tooltip" title="Contributor count"></i> <span class="badge badge-primary badge-pill"> <%= Star.where(:guide_id => @guide.id).count %></span>
+          <div class="glyphicon">
+          <i class="fas fa-users" rel="tooltip" title="Contributor count"></i> <span class="badge badge-secondary badge-pill"><%= Star.where(:guide_id => @guide.id).count %> Contributors</span>
+          </div>
           <!-- END CONTRIBUTORS COUNT-->
 
           <dl style="line-height:90%">
@@ -87,6 +105,58 @@
               <%= time_ago_in_words(@guide.updated_at) %> ago
             </dd>
           </dl>
+          
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-link" style="padding:5px" data-toggle="modal" data-target="#GuideEditModalCenter">
+                <i class="far fa-edit"></i>
+                Edit Guide Descriptors
+              </button>
+              <!-- edit guide Modal -->
+              <div class="modal fade" id="GuideEditModalCenter" tabindex="-1" role="dialog" aria-labelledby="GuideEditModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="GuideEditModalLongTitle">Edit Guide Descriptors</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form action="/update_guide/<%= @guide.id %>" method="post" id="guideform">
+                        <div class="form-group">
+                          <label for="title" class="col-form-label">Guide title</label>
+                          <input type="text" class="form-control" name="title" id="title" value="<%= @guide.try(:title) %>">
+                          <label for="industry" class="col-form-label">Guide Industries</label>
+                          <%= select_tag("industries", options_from_collection_for_select(Industry.all, :id, :name, GuideIndustry.where(:guide_id => @guide.id).pluck(:industry_id)), :multiple => true, :class => "form-control") %>
+                          <label for="disciplines" class="col-form-label">Guide Disciplines</label>
+                          <%= select_tag("disciplines", options_from_collection_for_select(Discipline.all, :id, :name, GuideDiscipline.where(:guide_id => @guide.id).pluck(:discipline_id)),:multiple =>  true, :class => "form-control") %>
+
+                          <label for="csi_section" class="col-form-label">Guide CSI Section</label>
+                          <input type="text" class="form-control" name="csi_section" id="csi_section" value="<%= @guide.try(:csi_section) %>">
+
+                          <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
+                        </div>
+
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="submit" form="guideform" class="btn btn-primary">Update Guide Descriptors</button>
+                      <a href="#" id="show_more">More</a>
+
+                      <div id="more" class="hidden">
+                        <a href="/delete_guide/<%= @guide.id %>" data-confirm="Are you sure?">
+                          Delete guide
+                        </a>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--END edit guide MODAL-->
+              
+              
           <div class="nav nav-tabs nav-fill flex-column" role="tablist">
 
             <% Tab.where(guide_id: @guide.id).each do|tab| %>
@@ -133,55 +203,6 @@
               </div>
               <!--END add tab MODAL-->
 
-              <!-- Button trigger modal -->
-              <button type="button" class="btn btn-link" data-toggle="modal" data-target="#GuideEditModalCenter">
-                <i class="far fa-edit"></i>
-                Edit Guide
-              </button>
-              <!-- edit guide Modal -->
-              <div class="modal fade" id="GuideEditModalCenter" tabindex="-1" role="dialog" aria-labelledby="GuideEditModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="GuideEditModalLongTitle">Edit Guide Descriptors</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <form action="/update_guide/<%= @guide.id %>" method="post" id="guideform">
-                        <div class="form-group">
-                          <label for="title" class="col-form-label">Guide title</label>
-                          <input type="text" class="form-control" name="title" id="title" value="<%= @guide.try(:title) %>">
-                          <label for="industry" class="col-form-label">Guide Industries</label>
-                          <%= select_tag("industries", options_from_collection_for_select(Industry.all, :id, :name, GuideIndustry.where(:guide_id => @guide.id).pluck(:industry_id)), :multiple => true, :class => "form-control") %>
-                          <label for="disciplines" class="col-form-label">Guide Disciplines</label>
-                          <%= select_tag("disciplines", options_from_collection_for_select(Discipline.all, :id, :name, GuideDiscipline.where(:guide_id => @guide.id).pluck(:discipline_id)),:multiple =>  true, :class => "form-control") %>
-
-                          <label for="csi_section" class="col-form-label">Guide CSI Section</label>
-                          <input type="text" class="form-control" name="csi_section" id="csi_section" value="<%= @guide.try(:csi_section) %>">
-
-                          <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
-                        </div>
-
-                      </form>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="submit" form="guideform" class="btn btn-primary">Update Guide Descriptors</button>
-                      <a href="#" id="show_more">More</a>
-
-                      <div id="more" class="hidden">
-                        <a href="/delete_guide/<%= @guide.id %>" data-confirm="Are you sure?">
-                          Delete guide
-                        </a>
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!--END edit guide MODAL-->
             <% end %>
 
             <!--     END ADD A TAB & EDIT GUIDE-->
@@ -197,7 +218,7 @@
             <% Tab.where(guide_id: @guide.id).each do|tab| %>
 
               <div class="tab-pane fade <%= tab.title == "Design Summary" ? 'active show' : '' %>" id="<%= tab.id %>" aria-labelledby="<%= tab.id %>-tab">
-                <div class="container">
+                <div class="container" style="padding:20px">
                   <% if current_user == nil %>
                     <a  href="/users/sign_up" style="float: right;">Create an account to contribute to this guide.</a>
                   <% else %>
@@ -207,7 +228,7 @@
                       <!-- Button trigger modal -->
                       <button type="button" class="btn btn-link" data-toggle="modal" data-target="#TabEditModalCenter<%= tab.id %>">
                         <i class="far fa-edit"></i>
-                        Edit the <%= tab.title %> tab
+                        Edit the <%= tab.title %> tab title
                       </button>
                       <!-- edit tab Modal -->
                       <div class="modal fade" id="TabEditModalCenter<%= tab.id %>" tabindex="-1" role="dialog" aria-labelledby="TabEditModalCenterTitle<%= tab.id %>" aria-hidden="true">
@@ -338,7 +359,7 @@
                                       </form>
 
                                     </div>
-                                <footer class="blockquote-footer"><%= comment.user.first_name %> <%= comment.user.last_name %> <cite title="Source">posted <%= time_ago_in_words(comment.created_at) %> ago</cite></footer>
+                                <footer class="blockquote-footer"><%= comment.user.first_name %> <%= comment.user.last_name %>, <cite title="Source">posted <%= time_ago_in_words(comment.created_at) %> ago</cite></footer>
                                 </blockquote>
                               </li>
                               <hr>

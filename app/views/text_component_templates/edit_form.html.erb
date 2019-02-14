@@ -30,7 +30,7 @@
       Content
     </label>
 
-    <textarea id="content" name="content" class="ckeditor" rows="10"><%= sanitize @text_component.content %></textarea>
+    <textarea id="content" name="content" class="ckeditor" rows="10"><%= raw @text_component.content %></textarea>
   </div>
   
   <button class="btn btn-block btn-outline-secondary">

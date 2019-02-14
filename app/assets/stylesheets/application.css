@@ -10,5 +10,22 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
+
  *= require_self
  */
+ body {
+  background: #F6F6F6;
+
+}
+.col-8{
+  background: #FFFFFF;
+}
+.table{
+  background: #FFFFFF;
+}
+.col-2{
+  overflow: auto;
+
+
+ 
+}

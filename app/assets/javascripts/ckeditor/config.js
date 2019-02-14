@@ -2,7 +2,6 @@ CKEDITOR.editorConfig = function( config ) {
   config.language = 'en';
   config.uiColor = '#ffffff';
   
-
   config.removeDialogTabs = 'image:Upload';
   config.removeDialogTabs = 'flash:Upload';
   /* Filebrowser routes */

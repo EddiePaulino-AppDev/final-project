@@ -12,10 +12,14 @@ class ApplicationController < ActionController::Base
   end
 
   before_action :set_paper_trail_whodunnit    
+  
   def user_for_paper_trail
     user_signed_in? ? current_user.id : "Public user"
   end
     
+  def not_found
+  raise ActionController::RoutingError.new('Not Found')
+  end
 
 
 end

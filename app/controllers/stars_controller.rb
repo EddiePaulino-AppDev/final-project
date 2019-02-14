@@ -1,11 +1,10 @@
 class StarsController < ApplicationController
     before_action :authenticate_user!
+
   def index
-    @stars = Star.all
-
-    render("star_templates/index.html.erb")
+  @stars = Star.where(:user_id => current_user.id)
+  render("star_templates/index.html.erb")
   end
-
 
   def create_row
     @star = Star.new
@@ -18,7 +17,7 @@ class StarsController < ApplicationController
 
       redirect_to("/guides/"+@star.guide_id.to_s, :notice => "You are now tracking this guide.")
     else
-      render("star_templates/new_form.html.erb")
+      redirect_to("/guides/"+@star.guide_id.to_s, :notice => "An error occured, please try again")
     end
   end
 

@@ -50,13 +50,13 @@ class CommentsController < ApplicationController
   def upvote
     @comment = Comment.find(params.fetch("comment_id"))
     @comment.upvote_from current_user
-    redirect_to("/guides/"+params.fetch("guide_id"))
+    redirect_to("/guides/"+params.fetch("guide_id")+"#Discussions")
   end
 
   def downvote
       @comment = Comment.find(params.fetch("comment_id"))
       @comment.downvote_from current_user
-      redirect_to("/guides/"+params.fetch("guide_id"))
+      redirect_to("/guides/"+params.fetch("guide_id")+"#Discussions")
   end
 
   def destroy_row
