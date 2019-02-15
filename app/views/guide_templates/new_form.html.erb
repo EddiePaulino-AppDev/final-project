@@ -20,7 +20,7 @@
     <!-- Label and input for title -->
     <div class="form-group">
       <label for="title">
-        Title
+        Title <span class="text-muted">(must be unique)</span>
       </label>
 
       <input type="text" id="title" name="title" class="form-control" value="<%= @guide.try(:title) %>">
@@ -28,7 +28,7 @@
     <!-- Label and input for industries -->
     <div class="form-group">
       <label for="industries">
-        Industries
+        Industries <span class="text-muted">(multi-select)</span>
       </label>
       <%= select_tag("industries", options_from_collection_for_select(Industry.all, :id, :name), :multiple => true, :class => "form-control") %>
     </div>
@@ -36,7 +36,7 @@
     <!-- Label and input for discipline, the database table must have rows of disciplines -->
     <div class="form-group">
       <label for="disciplines">
-        Disciplines
+        Disciplines <span class="text-muted">(multi-select)</span>
       </label>
       <%= select_tag("disciplines", options_from_collection_for_select(Discipline.all, :id, :name),:multiple =>  true, :class => "form-control") %>
     </div>

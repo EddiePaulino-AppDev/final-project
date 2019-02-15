@@ -1,0 +1,79 @@
+<div class="container">
+  <h1>
+    Community Articles
+  </h1>
+
+  <a href="/articles/new">
+    Add a new article
+  </a>
+
+
+  <hr>
+  <% @articles.each do |article| %>
+   <div class="card">
+    <div class="row mb-5 align-items-start">
+       
+          <div class="col-6">
+          <a href="/articles/<%= article.id %>">
+          <img src="<%= article.image %>" class="img-fluid img-thumbnail" style="border:0;" >
+          </a>
+          </div>
+          <div class="col-6">
+          <div class="card-header">
+            <h4 class="card-title"  style="padding:5px; margin:0px">
+              <a href="/articles/<%= article.id %>">
+                <%= article.title %>
+              </a>
+              <h4><span class="badge"><%= article.get_upvotes.size-article.get_downvotes.size %> Upvote('s)</span></h4>
+              <h5 class="text-muted">
+                <small class="text-muted">Authored by: </small> <small><%= article.author %></small>
+
+                <small class="float-right">
+                  Published on: <%= article.created_at.strftime("%B %d, %Y") %>
+                </small>
+
+              </h5>
+            </h4>
+          </div>
+
+          <div class="card-body" style="padding:5px">
+
+
+            <div>
+
+
+                  <div class="media-body">
+
+                    <p>
+                      <%= raw article.content[0,600]+"..." %>
+                    </p>
+                    <!--                 EDIT BUTTON-->
+                    <% if current_user == nil %>
+                    <% else %>
+                    <% if article.user_id == current_user.id %>
+                      <div class="btn-group d-flex" role="group">
+                        <a href="/articles/<%= article.id %>/edit" class="btn btn-warning w-100">
+                          <i class="fas fa-edit"></i>
+
+                          Edit
+                        </a>
+
+                      </div>
+                    <% else %>
+                    <% end %>
+                    <% end %>
+                  </div>
+                  <!-- media-body -->
+
+
+            </div>
+          </div>
+          <!-- card-body -->
+        </div>
+        <!-- card  -->
+      </div>
+      <!-- col-6 -->
+    </div>
+  <% end %>
+
+</div>

@@ -1,5 +1,5 @@
-ActiveAdmin.register GuideDiscipline do
-  permit_params :guide_id, :discipline_id
+ActiveAdmin.register Article do
+  permit_params :title, :author, :image, :content, :user_id, :status
 
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters

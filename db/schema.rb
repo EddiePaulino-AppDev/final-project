@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190212192922) do
+ActiveRecord::Schema.define(version: 20190215054440) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -43,6 +43,24 @@ ActiveRecord::Schema.define(version: 20190212192922) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
+  create_table "articles", force: :cascade do |t|
+    t.string "title"
+    t.string "author"
+    t.string "image"
+    t.string "content"
+    t.integer "user_id"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "cached_votes_total", default: 0
+    t.integer "cached_votes_score", default: 0
+    t.integer "cached_votes_up", default: 0
+    t.integer "cached_votes_down", default: 0
+    t.integer "cached_weighted_score", default: 0
+    t.integer "cached_weighted_total", default: 0
+    t.float "cached_weighted_average", default: 0.0
+  end
+
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string "data_file_name", null: false
     t.string "data_content_type"
@@ -70,6 +88,22 @@ ActiveRecord::Schema.define(version: 20190212192922) do
     t.float "cached_weighted_average", default: 0.0
   end
 
+  create_table "connect_disciplines", force: :cascade do |t|
+    t.integer "guide_id"
+    t.integer "discipline_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "article_id"
+  end
+
+  create_table "connect_industries", force: :cascade do |t|
+    t.integer "guide_id"
+    t.integer "industry_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "article_id"
+  end
+
   create_table "disciplines", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -80,20 +114,6 @@ ActiveRecord::Schema.define(version: 20190212192922) do
     t.integer "tab_id"
     t.integer "guide_id"
     t.string "title"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "guide_disciplines", force: :cascade do |t|
-    t.integer "guide_id"
-    t.integer "discipline_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "guide_industries", force: :cascade do |t|
-    t.integer "guide_id"
-    t.integer "industry_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

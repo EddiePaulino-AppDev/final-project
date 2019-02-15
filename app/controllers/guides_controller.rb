@@ -26,20 +26,20 @@ class GuidesController < ApplicationController
     @guide.title = params.fetch("title")
     @guide.save
     
-    #creating guide industries
+    #creating connect industries
     params.fetch("industries",{}).each do |industry|
-    @guide_industry = GuideIndustry.new
-    @guide_industry.guide_id = @guide.id
-    @guide_industry.industry_id = industry
-    @guide_industry.save
+    @connect_industry = ConnectIndustry.new
+    @connect_industry.guide_id = @guide.id
+    @connect_industry.industry_id = industry
+    @connect_industry.save
     end
 
-    #creating guide disciplines
+    #creating connect disciplines
     params.fetch("disciplines",{}).each do |discipline|
-    @guide_discipline = GuideDiscipline.new
-    @guide_discipline.guide_id = @guide.id
-    @guide_discipline.discipline_id = discipline
-    @guide_discipline.save
+    @connect_discipline = ConnectDiscipline.new
+    @connect_discipline.guide_id = @guide.id
+    @connect_discipline.discipline_id = discipline
+    @connect_discipline.save
     end
     
     @guide.tags = params.fetch("title")
@@ -145,25 +145,25 @@ class GuidesController < ApplicationController
     @guide.title = params.fetch("title")
     
     # updating industries
-    GuideIndustry.where(:guide_id => @guide.id).each do |guide_industry|
-    guide_industry.destroy
+    ConnectIndustry.where(:guide_id => @guide.id).each do |connect_industry|
+    connect_industry.destroy
     end
     params.fetch("industries",{}).each do |industry|
-    @guide_industry = GuideIndustry.new
-    @guide_industry.guide_id = @guide.id
-    @guide_industry.industry_id = industry
-    @guide_industry.save
+    @connect_industry = ConnectIndustry.new
+    @connect_industry.guide_id = @guide.id
+    @connect_industry.industry_id = industry
+    @connect_industry.save
     end
     
     # updating disciplines
-    GuideDiscipline.where(:guide_id => @guide.id).each do |guide_discipline|
-    guide_discipline.destroy
+    ConnectDiscipline.where(:guide_id => @guide.id).each do |connect_discipline|
+    connect_discipline.destroy
     end
     params.fetch("disciplines",{}).each do |discipline|
-    @guide_discipline = GuideDiscipline.new
-    @guide_discipline.guide_id = @guide.id
-    @guide_discipline.discipline_id = discipline
-    @guide_discipline.save
+    @connect_discipline = ConnectDiscipline.new
+    @connect_discipline.guide_id = @guide.id
+    @connect_discipline.discipline_id = discipline
+    @connect_discipline.save
     end
     
     #

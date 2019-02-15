@@ -14,10 +14,10 @@ class Guide < ApplicationRecord
 
   has_many :tabs, :dependent => :destroy
   has_many :stars, :dependent => :destroy
-  has_many :guide_disciplines, :dependent => :destroy
-  has_many :disciplines, :through => :guide_disciplines, :source => :discipline
-  has_many :guide_industries, :dependent => :destroy
-  has_many :industries, :through => :guide_industries, :source => :industry
+  has_many :connect_disciplines, :class_name => "ConnectDiscipline", :dependent => :destroy
+  has_many :disciplines, :through => :connect_disciplines, :source => :discipline
+  has_many :connect_industries, :class_name => "ConnectIndustry",:dependent => :destroy
+  has_many :industries, :through => :connect_industries, :source => :industry
   validates :title, uniqueness: true
   validates :title, :csi_section, presence: true
   has_paper_trail

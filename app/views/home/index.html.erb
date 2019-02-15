@@ -48,15 +48,16 @@
           background-position: center;
           background-repeat: no-repeat;
           background-size: cover;
-          height:300px; ">
-  
-        <form class="form-inline my-2 my-lg-0" action="/guides">
-          <label class="sr-only" for="search_bar"></label>
-          <input class="form-control form-control-lg mr-sm-2" type="text" name="search_entry" id="search_bar"  placeholder="Search Guides" style="width:400px">
-          <button class="btn btn-lg btn-secondary my-2 my-lg-0" type="submit">
-            <i class="fas fa-search"></i>
-          </button>
-        </form>
+          height:300px;
+          margin:0;">
+
+      <form class="form-inline my-2 my-lg-0" action="/guides">
+        <label class="sr-only" for="search_bar"></label>
+        <input class="form-control form-control-lg mr-sm-2" type="text" name="search_entry" id="search_bar"  placeholder="Search Guides" style="width:400px">
+        <button class="btn btn-lg btn-secondary my-2 my-lg-0" type="submit">
+          <i class="fas fa-search"></i>
+        </button>
+      </form>
 
     </div>
 
@@ -64,14 +65,14 @@
     <div class="container">
       <!--Cards-->
       <div class="row justify-content-center">
-                
-    <!--    Browse guides by Industry-->
+
+        <!--    Browse guides by Industry-->
         <div class="card border-secondary mb-3" style="margin:20px; max-height: 200px;overflow-y: auto;">
           <h6 class="card-header text-white" style="background-color:#3E3F3A;">Browse Guides by Industry</h6>
           <ul class="list-group list-group-flush">
             <% Industry.all.each do |industry| %>
-                <% if industry.name == "" %>
-                <% else %>
+              <% if industry.name == "" %>
+              <% else %>
                 <li class="list-group-item" style="padding:0;">
                   <form action="/guides">
                     <input class="form-control" type="hidden" name="search_entry" id="search_entry" value="">
@@ -79,7 +80,7 @@
                     <input class="form-control" type="hidden" name="discipline" id="discipline" value="">
                     <button class="btn btn-link" type="submit">
                       <small><%= industry.name %></small>
-                      <span class="badge badge-secondary badge-pill"><%= GuideIndustry.where(:industry_id => industry.id).count %></span>
+                      <span class="badge badge-secondary badge-pill"><%= ConnectIndustry.where(:industry_id => industry.id,:article_id => nil).count %></span>
                     </button>
                   </form>
                 </li>
@@ -87,8 +88,8 @@
             <% end %>
           </ul>
         </div>
-        
-    <!--    Browse guides by discipline-->
+
+        <!--    Browse guides by discipline-->
         <div class="card border-secondary mb-3" style="margin:20px; max-height: 200px;overflow-y: auto;">
           <h6 class="card-header text-white" style="background-color:#3E3F3A;">Browse Guides by Discipline</h6>
           <ul class="list-group list-group-flush">
@@ -102,7 +103,7 @@
                     <input class="form-control" type="hidden" name="industry" id="industry" value="">
                     <button class="btn btn-link" type="submit">
                       <small><%= discipline.name %></small>
-                      <span class="badge badge-secondary badge-pill"><%= GuideDiscipline.where(:discipline_id => discipline.id).count %></span>
+                      <span class="badge badge-secondary badge-pill"><%= ConnectDiscipline.where(:discipline_id => discipline.id,:article_id => nil).count %></span>
                     </button>
                   </form>
                 </li>
@@ -117,15 +118,38 @@
         </div>
 
 
-        <div class="card border-secondary mb-3 offset-mb-1" style="margin:20px; max-height: 200px;overflow-y: auto;">
-          <h6 class="card-header text-white" style="background-color:#3E3F3A;">Featured Community Board Articles</h6>
-
-        </div>
       </div>
       <!--END CARDS-->
 
 
     </div>
+
+
+    <h6 class="card-header text-white" style="background-color:#3E3F3A;  text-align: center;;">Featured Community Board Articles</h6>
+    <div class="row justify-content-center">
+      <% Article.where(:status === "Featured").order(:cached_votes_up => :desc).each do |article| %>
+
+        <div class="card border-primary mb-3" style="margin:10px; max-width: 15rem;max-height: 20rem;">
+          <a href="/articles/<%= article.id %>">
+            <img src="<%= article.image %>" class="img-fluid img-thumbnail" style="border:0; padding:0; " >
+          </a>
+          <a href="/articles/<%= article.id %>">
+            <div class="card-header" style="padding:5px"><%= article.title %></div>
+          </a>
+          <div class="card-body" style="padding:5px">
+
+            <div><small class="badge"><%= article.get_upvotes.size-article.get_downvotes.size %> Upvote('s)</small>
+              <small class="float-right">
+                Published on: <%= article.created_at.strftime("%B %d, %Y") %>
+              </small></div>
+            <small class="text-muted">Authored by: </small> <small><%= article.author %></small>
+
+          </div>
+        </div>
+
+      <% end %>
+    </div>
+
     <%= render 'layouts/footer' %>
   </body>
 

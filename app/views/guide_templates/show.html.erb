@@ -127,9 +127,9 @@
                           <label for="title" class="col-form-label">Guide title</label>
                           <input type="text" class="form-control" name="title" id="title" value="<%= @guide.try(:title) %>">
                           <label for="industry" class="col-form-label">Guide Industries</label>
-                          <%= select_tag("industries", options_from_collection_for_select(Industry.all, :id, :name, GuideIndustry.where(:guide_id => @guide.id).pluck(:industry_id)), :multiple => true, :class => "form-control") %>
+                          <%= select_tag("industries", options_from_collection_for_select(Industry.all, :id, :name, ConnectIndustry.where(:guide_id => @guide.id).pluck(:industry_id)), :multiple => true, :class => "form-control") %>
                           <label for="disciplines" class="col-form-label">Guide Disciplines</label>
-                          <%= select_tag("disciplines", options_from_collection_for_select(Discipline.all, :id, :name, GuideDiscipline.where(:guide_id => @guide.id).pluck(:discipline_id)),:multiple =>  true, :class => "form-control") %>
+                          <%= select_tag("disciplines", options_from_collection_for_select(Discipline.all, :id, :name, ConnectDiscipline.where(:guide_id => @guide.id).pluck(:discipline_id)),:multiple =>  true, :class => "form-control") %>
 
                           <label for="csi_section" class="col-form-label">Guide CSI Section</label>
                           <input type="text" class="form-control" name="csi_section" id="csi_section" value="<%= @guide.try(:csi_section) %>">
@@ -281,7 +281,7 @@
                         <i class="fas fa-plus"></i>
                         Start a discussion
                       </button>
-
+                   
                       <!-- add discussion Modal -->
                       <div class="modal fade" id="DiscussionModalCenter" tabindex="-1" role="dialog" aria-labelledby="DiscussionModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -314,15 +314,15 @@
                       <!--END add discussion MODAL-->
 
                     <% end %>
-                    <% Discussion.where(guide_id: @guide.id).each do|discussion| %>
+                    <% Discussion.where(guide_id: @guide.id).order(:created_at).each do|discussion| %>
 
                       <div class="card">
 
                         <div class="card-header">
                           <h4 class="card-title">
                             <%= discussion.title %>
-                            <small>
-                              <%= time_ago_in_words(discussion.created_at) %> ago
+                            <small class="text-muted">
+                              -created <%= time_ago_in_words(discussion.created_at) %> ago
                             </small>
                           </h4>
                         </div>
