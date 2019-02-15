@@ -7,12 +7,11 @@
     Add a new article
   </a>
 
-
   <hr>
   <% @articles.each do |article| %>
    <div class="card">
     <div class="row mb-5 align-items-start">
-       
+  
           <div class="col-6">
           <a href="/articles/<%= article.id %>">
           <img src="<%= article.image %>" class="img-fluid img-thumbnail" style="border:0;" >
