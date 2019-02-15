@@ -124,32 +124,33 @@
 
     </div>
 
-
     <h6 class="card-header text-white" style="background-color:#3E3F3A;  text-align: center;;">Featured Community Board Articles</h6>
-    <div class="row justify-content-center">
-      <% Article.where(:status === "Featured").order(:cached_votes_up => :desc).each do |article| %>
+    <div class="container">
 
-        <div class="card border-primary mb-3" style="margin:10px; max-width: 15rem;max-height: 20rem;">
-          <a href="/articles/<%= article.id %>">
-            <img src="<%= article.image %>" class="img-fluid img-thumbnail" style="border:0; padding:0; " >
-          </a>
-          <a href="/articles/<%= article.id %>">
-            <div class="card-header" style="padding:5px"><%= article.title %></div>
-          </a>
-          <div class="card-body" style="padding:5px">
+      <div class="row justify-content-center">
+        <% Article.where(:status === "Featured").order(:cached_votes_up => :desc).each do |article| %>
 
-            <div><small class="badge"><%= article.get_upvotes.size-article.get_downvotes.size %> Upvote('s)</small>
-              <small class="float-right">
-                Published on: <%= article.created_at.strftime("%B %d, %Y") %>
-              </small></div>
-            <small class="text-muted">Authored by: </small> <small><%= article.author %></small>
+          <div class="card border-primary mb-3" style="margin:10px; max-width: 15rem;max-height: 20rem;">
+            <a href="/articles/<%= article.id %>">
+              <img src="<%= article.image %>" class="img-fluid img-thumbnail" style="border:0; padding:0; " >
+            </a>
+            <a href="/articles/<%= article.id %>">
+              <div class="card-header" style="padding:5px"><%= article.title %></div>
+            </a>
+            <div class="card-body" style="padding:5px">
 
+              <div><small class="badge"><%= article.get_upvotes.size-article.get_downvotes.size %> Upvote('s)</small>
+                <small class="float-right">
+                  Published on: <%= article.created_at.strftime("%B %d, %Y") %>
+                </small></div>
+              <small class="text-muted">Authored by: </small> <small><%= article.author %></small>
+
+            </div>
           </div>
-        </div>
 
-      <% end %>
+        <% end %>
+      </div>
     </div>
-
     <%= render 'layouts/footer' %>
   </body>
 
