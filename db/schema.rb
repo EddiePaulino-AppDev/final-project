@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190215054440) do
+ActiveRecord::Schema.define(version: 20190226032303) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -74,34 +74,35 @@ ActiveRecord::Schema.define(version: 20190215054440) do
   end
 
   create_table "comments", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "discussion_id"
+    t.integer "commentable_id"
+    t.string "commentable_type"
+    t.string "title"
     t.text "body"
+    t.string "subject"
+    t.integer "user_id", null: false
+    t.integer "parent_id"
+    t.integer "lft"
+    t.integer "rgt"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "cached_votes_total", default: 0
-    t.integer "cached_votes_score", default: 0
-    t.integer "cached_votes_up", default: 0
-    t.integer "cached_votes_down", default: 0
-    t.integer "cached_weighted_score", default: 0
-    t.integer "cached_weighted_total", default: 0
-    t.float "cached_weighted_average", default: 0.0
+    t.index ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "connect_disciplines", force: :cascade do |t|
     t.integer "guide_id"
     t.integer "discipline_id"
+    t.integer "article_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "article_id"
   end
 
   create_table "connect_industries", force: :cascade do |t|
     t.integer "guide_id"
     t.integer "industry_id"
+    t.integer "article_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "article_id"
   end
 
   create_table "disciplines", force: :cascade do |t|

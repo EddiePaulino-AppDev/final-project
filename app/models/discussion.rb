@@ -13,5 +13,5 @@
 class Discussion < ApplicationRecord
   belongs_to :guide
   belongs_to :tab
-  has_many :comments, :dependent => :destroy
+  acts_as_commentable
 end

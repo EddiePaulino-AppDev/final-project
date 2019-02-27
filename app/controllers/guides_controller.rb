@@ -11,6 +11,11 @@ class GuidesController < ApplicationController
 
   def show
     @guide = Guide.find(params.fetch("id_to_display"))
+    @instance_tab = params.fetch("tab","")
+
+    if @instance_tab == ""
+      @instance_tab ="Design Summary"
+    end 
 
     render("guide_templates/show.html.erb")
   end
@@ -124,7 +129,12 @@ class GuidesController < ApplicationController
       @tab.title = "Discussions"
       @tab.guide_id = @guide.id
       @tab.save
-
+      #create first discussion
+      @discussion = Discussion.new
+      @discussion.title = "Guide Development"
+      @discussion.guide_id = @guide.id
+      @discussion.tab_id = @tab.id
+      @discussion.save
 
       redirect_to("/guides/" + @guide.id.to_s, :notice => "Guide created successfully.")
     else

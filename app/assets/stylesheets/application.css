@@ -17,15 +17,12 @@
   background: #F6F6F6;
 
 }
-.col-8{
+
+.white-back{
   background: #FFFFFF;
 }
-.table{
-  background: #FFFFFF;
-}
-.col-2{
-  overflow: auto;
-}
-dl{
-    background: #FFFFFF;
+
+
+a, a:hover, .btn-link, .btn-link:hover {
+color:#4e73df; 
 }

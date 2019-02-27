@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   # Routes for the Article resource:
 
+resources :comments, :only => [:create, :destroy]
+
   # CREATE
   get("/articles/new", { :controller => "articles", :action => "new_form" })
   post("/create_article", { :controller => "articles", :action => "create_row" })
@@ -37,27 +39,6 @@ Rails.application.routes.draw do
 
   # DELETE
   get("/delete_discussion/:id_to_remove", { :controller => "discussions", :action => "destroy_row" })
-
-  #------------------------------
-
-  # CREATE
-  get("/comments/new", { :controller => "comments", :action => "new_form" })
-  post("/create_comment", { :controller => "comments", :action => "create_row" })
-
-  # READ
-  get("/comments", { :controller => "comments", :action => "index" })
-  get("/comments/:id_to_display", { :controller => "comments", :action => "show" })
-
-  # UPDATE
-  get("/comments/:prefill_with_id/edit", { :controller => "comments", :action => "edit_form" })
-  post("/update_comment/:id_to_modify", { :controller => "comments", :action => "update_row" })
-  
-  # Voting comments
-  post("/comments/:id/upvote", { :controller => "comments", :action => "upvote"})
-  post("/comments/:id/downvote", { :controller => "comments", :action => "downvote"})
-  
-  # DELETE
-  get("/delete_comment/:id_to_remove", { :controller => "comments", :action => "destroy_row" })
 
   #------------------------------
 
@@ -132,6 +113,7 @@ Rails.application.routes.draw do
   # READ
   get("/guides", { :controller => "guides", :action => "index" })
   get("/guides/:id_to_display", { :controller => "guides", :action => "show" })
+  get("/guides/:id_to_display/:tab", { :controller => "guides", :action => "show" })
 
   # UPDATE
   get("/guides/:prefill_with_id/edit", { :controller => "guides", :action => "edit_form" })
