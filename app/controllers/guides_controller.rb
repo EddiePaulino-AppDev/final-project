@@ -4,7 +4,7 @@ class GuidesController < ApplicationController
   def index
       @q = Guide.ransack(tags_cont_any: params.fetch("search_entry","").split(/[\s,'+-:~]/), industries_name_eq: params.fetch("industry",""), disciplines_name_eq: params.fetch("discipline",""), csi_section_eq: params.fetch("csi_section",""))
       @guides = @q.result.includes(:industries, :disciplines)
-      #@guides = @guides.sort_by {|guide| [guide.created_at, guide.where(:tags => params.fetch("search_entry")).count]}.reverse
+    
 
     render("guide_templates/index.html.erb")
   end
@@ -108,7 +108,7 @@ class GuidesController < ApplicationController
       @text_component.save
 
       @tab = Tab.new
-      @tab.title = "Products/Suppliers"
+      @tab.title = "Products"
       @tab.guide_id = @guide.id
       @tab.save
       @text_component = TextComponent.new

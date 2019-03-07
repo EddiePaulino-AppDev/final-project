@@ -3,17 +3,7 @@
     <%= @article.title %>
   </h1>
 
-  <div class="row" style="padding:10px">
-    <form action="/articles/<%= @article.id %>/upvote" method="post">
-      <input type="hidden" name="article_id" value="<%= @article.id %>">
-      <button type="submit" class="btn btn-primary">
-        <i class="fas fa-plus"></i>
-      </button>
-    </form>
 
-    <h4><span class="badge"><%= @article.get_upvotes.size %> Upvote('s)</span></h4>
-
-  </div>
 
   <% if current_user == nil %>
   <% else %>
@@ -38,20 +28,59 @@
     </dd>
     <dt>
       Author('s)
+<% if current_user == nil %>
+     <!-- star button start-->
+        <div class="row float-right" style="padding:10px">
+    <form action="/articles/<%= @article.id %>/upvote" method="post">
+      <input type="hidden" name="article_id" value="<%= @article.id %>">
+      <button type="submit" style="padding:3px" rel="tooltip" title="star this article" class="btn btn-outline-primary">
+        <i class="fas fa-star fa-2x"></i>
+      </button>
+    </form>
+
+    <h4><span class="badge"><%= @article.get_upvotes.size %> Stars('s)</span></h4>
+     <!--star button end-->
+  </div>
+<% else %>
+      <% if current_user.voted_for? @article %>
+       <!-- star button start-->
+    <div class="row float-right" style="padding:10px">
+      <button style="padding:3px" class="btn btn-secondary">
+        <i class="fas fa-star fa-2x"></i>
+      </button>
+
+    <h4><span class="badge"><%= @article.get_upvotes.size %> Stars('s)</span></h4>
+     <!--star button end-->
+      </div>
+      <% else %>
+     <!-- star button start-->
+        <div class="row float-right" style="padding:10px">
+    <form action="/articles/<%= @article.id %>/upvote" method="post">
+      <input type="hidden" name="article_id" value="<%= @article.id %>">
+      <button type="submit" style="padding:3px" rel="tooltip" title="star this article" class="btn btn-outline-primary">
+        <i class="fas fa-star fa-2x"></i>
+      </button>
+    </form>
+
+    <h4><span class="badge"><%= @article.get_upvotes.size %> Stars('s)</span></h4>
+     <!--star button end-->
+  </div>
+  <% end %>
+  <% end %>
     </dt>
     <dd style="float-left">
       <%= @article.author %>
     </dd>
 
     <dt>
-      Published on
+      Posted on
     </dt>
     <dd>
       <%= @article.created_at.strftime("%B %d, %Y") %>
     </dd>
 
     <dt>
-      Last Update on
+      Updated on
     </dt>
     <dd>
       <%= @article.updated_at.strftime("%B %d, %Y") %>
@@ -73,9 +102,121 @@
     <% else %>
     <% end %>
 <% end %>
-  <hr>
 
+<div></div>
   <a href="/articles">
     Go back
   </a>
+    <hr>
+  
+
+                <div class="card">
+
+                  <div class="card-header">
+                    <h4 class="card-title">
+                   <i class="fas fa-comments"></i> Comments (<%= @article.comment_threads.size %>)
+                     
+                    </h4>
+                  </div>
+
+                  <div class="card-body">
+                    <ul class="list-unstyled pt-3">
+                      <% @article.comment_threads.each do |comment| %>
+                        <!-- START COMMENTS-->
+                        <li class="media mb-2">
+                          <div class="media-body">
+                            <p><%= comment.body %></p>
+
+                          </div>
+
+                          <!-- media-body -->
+                          <!-- footer-->
+                          <blockquote class="blockquote mb-0">
+                            <div class="row justify-content-end">
+                              <form action="/comments/<%= comment.id %>/upvote" method="post">
+                                <input type="hidden" name="article_id" value="<%= @article.id %>">
+                                <input type="hidden" name="comment_id" value="<%= comment.id %>">
+                                <button type="submit" class="btn btn-secondary">
+                                  <i class="fas fa-angle-up"></i>
+                                </button>
+                              </form>
+
+                              <h4><span class="badge"><%= comment.get_upvotes.size-comment.get_downvotes.size %></span></h4>
+                              <form action="/comments/<%= comment.id %>/downvote" method="post">
+                                <input type="hidden" name="article_id" value="<%= @article.id %>">
+                                <input type="hidden" name="comment_id" value="<%= comment.id %>">
+                                <button type="submit" class="btn btn-secondary">
+                                  <i class="fas fa-angle-down"></i>
+                                </button>
+                              </form>
+                              <% if current_user == nil %>
+                              <% else %>
+                                <% if comment.user_id == current_user.id %>
+                                  <a href="/delete_comment/<%= comment.id %>", data-confirm="Are you sure?">
+                                    Delete
+                                  </a>
+                                <% else %>
+                                <% end %>
+                              <% end %>
+
+                            </div>
+                            <footer class="blockquote-footer"><%= comment.user.first_name %> <%= comment.user.last_name %>, <cite title="Source"> <%= time_ago_in_words(comment.created_at) %> ago</cite></footer>
+                          </blockquote>
+                        </li>
+                        <hr>
+                      <% end %>
+                      <!--   END COMMENTS-->
+
+                      <li class="media">
+                        <div class="media-body">
+
+                            <!-- Hidden input for authenticity token to protect from forgery -->
+                            <form action="/create_comment" method="post" class="pt-4">
+                              <!-- Hidden input for authenticity token to protect from forgery -->
+                              <input name="authenticity_token" type="hidden" value="<%= session[:current_user_id] %>">
+
+                              <input type="hidden" name="article_id" value="<%= @article.id %>">
+
+                              <input type="hidden" name="user_id" value="<%= current_user.try(:id) %>">
+
+
+                              <!-- Label and input for body -->
+                              <div class="form-group">
+                                <label for="body" class="sr-only">
+                                  Body
+                                </label>
+
+                                <div class="input-group">
+                                  <textarea id="body" name="body" class="form-control" rows="3" placeholder="Add a comment..."></textarea>
+
+                                  <span class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">
+                                      <i class="far fa-comment"></i>
+
+                                      Add Comment
+                                    </button>
+                                  </span>
+                                </div>
+                                <!-- input-group -->
+                              </div>
+                              <!-- form-group -->
+                            </form>
+
+
+                   
+                          <!--                 EDIT AND DELETE BUTTONS-->
+                        </div>
+                        <!-- media-body -->
+                      </li>
+                    </ul>
+
+
+                  </div>
+                  <!-- card-body -->
+                </div>
+                <!-- card  -->
+                <hr>
+
+
+  
 </div>

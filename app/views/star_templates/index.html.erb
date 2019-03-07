@@ -20,12 +20,15 @@
       <th>
         CSI Section
       </th>
+       <th>
+        Updated
+      </th>
 
       <th>
       </th>
     </tr>
 
-    <% @stars.each do |star| %>
+    <% @stars.order(updated_at: :asc).each do |star| %>
       <tr>
 
         <td>
@@ -41,6 +44,9 @@
 
         <td>
           <%= Guide.find_by(:id => star.guide_id).csi_section %>
+        </td>
+        <td>
+          <%= time_ago_in_words(Guide.find_by(:id => star.guide_id).updated_at) %> ago
         </td>
 
 

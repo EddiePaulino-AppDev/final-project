@@ -1,3 +1,6 @@
+<head>
+  <title>OS Design Guide - Search Guides</title>
+</head>
 <div class="container">
   <h1>
     Guide Search Results for: "<%= params.fetch("search_entry","") %>"
@@ -51,22 +54,18 @@
             <%= sort_link @q, :title, "Title" %>
           </th>
           <th>
-            <%= sort_link @q, :industries, "Industries" %>
+           <%= sort_link @q, :industries_name, "Industries" %>
           </th>
           <th>
-            <%= sort_link @q, :discipline, "Disciplines" %>
+            <%= sort_link @q, :disciplines_name, "Disciplines" %>
           </th>
           
           <th>
             <%= sort_link @q, :csi_section, "CSI Section" %>
           </th>
-          
-          <th>
-            <%= sort_link @q, :created_at, "Created At" %>
-          </th>
 
           <th>
-            <%= sort_link @q, :updated_at, "Updated At" %>
+            <%= sort_link @q, :updated_at, "Updated", default_order: :asc %>
           </th>
 
           <th>
@@ -88,10 +87,6 @@
             
             <td>
               <%= guide.csi_section %>
-            </td>
-            
-            <td>
-              <%= time_ago_in_words(guide.created_at) %> ago
             </td>
 
             <td>

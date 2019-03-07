@@ -11,8 +11,6 @@
           $('div#more').toggle();
         });
       });
-
-
     </script>
 
 
@@ -27,25 +25,25 @@
         <div class="col-2">
           <h3><%= @guide.title %></h3>
           <% if current_user == nil %>
-           <div class="glyphicon">
-            <i class="fas fa-star" rel="tooltip" title="Stars from Users"></i> <span class="badge badge-secondary badge-pill"> <%= Star.where(:guide_id => @guide.id).count %> Stars</span>
+            <div class="glyphicon">
+              <i class="fas fa-star" rel="tooltip" title="Stars from Users"></i> <span class="badge badge-secondary badge-pill"> <%= Star.where(:guide_id => @guide.id).count %> Stars</span>
             </div>
           <% else %>
 
             <!--STARRING LINKS-->
 
-         <div class="glyphicon float-left">
-          <i class="fas fa-star" rel="tooltip" title="Star count"></i> <span class="badge badge-secondary badge-pill"><%= Star.where(:guide_id => @guide.id).count %> Stars</span> 
+            <div class="glyphicon float-left">
+              <i class="fas fa-star" rel="tooltip" title="Star count"></i> <span class="badge badge-secondary badge-pill"><%= Star.where(:guide_id => @guide.id).count %> Stars</span>
             </div>
-           
-              
+
+
             <% if Star.find_by({ :user_id => current_user.id, :guide_id => @guide.id }) == nil %>
 
               <form action="/create_star" method="post">
                 <input type="hidden" id="guide_id" name="guide_id" value="<%= @guide.id %>">
                 <input type="hidden" id="user_id" name="user_id" value="<%= current_user.id %>">
                 <button type="submit" class="btn" style="padding-left:5px; padding-right:5px; padding-bottom:0px; padding-top:0px; margin:1px">
-                  <i class="fas fa-plus" rel="tooltip" title="Star this guide"></i> 
+                  <i class="fas fa-plus" rel="tooltip" title="Star this guide"></i>
                 </button>
               </form>
 
@@ -53,22 +51,20 @@
               <form action="/delete_star/<%= Star.find_by({ :user_id => current_user.id, :guide_id => @guide.id }).id %>">
                 <input type="hidden" id="guide_id" name="guide_id" value="<%= @guide.id %>">
                 <button type="submit" class="btn" style="padding-left:5px; padding-right:5px; padding-bottom:0px; padding-top:0px; margin:1px">
-                  <i class="fas fa-minus" rel="tooltip" title="Un-Star this guide"></i> 
+                  <i class="fas fa-minus" rel="tooltip" title="Un-Star this guide"></i>
                 </button>
               </form>
 
             <% end %>
-         
-         
-          
-          
+
+
           <% end %>
           <!-- END STARRING LINKS-->
 
 
           <!--CONTRIBUTORS COUNT-->
           <div class="glyphicon">
-          <i class="fas fa-users" rel="tooltip" title="Contributor count"></i> <span class="badge badge-secondary badge-pill"><%= Star.where(:guide_id => @guide.id).count %> Contributors</span>
+            <i class="fas fa-users" rel="tooltip" title="Contributor count"></i> <span class="badge badge-secondary badge-pill"><%= Star.where(:guide_id => @guide.id).count %> Contributors</span>
           </div>
           <!-- END CONTRIBUTORS COUNT-->
 
@@ -91,14 +87,14 @@
             <dd>
               <%= @guide.csi_section %>
             </dd>
-
+<!--
             <dt>
               Created
             </dt>
             <dd>
-              <%= @guide.created_at.strftime("%m/%d/%Y") %>
+              <%#= @guide.created_at.strftime("%m/%d/%Y") %>
             </dd>
-
+-->
             <dt>
               Updated
             </dt>
@@ -106,64 +102,64 @@
               <%= time_ago_in_words(@guide.updated_at) %> ago
             </dd>
           </dl>
-          
-              <!-- Button trigger modal -->
-              <button type="button" class="btn btn-link" style="padding:5px" data-toggle="modal" data-target="#GuideEditModalCenter">
-                <i class="far fa-edit"></i>
-                Edit Guide Descriptors
-              </button>
-              <!-- edit guide Modal -->
-              <div class="modal fade" id="GuideEditModalCenter" tabindex="-1" role="dialog" aria-labelledby="GuideEditModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="GuideEditModalLongTitle">Edit Guide Descriptors</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
+
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-link" style="padding:5px" data-toggle="modal" data-target="#GuideEditModalCenter">
+            <i class="far fa-edit"></i>
+            Edit Guide Descriptors
+          </button>
+          <!-- edit guide Modal -->
+          <div class="modal fade" id="GuideEditModalCenter" tabindex="-1" role="dialog" aria-labelledby="GuideEditModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="GuideEditModalLongTitle">Edit Guide Descriptors</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form action="/update_guide/<%= @guide.id %>" method="post" id="guideform">
+                    <div class="form-group">
+                      <label for="title" class="col-form-label">Guide title</label>
+                      <input type="text" class="form-control" name="title" id="title" value="<%= @guide.try(:title) %>">
+                      <label for="industry" class="col-form-label">Guide Industries</label>
+                      <%= select_tag("industries", options_from_collection_for_select(Industry.all, :id, :name, ConnectIndustry.where(:guide_id => @guide.id).pluck(:industry_id)), :multiple => true, :class => "form-control") %>
+                      <label for="disciplines" class="col-form-label">Guide Disciplines</label>
+                      <%= select_tag("disciplines", options_from_collection_for_select(Discipline.all, :id, :name, ConnectDiscipline.where(:guide_id => @guide.id).pluck(:discipline_id)),:multiple =>  true, :class => "form-control") %>
+
+                      <label for="csi_section" class="col-form-label">Guide CSI Section</label>
+                      <input type="text" class="form-control" name="csi_section" id="csi_section" value="<%= @guide.try(:csi_section) %>">
+
+                      <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
                     </div>
-                    <div class="modal-body">
-                      <form action="/update_guide/<%= @guide.id %>" method="post" id="guideform">
-                        <div class="form-group">
-                          <label for="title" class="col-form-label">Guide title</label>
-                          <input type="text" class="form-control" name="title" id="title" value="<%= @guide.try(:title) %>">
-                          <label for="industry" class="col-form-label">Guide Industries</label>
-                          <%= select_tag("industries", options_from_collection_for_select(Industry.all, :id, :name, ConnectIndustry.where(:guide_id => @guide.id).pluck(:industry_id)), :multiple => true, :class => "form-control") %>
-                          <label for="disciplines" class="col-form-label">Guide Disciplines</label>
-                          <%= select_tag("disciplines", options_from_collection_for_select(Discipline.all, :id, :name, ConnectDiscipline.where(:guide_id => @guide.id).pluck(:discipline_id)),:multiple =>  true, :class => "form-control") %>
 
-                          <label for="csi_section" class="col-form-label">Guide CSI Section</label>
-                          <input type="text" class="form-control" name="csi_section" id="csi_section" value="<%= @guide.try(:csi_section) %>">
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" form="guideform" class="btn btn-primary">Update Guide Descriptors</button>
+                  <a href="#" id="show_more">More</a>
 
-                          <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
-                        </div>
-
-                      </form>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="submit" form="guideform" class="btn btn-primary">Update Guide Descriptors</button>
-                      <a href="#" id="show_more">More</a>
-
-                      <div id="more" class="hidden">
-                        <a href="/delete_guide/<%= @guide.id %>" data-confirm="Are you sure?">
-                          Delete guide
-                        </a>
-                      </div>
-
-                    </div>
+                  <div id="more" class="hidden">
+                    <a href="/delete_guide/<%= @guide.id %>" data-confirm="Are you sure?">
+                      Delete guide
+                    </a>
                   </div>
+
                 </div>
               </div>
-              <!--END edit guide MODAL-->
-              
-              
+            </div>
+          </div>
+          <!--END edit guide MODAL-->
+
+
           <ul class="nav nav-pills nav-fill flex-column">
 
             <% Tab.where(guide_id: @guide.id).each do|tab| %>
-            <li class="nav-item text-left">
-                  <a class="nav-link <%= "active" if @instance_tab == tab.title  %>" href="/guides/<%= @guide.id %>/<%= tab.title %>"><%= tab.title.to_s %></a>
-            </li>
+              <li class="nav-item text-left">
+                <a class="nav-link <%= "active" if @instance_tab == tab.title  %>" href="/guides/<%= @guide.id %>/<%= tab.title %>"><%= tab.title.to_s %></a>
+              </li>
 
             <% end %>
 
@@ -189,7 +185,7 @@
                     <div class="modal-body">
                       <form action="/create_tab" method="post" id="tabform">
                         <div class="form-group">
-                          <label for="title" class="col-form-label">Tab title</label>
+                          <label for="title" class="col-form-label">Tab title <small>(don't use special characters)</small></label>
                           <input type="text" class="form-control" name="title" id="title">
                           <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
                         </div>
@@ -211,227 +207,238 @@
 
 
           </ul>
-          
+
         </div>
-         <!--   end 2 column-->
+        <!--   end 2 column-->
 
         <!--   start 8 column-->
         <div class="col-8 white-back">
-   
-
-            <% @tab = Tab.find_by(:title => @instance_tab) %>
 
 
+          <% @tab = Tab.find_by(:title => @instance_tab) %>
 
-                <div class="container" style="padding:20px">
-              
-                  <% if current_user == nil %>
-                    <a  href="/users/sign_up" style="float: right;">Create an account to contribute to this guide.</a>
-                  <% else %>
-                    <% if ["DesignSummary","Discussions"].include? @instance_tab %>
-                    <% else %>
-                    <div class="row">
-                      <!-- Button trigger modal -->
-                      <button type="button" class="btn btn-link" data-toggle="modal" data-target="#TabEditModalCenter<%= @tab.id %>">
-                        <i class="far fa-edit"></i>
-                        Edit the <%= @tab.title %> tab title
-                      </button>
-                      <!-- edit tab Modal -->
-                      <div class="modal fade" id="TabEditModalCenter<%= @tab.id %>" tabindex="-1" role="dialog" aria-labelledby="TabEditModalCenterTitle<%= @tab.id %>" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="TabEditModalLongTitle<%= @tab.id %>">Edit tab title</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
+
+          <div class="container" style="padding:20px">
+
+            <% if current_user == nil %>
+            <div class="row">
+              <a  href="/users/sign_up" style="float: right;">Create an account to contribute to this guide.</a>
+              </div>
+            <% else %>
+              <% if ["DesignSummary","Discussions"].include? @instance_tab %>
+              <% else %>
+                <div class="row">
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-link" data-toggle="modal" data-target="#TabEditModalCenter<%= @tab.id %>">
+                    <i class="far fa-edit"></i>
+                    Edit the <%= @tab.title %> tab title
+                  </button>
+                  <!-- edit tab Modal -->
+                  <div class="modal fade" id="TabEditModalCenter<%= @tab.id %>" tabindex="-1" role="dialog" aria-labelledby="TabEditModalCenterTitle<%= @tab.id %>" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="TabEditModalLongTitle<%= @tab.id %>">Edit tab title</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <form action="/update_tab" method="post" id="TabEditForm<%= @tab.id %>">
+                            <div class="form-group">
+                              <label for="title" class="col-form-label">Tab title</label>
+                              <input type="text" class="form-control" name="title" id="title" value="<%= @tab.try(:title) %>">
+
+                              <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
                             </div>
-                            <div class="modal-body">
-                              <form action="/update_tab" method="post" id="TabEditForm<%= @tab.id %>">
-                                <div class="form-group">
-                                  <label for="title" class="col-form-label">Tab title</label>
-                                  <input type="text" class="form-control" name="title" id="title" value="<%= @tab.try(:title) %>">
 
-                                  <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
-                                </div>
+                          </form>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button type="submit" form="TabEditForm<%= @tab.id %>" class="btn btn-primary">Update the <%= @tab.title %> tab title</button>
 
-                              </form>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                              <button type="submit" form="TabEditForm<%= @tab.id %>" class="btn btn-primary">Update the <%= @tab.title %> tab title</button>
+                          <a href="#" id="show_more">More</a>
 
-                                <a href="#" id="show_more">More</a>
-
-                                <div id="more" class="hidden">
-                                  <a href="/delete_tab/<%= @tab.id %>" data-confirm="Are you sure?">
-                                    Delete the <%= @tab.title %> tab
-                                  </a>
-                                </div>
-                            
-                            </div>
+                          <div id="more" class="hidden">
+                            <a href="/delete_tab/<%= @tab.id %>" data-confirm="Are you sure?">
+                              Delete the <%= @tab.title %> tab
+                            </a>
                           </div>
+
                         </div>
                       </div>
-                      <!--END edit tab MODAL-->
                     </div>
-                    <% end %>
-                  <% end %>
-               
-                  
-                  <!--   START DISCUSSION TAB LOGIC-->
-                  <% if @instance_tab == "Discussions" %>
-                    <% if current_user == nil %>
-                    <% else %>
-                      <!-- Button trigger modal -->
-                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#DiscussionModalCenter">
-                        <i class="fas fa-plus"></i>
-                        Start a discussion
-                      </button>
-                   
-                      <!-- add discussion Modal -->
-                      <div class="modal fade" id="DiscussionModalCenter" tabindex="-1" role="dialog" aria-labelledby="DiscussionModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="DiscussionModalLongTitle">Start a new discussion</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>
-                            <div class="modal-body">
-                              <form action="/create_discussion" method="post" id="DiscussionForm">
-                                <div class="form-group">
-                                  <label for="title" class="col-form-label">Dicussion title</label>
-                                  <input type="text" class="form-control" name="title" id="title">
+                  </div>
+                  <!--END edit tab MODAL-->
+                </div>
+              <% end %>
+            <% end %>
 
-                                  <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
-                                  <input type="hidden" id="tab_id" name="tab_id" class="form-control" value="<%= @tab.id %>">
-                                </div>
 
-                              </form>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                              <button type="submit" form="DiscussionForm" class="btn btn-primary">Start discussion</button>
-                            </div>
+            <!--   START DISCUSSION TAB LOGIC-->
+            <% if @instance_tab == "Discussions" %>
+              <% if current_user == nil %>
+              <% else %>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#DiscussionModalCenter">
+                  <i class="fas fa-plus"></i>
+                  Start a discussion
+                </button>
+
+                <!-- add discussion Modal -->
+                <div class="modal fade" id="DiscussionModalCenter" tabindex="-1" role="dialog" aria-labelledby="DiscussionModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="DiscussionModalLongTitle">Start a new discussion</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <form action="/create_discussion" method="post" id="DiscussionForm">
+                          <div class="form-group">
+                            <label for="title" class="col-form-label">Dicussion title</label>
+                            <input type="text" class="form-control" name="title" id="title">
+
+                            <input type="hidden" id="guide_id" name="guide_id" class="form-control" value="<%= @guide.id %>">
+                            <input type="hidden" id="tab_id" name="tab_id" class="form-control" value="<%= @tab.id %>">
                           </div>
-                        </div>
+
+                        </form>
                       </div>
-                      <!--END add discussion MODAL-->
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" form="DiscussionForm" class="btn btn-primary">Start discussion</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--END add discussion MODAL-->
 
-                    <% end %>
-                    <% Discussion.where(guide_id: @guide.id).order(:created_at).each do|discussion| %>
+              <% end %>
+              <% Discussion.where(guide_id: @guide.id).order(:created_at).each do|discussion| %>
 
-                      <div class="card">
+                <div class="card">
 
-                        <div class="card-header">
-                          <h4 class="card-title">
-                            <%= discussion.title %>
-                            <small class="text-muted">
-                              -created <%= time_ago_in_words(discussion.created_at) %> ago
-                            </small>
-                          </h4>
-                        </div>
+                  <div class="card-header">
+                    <h4 class="card-title">
+                      <%= discussion.title %>
+                      <small class="text-muted">
+                        -created <%= time_ago_in_words(discussion.created_at) %> ago
+                      </small>
+                    </h4>
+                  </div>
 
-                        <div class="card-body">
-                          <ul class="list-unstyled pt-3">
-                            <%# discussion.comment_threads.each do |comment| %>
-                              <!-- START COMMENTS-->
-                              <li class="media mb-2">
-                                <div class="media-body">
-                                    <p><%#= comment.body %></p>
+                  <div class="card-body">
+                    <ul class="list-unstyled pt-3">
+                      <% discussion.comment_threads.each do |comment| %>
+                        <!-- START COMMENTS-->
+                        <li class="media mb-2">
+                          <div class="media-body">
+                            <p><%= comment.body %></p>
 
-                                </div>
+                          </div>
 
-                                <!-- media-body -->
-                               <!-- footer-->
-                                <blockquote class="blockquote mb-0">
-                                    <div class="row justify-content-end">
-                                      <form action="/comments/<%#= comment.id %>/upvote" method="post">
-                                        <input type="hidden" name="guide_id" value="<%= @guide.id %>">
-                                        <input type="hidden" name="comment_id" value="<%#= comment.id %>">
-                                        <button type="submit" class="btn btn-secondary">
-                                          <i class="fas fa-angle-up"></i>
-                                        </button>
-                                      </form>
+                          <!-- media-body -->
+                          <!-- footer-->
+                          <blockquote class="blockquote mb-0">
+                            <div class="row justify-content-end">
+                              <form action="/comments/<%= comment.id %>/upvote" method="post">
+                                <input type="hidden" name="guide_id" value="<%= @guide.id %>">
+                                <input type="hidden" name="comment_id" value="<%= comment.id %>">
+                                <button type="submit" class="btn btn-secondary">
+                                  <i class="fas fa-angle-up"></i>
+                                </button>
+                              </form>
 
-                                      <h4><span class="badge"><%#= comment.get_upvotes.size-comment.get_downvotes.size %></span></h4>
-                                      <form action="/comments/<%#= comment.id %>/downvote" method="post">
-                                        <input type="hidden" name="guide_id" value="<%= @guide.id %>">
-                                        <input type="hidden" name="comment_id" value="<%#= comment.id %>">
-                                        <button type="submit" class="btn btn-secondary">
-                                          <i class="fas fa-angle-down"></i>
-                                        </button>
-                                      </form>
-
-                                    </div>
-                                <footer class="blockquote-footer"><%#= comment.user.first_name %> <%#= comment.user.last_name %>, <cite title="Source">posted <%#= time_ago_in_words(comment.created_at) %> ago</cite></footer>
-                                </blockquote>
-                              </li>
-                              <hr>
-                            <%# end %>
-                            <!--   END COMMENTS-->
-
-                            <li class="media">
-                              <div class="media-body">
-                                <% if current_user == nil %>
+                              <h4><span class="badge"><%= comment.get_upvotes.size-comment.get_downvotes.size %></span></h4>
+                              <form action="/comments/<%= comment.id %>/downvote" method="post">
+                                <input type="hidden" name="guide_id" value="<%= @guide.id %>">
+                                <input type="hidden" name="comment_id" value="<%= comment.id %>">
+                                <button type="submit" class="btn btn-secondary">
+                                  <i class="fas fa-angle-down"></i>
+                                </button>
+                              </form>
+                              <% if current_user == nil %>
+                              <% else %>
+                                <% if comment.user_id == current_user.id %>
+                                  <a href="/delete_comment/<%= comment.id %>", data-confirm="Are you sure?">
+                                    Delete
+                                  </a>
                                 <% else %>
-                                  <!-- Hidden input for authenticity token to protect from forgery -->
-                                  <form action="/create_comment" method="post" class="pt-4">
-                                    <!-- Hidden input for authenticity token to protect from forgery -->
-                                    <input name="authenticity_token" type="hidden" value="<%= session[:current_user_id] %>">
-
-                                    <input type="hidden" name="discussion_id" value="<%= discussion.id %>">
-
-                                    <input type="hidden" name="user_id" value="<%= current_user.id %>">
-
-                                    <input type="hidden" name="guide_id" value="<%= @guide.id %>">
-
-                                    <!-- Label and input for body -->
-                                    <div class="form-group">
-                                      <label for="body" class="sr-only">
-                                        Body
-                                      </label>
-
-                                      <div class="input-group">
-                                        <textarea id="body" name="body" class="form-control" rows="3" placeholder="Add a comment..."></textarea>
-
-                                        <span class="input-group-append">
-                                          <button class="btn btn-primary" type="submit">
-                                            <i class="far fa-comment"></i>
-
-                                            Add Comment
-                                          </button>
-                                        </span>
-                                      </div>
-                                      <!-- input-group -->
-                                    </div>
-                                    <!-- form-group -->
-                                  </form>
                                 <% end %>
-                                <!--                 EDIT AND DELETE BUTTONS-->
+                              <% end %>
+
+                            </div>
+                            <footer class="blockquote-footer"><%= comment.user.first_name %> <%= comment.user.last_name %>, <cite title="Source"><%= time_ago_in_words(comment.created_at) %> ago</cite></footer>
+                          </blockquote>
+                        </li>
+                        <hr>
+                      <% end %>
+                      <!--   END COMMENTS-->
+
+                      <li class="media">
+                        <div class="media-body">
+                
+                            <!-- Hidden input for authenticity token to protect from forgery -->
+                            <form action="/create_comment" method="post" class="pt-4">
+                              <!-- Hidden input for authenticity token to protect from forgery -->
+                              <input name="authenticity_token" type="hidden" value="<%= session[:current_user_id] %>">
+
+                              <input type="hidden" name="discussion_id" value="<%= discussion.id %>">
+
+                              <input type="hidden" name="user_id" value="<%= current_user.try(:id) %>">
+
+                              <input type="hidden" name="guide_id" value="<%= @guide.try(:id) %>">
+
+                              <!-- Label and input for body -->
+                              <div class="form-group">
+                                <label for="body" class="sr-only">
+                                  Body
+                                </label>
+
+                                <div class="input-group">
+                                  <textarea id="body" name="body" class="form-control" rows="3" placeholder="Add a comment..."></textarea>
+
+                                  <span class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">
+                                      <i class="far fa-comment"></i>
+
+                                      Add Comment
+                                    </button>
+                                  </span>
+                                </div>
+                                <!-- input-group -->
                               </div>
-                              <!-- media-body -->
-                            </li>
-                          </ul>
+                              <!-- form-group -->
+                            </form>
 
 
+
+                          <!--                 EDIT AND DELETE BUTTONS-->
                         </div>
-                        <!-- card-body -->
-                      </div>
-                      <!-- card  -->
-                      <hr>
+                        <!-- media-body -->
+                      </li>
+                    </ul>
 
 
-                    <% end %>
+                  </div>
+                  <!-- card-body -->
+                </div>
+                <!-- card  -->
+                <hr>
 
-                  <% else %>
 
-                    <!--  START CONTENT FOR TABS THAT ARE NOT THE DISCUSSION TAB-->
+              <% end %>
+
+            <% else %>
+
+              <!--  START CONTENT FOR TABS THAT ARE NOT THE DISCUSSION TAB-->
 
 
-                    <!--
+              <!--
 <ul class="nav nav-tabs">
 
   <li class="nav-item show active dropdown">
@@ -452,32 +459,28 @@
 </div>-->
 
 
-                    <% @text_component = TextComponent.find_by(:tab_id => Tab.find_by(:title => @instance_tab).id) %>
-                      <%= raw @text_component.content %>
-                  
-                      <% if current_user == nil %>
-                      <% else %>
-                        <form action="/text_components/<%= @text_component.id %>/edit">
-                          <input type="hidden" name="tab_id" id="tab_id" class="form-control" value="<%= @text_component.tab_id %>">
-                          <input type="hidden" name="guide_id" id="guide_id" class="form-control" value="<%= @guide.id %>">
-                          <button type="submit" class="btn btn-primary">
-                            <i class="far fa-edit"></i>
-                            Edit Content</button>
-                        </form>
-                      <% end %>
-                      <hr>
-                 
+              <% @text_component = TextComponent.find_by(:tab_id => Tab.find_by(:title => @instance_tab).id) %>
+              <%= raw @text_component.content %>
+
+              <% if current_user == nil %>
+              <% else %>
+                <form action="/text_components/<%= @text_component.id %>/edit">
+                  <input type="hidden" name="tab_id" id="tab_id" class="form-control" value="<%= @text_component.tab_id %>">
+                  <input type="hidden" name="guide_id" id="guide_id" class="form-control" value="<%= @guide.id %>">
+                  <button type="submit" class="btn btn-primary">
+                    <i class="far fa-edit"></i>
+                    Edit Content</button>
+                </form>
+              <% end %>
+              <hr>
 
 
-                  <% end %>
-                  <!--END DROPDOWN BUTTONS-->
+            <% end %>
+            <!--END DROPDOWN BUTTONS-->
 
 
-                </div>
-            
+          </div>
 
-         
-       
 
         </div>
 

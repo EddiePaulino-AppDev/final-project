@@ -6,7 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 gem "awesome_nested_set"
-gem 'acts_as_commentable_with_threading'
+gem "acts_as_commentable_with_threading"
 gem 'acts_as_votable', '~> 0.12.0'
 gem 'paper_trail'
 gem "ransack"

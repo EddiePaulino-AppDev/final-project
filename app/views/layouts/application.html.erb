@@ -12,7 +12,7 @@
       gtag('config', 'UA-130254865-1');
     </script>
 
-    <title>OS Design Guide</title>
+    <title>OS Design Guide: <%= @article.try(:title) %><%= @guide.try(:title) %></title>
     <%= csrf_meta_tags %>
 
     <!-- Expand the number of characters we can use in the document beyond basic ASCII 🎉 -->

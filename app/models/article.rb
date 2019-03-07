@@ -28,4 +28,5 @@ class Article < ApplicationRecord
    mount_uploader :image, ArticleImageUploader
   validates :title, :image, :author, :content, presence: true
    acts_as_votable
+   acts_as_commentable
 end

@@ -139,9 +139,9 @@
             </a>
             <div class="card-body" style="padding:5px">
 
-              <div><small class="badge"><%= article.get_upvotes.size-article.get_downvotes.size %> Upvote('s)</small>
+              <div><small class="badge"><i class="fas fa-star"></i>(<%= article.get_upvotes.size-article.get_downvotes.size %>) <i class="fas fa-comments"></i> (<%= article.comment_threads.size %>)</small>
                 <small class="float-right">
-                  Published on: <%= article.created_at.strftime("%B %d, %Y") %>
+                  Posted on: <%= article.created_at.strftime("%B %d, %Y") %>
                 </small></div>
               <small class="text-muted">Authored by: </small> <small><%= article.author %></small>
 
