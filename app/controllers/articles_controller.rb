@@ -1,9 +1,16 @@
 class ArticlesController < ApplicationController
-  before_action :authenticate_user!, :except => [:show, :index]
+  before_action :authenticate_user!, :except => [:show, :index, :search]
   def index
     @articles = Article.all
 
     render("article_templates/index.html.erb")
+  end
+
+  def search
+    @articles = Article.all
+    @q = Article.ransack(params[:q])
+      @articles = @q.result.includes(:industries, :disciplines)
+    render("article_templates/search.html.erb")
   end
 
   def show
@@ -24,7 +31,23 @@ class ArticlesController < ApplicationController
     @article.image = params.fetch("image","")
     @article.content = params.fetch("content")
     @article.user_id = params.fetch("user_id")
+    @article.save
+    
+        #creating connect industries
+    params.fetch("industries",{}).each do |industry|
+    @connect_industry = ConnectIndustry.new
+    @connect_industry.article_id = @article.id
+    @connect_industry.industry_id = industry
+    @connect_industry.save
+    end
 
+    #creating connect disciplines
+    params.fetch("disciplines",{}).each do |discipline|
+    @connect_discipline = ConnectDiscipline.new
+    @connect_discipline.article_id = @article.id
+    @connect_discipline.discipline_id = discipline
+    @connect_discipline.save
+    end
 
     if @article.valid?
       @article.save
@@ -37,7 +60,7 @@ class ArticlesController < ApplicationController
 
   def edit_form
     @article = Article.find(params.fetch("prefill_with_id"))
-
+    
     render("article_templates/edit_form.html.erb")
   end
 
@@ -46,10 +69,31 @@ class ArticlesController < ApplicationController
 
     @article.title = params.fetch("title")
     @article.author = params.fetch("author")
-    @article.image = params.fetch("image",@article.image)
+    @article.image = params.fetch("image","")
     @article.content = params.fetch("content")
     @article.user_id = params.fetch("user_id")
-
+    
+    # updating industries
+    ConnectIndustry.where(:article_id => @article.id).each do |connect_industry|
+    connect_industry.destroy
+    end
+    params.fetch("industries",{}).each do |industry|
+    @connect_industry = ConnectIndustry.new
+    @connect_industry.article_id = @article.id
+    @connect_industry.industry_id = industry
+    @connect_industry.save
+    end
+    
+    # updating disciplines
+    ConnectDiscipline.where(:article_id => @article.id).each do |connect_discipline|
+    connect_discipline.destroy
+    end
+    params.fetch("disciplines",{}).each do |discipline|
+    @connect_discipline = ConnectDiscipline.new
+    @connect_discipline.article_id = @article.id
+    @connect_discipline.discipline_id = discipline
+    @connect_discipline.save
+    end
 
     if @article.valid?
       @article.save

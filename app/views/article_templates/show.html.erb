@@ -21,52 +21,17 @@
   <hr>
 
   <dl class="white-back" style="padding:10px">
+   <div class="row">
+   <div class="col-10">
     <dt>
     </dt>
     <dd>
       <img src="<%= @article.image %>" class="img-fluid img-thumbnail" style="border:0;" >
     </dd>
+    </div>
+    <div class="col-2" style="padding:0px">
     <dt>
       Author('s)
-<% if current_user == nil %>
-     <!-- star button start-->
-        <div class="row float-right" style="padding:10px">
-    <form action="/articles/<%= @article.id %>/upvote" method="post">
-      <input type="hidden" name="article_id" value="<%= @article.id %>">
-      <button type="submit" style="padding:3px" rel="tooltip" title="star this article" class="btn btn-outline-primary">
-        <i class="fas fa-star fa-2x"></i>
-      </button>
-    </form>
-
-    <h4><span class="badge"><%= @article.get_upvotes.size %> Stars('s)</span></h4>
-     <!--star button end-->
-  </div>
-<% else %>
-      <% if current_user.voted_for? @article %>
-       <!-- star button start-->
-    <div class="row float-right" style="padding:10px">
-      <button style="padding:3px" class="btn btn-secondary">
-        <i class="fas fa-star fa-2x"></i>
-      </button>
-
-    <h4><span class="badge"><%= @article.get_upvotes.size %> Stars('s)</span></h4>
-     <!--star button end-->
-      </div>
-      <% else %>
-     <!-- star button start-->
-        <div class="row float-right" style="padding:10px">
-    <form action="/articles/<%= @article.id %>/upvote" method="post">
-      <input type="hidden" name="article_id" value="<%= @article.id %>">
-      <button type="submit" style="padding:3px" rel="tooltip" title="star this article" class="btn btn-outline-primary">
-        <i class="fas fa-star fa-2x"></i>
-      </button>
-    </form>
-
-    <h4><span class="badge"><%= @article.get_upvotes.size %> Stars('s)</span></h4>
-     <!--star button end-->
-  </div>
-  <% end %>
-  <% end %>
     </dt>
     <dd style="float-left">
       <%= @article.author %>
@@ -87,8 +52,66 @@
     </dd>
 
     <dt>
+      Industries
     </dt>
     <dd>
+      <%= @article.industries.pluck(:name).to_sentence %>
+    </dd>
+    <dt>
+      Disciplines
+    </dt>
+    <dd>
+      <%= @article.disciplines.pluck(:name).to_sentence %>
+    </dd>
+    <dt></dt>
+    <dd>
+      <% if current_user == nil %>
+     <!-- star button start-->
+        <div class="row" style="padding:10px">
+    <form action="/articles/<%= @article.id %>/upvote" method="post">
+      <input type="hidden" name="article_id" value="<%= @article.id %>">
+      <button type="submit" style="padding:3px" rel="tooltip" title="star this article" class="btn btn-outline-primary">
+        <i class="fas fa-star fa-2x"></i>
+      </button>
+    </form>
+
+    <h4><span class="badge"><%= @article.get_upvotes.size %> Stars('s)</span></h4>
+     <!--star button end-->
+  </div>
+<% else %>
+      <% if current_user.voted_for? @article %>
+       <!-- star button start-->
+    <div class="row" style="padding:10px">
+      <button style="padding:3px" class="btn btn-secondary">
+        <i class="fas fa-star fa-2x"></i>
+      </button>
+
+    <h4><span class="badge"><%= @article.get_upvotes.size %> Stars('s)</span></h4>
+     <!--star button end-->
+      </div>
+      <% else %>
+     <!-- star button start-->
+        <div class="row" style="padding:10px">
+    <form action="/articles/<%= @article.id %>/upvote" method="post">
+      <input type="hidden" name="article_id" value="<%= @article.id %>">
+      <button type="submit" style="padding:3px" rel="tooltip" title="star this article" class="btn btn-outline-primary">
+        <i class="fas fa-star fa-2x"></i>
+      </button>
+    </form>
+
+    <h4><span class="badge"><%= @article.get_upvotes.size %> Stars('s)</span></h4>
+     <!--star button end-->
+  </div>
+  <% end %>
+  <% end %>
+    </dd>
+    </div>
+    </div>
+
+    <dt>
+    </dt>
+    <dd>
+      <hr>
       <%= raw @article.content %>
     </dd>
 

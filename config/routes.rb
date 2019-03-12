@@ -9,7 +9,9 @@ resources :comments, :only => [:create, :destroy]
 
   # READ
   get("/articles", { :controller => "articles", :action => "index" })
+  get("/articles/search", { :controller => "articles", :action => "search"})
   get("/articles/:id_to_display", { :controller => "articles", :action => "show" })
+
 
   # UPDATE
   get("/articles/:prefill_with_id/edit", { :controller => "articles", :action => "edit_form" })

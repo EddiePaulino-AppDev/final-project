@@ -33,6 +33,11 @@
     <input type="text" id="author" name="author" class="form-control" value="<%= @article.author %>">
   </div>
 
+ <label for="industry" class="col-form-label">Industries</label>
+   <%= select_tag("industries", options_from_collection_for_select(Industry.all, :id, :name, ConnectIndustry.where(:article_id => @article.id).pluck(:industry_id)), :multiple => true, :class => "form-control") %>
+ <label for="disciplines" class="col-form-label">Disciplines</label>
+   <%= select_tag("disciplines", options_from_collection_for_select(Discipline.all, :id, :name, ConnectDiscipline.where(:article_id => @article.id).pluck(:discipline_id)),:multiple =>  true, :class => "form-control") %>
+
   <!-- Label and input for image -->
   <div class="form-group">
 

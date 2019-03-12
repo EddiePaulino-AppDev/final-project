@@ -21,12 +21,12 @@
 #
 
 class Article < ApplicationRecord
-  has_many :connect_industries, :dependent => :destroy
-  has_many :connect_disciplines, :dependent => :destroy
+  has_many :connect_industries, :class_name => "ConnectIndustry", :dependent => :destroy
+  has_many :connect_disciplines, :class_name => "ConnectDiscipline", :dependent => :destroy
   has_many :industries, :through => :connect_industries, :source => :industry
   has_many :disciplines, :through => :connect_disciplines, :source => :discipline
    mount_uploader :image, ArticleImageUploader
-  validates :title, :image, :author, :content, presence: true
+  validates :title, :author, :content, presence: true
    acts_as_votable
    acts_as_commentable
 end

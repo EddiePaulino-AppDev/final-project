@@ -11,4 +11,5 @@
 class Industry < ApplicationRecord
   has_many :connect_industries, :class_name => "ConnectIndustry",:dependent => :destroy
   has_many :guides, :through => :connect_industries, :source => :guide
+  has_many :articles, :through => :connect_industries, :source => :article
 end

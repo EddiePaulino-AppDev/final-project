@@ -75,8 +75,14 @@
         <!-- card  -->
       </div>
       <!-- col-6 -->
-        <div class="card-footer text-muted">
-          Disciplines: Industries: 
+      <div class="card-footer" style="padding:5px">
+        <small class="text-muted float-left">
+          Disciplines: <%= article.disciplines.pluck(:name).to_sentence %> 
+        </small>
+ 
+        <small class="text-muted float-right">
+         Industries: <%= article.industries.pluck(:name).to_sentence %>
+        </small>
         </div>
     </div>
   <% end %>
