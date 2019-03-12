@@ -12,15 +12,15 @@
 
   <hr>
   <% @articles.each do |article| %>
-   <div class="card">
-    <div class="row mb-2 align-items-start">
-  
-          <div class="col-6">
+    <div class="card">
+      <div class="row mb-2 align-items-start">
+
+        <div class="col-6">
           <a href="/articles/<%= article.id %>">
-          <img src="<%= article.image %>" class="img-fluid img-thumbnail" style="border:0;" >
+            <img src="<%= article.image %>" class="img-fluid img-thumbnail" style="border:0;" >
           </a>
-          </div>
-          <div class="col-6">
+        </div>
+        <div class="col-6">
           <div class="card-header">
             <h4 class="card-title"  style="padding:5px; margin:0px">
               <a href="/articles/<%= article.id %>">
@@ -44,47 +44,49 @@
             <div>
 
 
-                  <div class="media-body">
+              <div class="media-body">
 
-                    <p>
-                      <%= raw article.content[0,500]+"..." %>
-                    </p>
-                    <!--                 EDIT BUTTON-->
-                    <% if current_user == nil %>
-                    <% else %>
-                    <% if article.user_id == current_user.id %>
-                      <div class="btn-group d-flex" role="group">
-                        <a href="/articles/<%= article.id %>/edit" class="btn btn-warning w-100">
-                          <i class="fas fa-edit"></i>
+                <p>
+                  <%= raw article.content[0,500]+"..." %>
+                </p>
+                <!--                 EDIT BUTTON-->
+                <% if current_user == nil %>
+                <% else %>
+                  <% if article.user_id == current_user.id %>
+                    <div class="btn-group d-flex" role="group">
+                      <a href="/articles/<%= article.id %>/edit" class="btn btn-warning w-100">
+                        <i class="fas fa-edit"></i>
 
-                          Edit
-                        </a>
+                        Edit
+                      </a>
 
-                      </div>
-                    <% else %>
-                    <% end %>
-                    <% end %>
-                  </div>
-                  <!-- media-body -->
+                    </div>
+                  <% else %>
+                  <% end %>
+                <% end %>
+              </div>
+              <!-- media-body -->
 
 
             </div>
           </div>
           <!-- card-body -->
         </div>
-        <!-- card  -->
+
       </div>
-      <!-- col-6 -->
       <div class="card-footer" style="padding:5px">
         <small class="text-muted float-left">
-          Disciplines: <%= article.disciplines.pluck(:name).to_sentence %> 
+          Disciplines: <%= article.disciplines.pluck(:name).to_sentence %>
         </small>
- 
+
         <small class="text-muted float-right">
-         Industries: <%= article.industries.pluck(:name).to_sentence %>
+          Industries: <%= article.industries.pluck(:name).to_sentence %>
         </small>
-        </div>
+      </div>
+      <!-- card  -->
     </div>
+    <!-- col-6 -->
+
   <% end %>
 
 </div>
