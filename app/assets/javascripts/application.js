@@ -12,5 +12,5 @@
 //
 //= require rails-ujs
 //= require cloudinary
-//= require ckeditor/init
+//= require ckeditor/loader
 //= require_tree .
