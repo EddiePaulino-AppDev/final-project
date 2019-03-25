@@ -4,3 +4,4 @@
 //= link_directory ../stylesheets .css
 //= link ckeditor/application.css
 //= link ckeditor/application.js
+//= link ckeditor/config.js
