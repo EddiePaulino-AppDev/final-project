@@ -1,4 +1,5 @@
 # Use this hook to configure ckeditor
+if Object.const_defined?("Ckeditor")
 Ckeditor.setup do |config|
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default), :mongo_mapper and
@@ -56,10 +57,5 @@ Ckeditor.setup do |config|
   # By default: "ckeditor/config.js"
    config.js_config_url = 'ckeditor/config.js'
    
-    assets_root =  Rails.root.join('app','assets','javascripts')
-  ckeditor_plugins_root = assets_root.join('ckeditor','plugins')
-  %w(openlink sourcedialog).each do |ckeditor_plugin|
-    Ckeditor.assets += Dir[ckeditor_plugins_root.join(ckeditor_plugin, '**', '*.js')].map {|x| x.sub(assets_root.to_path, '').sub(/^\/+/, '')}
   end
-   
 end
