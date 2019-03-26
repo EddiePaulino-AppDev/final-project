@@ -1,9 +1,11 @@
 <%= javascript_include_tag Ckeditor.cdn_url %>
+
 <script>
   CKEDITOR.replace( 'ckeditor', {
-        customConfig: '/ckeditor/config.js'
+        customConfig: '/ckeditor/ckeditor_config.js'
 } );
 </script>
+
 <!-- Validation failure messages -->
 <% if @article.errors.any? %>
   <% @article.errors.full_messages.each do |message| %>
