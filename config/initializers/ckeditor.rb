@@ -1,5 +1,5 @@
 # Use this hook to configure ckeditor
-if Object.const_defined?("Ckeditor")
+
 Ckeditor.setup do |config|
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default), :mongo_mapper and
@@ -55,7 +55,7 @@ Ckeditor.setup do |config|
   # JS config url
   # Used when CKEditor CDN enabled
   # By default: "ckeditor/config.js"
-   config.js_config_url = 'ckeditor/config.js'
+  config.js_config_url = 'ckeditor/config.js'
    
-  end
+  
 end
