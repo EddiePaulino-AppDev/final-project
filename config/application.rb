@@ -30,7 +30,6 @@ module OSDesignGuide
     config.assets.precompile += %w( ckeditor/* )
     config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
     
-    config.assets.paths << "#{Rails}/vendor/assets/*"
     
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1

@@ -1,7 +1,7 @@
 Rails.application.configure do
   
   
-    config.action_mailer.default_url_options = { host: "www.osdesignguide.com" }
+  config.action_mailer.default_url_options = { host: "www.osdesignguide.com" }
 
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -14,7 +14,6 @@ Rails.application.configure do
   # Rake tasks automatically ignore this option for performance.
   config.eager_load = true
   
-  config.serve_static_assets = true
 
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
